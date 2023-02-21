@@ -1,3 +1,5 @@
 .idea/
 FoodBuddy_DevRole/.DS_Store
 FoodBuddy_DevRole/backEnd/.DS_Store
+/.metadata/
+FoodBuddy_DevRole/FrontEnd/package-lock.json

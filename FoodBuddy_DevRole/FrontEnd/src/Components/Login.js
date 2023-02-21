@@ -8,6 +8,15 @@ export const Login = () => {
       event.preventDefault();
       console.log(`Submitted form with username: ${username},and password: ${password}`);
   }
+  // const callLoginapi = (formData) => {
+  //   axios.post('/api/v1/login', formData)
+  //     .then(response => {
+  //       console.log(response);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
     return(
       <div className='Form-Container'>  
       <form className='form'>
