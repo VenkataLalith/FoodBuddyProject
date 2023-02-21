@@ -1,0 +1,10 @@
+stages:
+  - build
+
+build-job:
+  stage: build
+  script:
+    - chmod 777 -R ./FoodBuddy_DevRole
+    - mvn clean install
+  tags:
+    - CSCI5308Grp14
