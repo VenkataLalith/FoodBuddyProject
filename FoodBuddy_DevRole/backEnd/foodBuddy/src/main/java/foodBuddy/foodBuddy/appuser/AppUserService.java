@@ -45,4 +45,20 @@ public class AppUserService implements UserDetailsService {
         // send email
         return token;
     }
+    
+    public String loginUser(AppUser appUser) {
+    	if(userRepository.findByEmail(appUser.getEmail()).isPresent()) {
+    		String password = userRepository.findPasswordByEmail(appUser.getEmail());
+    		if(password.equals(appUser.getPassword())) {
+    			return "success";
+    		} else {
+    			return "failure";
+    		}
+    	} else {
+    		//throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG,email)));
+    		return "failure";
+    	}
+    	
+    	
+    }
 }

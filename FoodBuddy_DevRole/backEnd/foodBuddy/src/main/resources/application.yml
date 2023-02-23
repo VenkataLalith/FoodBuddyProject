@@ -4,12 +4,12 @@ server:
     include-binding-errors: always
 spring:
   datasource:
-    password: Qwerty@123
+    password:
     url: jdbc:mysql://localhost:3306/foodBuddy
     username: root
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
 
 

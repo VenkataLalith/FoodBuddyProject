@@ -33,10 +33,11 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 // giving permission to every request for /login endpoint
                 .authorizeRequests().requestMatchers("/api/v*/registration/**").permitAll()
-                // for everything else, the user has to be authenticated
-                .anyRequest().authenticated()
+                    .requestMatchers("/api/v*/login/**").permitAll()
+                    // for everything else, the user has to be authenticated
+                    .anyRequest().authenticated()
                 // setting stateless session, because we choose to implement Rest API
-                .and().formLogin();
+                .and().formLogin().disable();
 
         return http.build();
     }

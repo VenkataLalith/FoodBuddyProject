@@ -64,6 +64,11 @@ public class AppUser implements UserDetails {
 
 
     }
+    
+    public AppUser(String email,String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
