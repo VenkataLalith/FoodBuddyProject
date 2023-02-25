@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import UserData from '../Constants/UserData';
 import Constants from '../Constants/Constants';
+import { useNavigate } from "react-router-dom";
+
 
 export const Register = () => {
     const [firstName, setFirstName] = useState(UserData.firstNameame);
     const [lastName, setLastName] = useState(UserData.lastName);
     const [password, setPassword] = useState(UserData.password);
     const [email, setEmail] = useState(UserData.email);
+    const navigate = useNavigate();
+    const gotoLoginPage = () => navigate("/");
 
     const submitForm = (event) =>{
         event.preventDefault();
@@ -34,6 +38,9 @@ export const Register = () => {
     
 
     return(
+      <div>
+
+     
         <div className='Form-Container'>  
        <form className='form'>
         <label> Fisrt Name</label>
@@ -50,6 +57,13 @@ export const Register = () => {
         <input className='input'  placeholder='Please enter your name' value={email} onChange={e => setEmail(e.target.value)}></input>
       </form>
       <button type='submit' className='input1' onClick={submitForm}>Submit</button>
+      <p>
+                    Already have an account?{" "}
+                    <span className='link' onClick={gotoLoginPage}>
+                        Login
+                    </span>
+                </p>
+       </div>
        </div>
     )
     }  

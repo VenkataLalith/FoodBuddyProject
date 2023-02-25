@@ -2,6 +2,8 @@
 import './App.css';
 import { Register } from './Components/Register';
 import { Login } from './Components/Login';
+import {Routing} from './Components/Routes.js'
+import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 
 function App() {
@@ -11,8 +13,12 @@ function App() {
   });
   return (
     <div className="App">
+       <BrowserRouter>
+       <Routing /> 
+       </BrowserRouter>
+      
      {/* <Login/> */}
-       <Register/> 
+       {/* <Register/>  */}
     </div>
   );
 }
