@@ -1,25 +1,82 @@
+body,
+html {
+  height: 100%;
+}
+
 .App {
   text-align: center;
-  display: flex;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
   background-color: lavender;
-  }
+  flex-direction: column;
+}
 
-.form{
+.form {
   text-align: left;
-} 
+}
 
-.input{
+.input {
   display: flex;
   width: 100%;
   padding: 9px 10px;
   flex-direction: column;
 }
 
-.input1{
+.input1 {
   margin-top: 10%;
 }
 
 
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5rem;
+}
+
+
+.Layout {
+  flex-grow: 1;
+  position: relative;
+  padding-bottom: 5rem;
+}
+
+ul li {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #EEE;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+ul li:hover {
+  transform: translateY(-5px);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 10px 20px;
+  border-radius: 10px !important;
+  background-color: #EEE;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-5px);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+}

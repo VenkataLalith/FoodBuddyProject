@@ -3,6 +3,6 @@ const UserData = {
   lastName: '',
   password: '',
   email: ''
-  };
-  
-  export default UserData;
+};
+
+export default UserData;

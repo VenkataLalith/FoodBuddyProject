@@ -1,24 +1,25 @@
-
 import './App.css';
 import { Register } from './Components/Register';
 import { Login } from './Components/Login';
-import {Routing} from './Components/Routes.js'
+import { Routing } from './Components/Routes.js'
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
+import Layout from './Components/Layout';
 
 function App() {
   axios.interceptors.request.use(config => {
     config.headers['Origin'] = 'http://localhost:3000';
     return config;
   });
+
   return (
     <div className="App">
-       <BrowserRouter>
-       <Routing /> 
-       </BrowserRouter>
-      
-     {/* <Login/> */}
-       {/* <Register/>  */}
+      <BrowserRouter>
+        <Layout>
+          {/* This is where we can add children */}
+          <Routing />
+        </Layout>
+      </BrowserRouter>
     </div>
   );
 }
