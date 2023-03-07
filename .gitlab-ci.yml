@@ -4,6 +4,7 @@ stages:
 build-job:
   stage: build
   script:
+    - cd ./FoodBuddy_DevRole/backEnd/foodBuddy
     - chmod 777 -R ./FoodBuddy_DevRole/backEnd/foodBuddy
     - mvn clean install
   tags:
