@@ -110,3 +110,11 @@ a:active {
   color: black;
   background-color: transparent;
 }
+
+.center {
+  margin: auto;
+  margin-top: 5%;
+  width: 50%;
+  border: 1px solid black;
+  padding: 30px;
+}
