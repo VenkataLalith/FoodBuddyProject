@@ -86,6 +86,31 @@ class FoodBuddyApplicationTests {
 		String email = "timH@email.com";
 		assertTrue(emailValidator.test(email));
 	}
+
+	@Test
+    void loadUserByUserNameTestWhenUserIsNull() {
+    String email = "nullUser@example.com";
+	Optional<AppUser> empty = Optional.empty();
+    when(userRepository.findByEmail(email)).thenReturn(empty);
+    assertThrows(UsernameNotFoundException.class, () -> appUserService.loadUserByUsername(email));
+}
+
+	@Test
+	void userRegistrationWithInvalidEmailTest() {
+    String email = "invalidEmail";
+	Optional<AppUser> empty = Optional.empty(email);
+    AppUser invalidUser = new AppUser("Invalid", "User", "password", email, AppUserRole.USER);
+    assertThrows(IllegalStateException.class, () -> appUserService.signUpUser(invalidUser));
+}
+
+	@Test
+	void userRegistrationWithExistingEmailTest() {
+    String email = "existingUser@example.com";
+    AppUser existingUser = new AppUser("Existing", "User", "password", email, AppUserRole.USER);
+    when(userRepository.findByEmail(email)).thenReturn(Optional.of(existingUser));
+    assertThrows(IllegalStateException.class, () -> appUserService.signUpUser(existingUser));
+}
+
 	
 	
 

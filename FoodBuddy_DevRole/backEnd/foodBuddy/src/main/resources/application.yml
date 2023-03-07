@@ -4,7 +4,7 @@ server:
     include-binding-errors: always
 spring:
   datasource:
-    password:
+    password: Pakshal@6451
     url: jdbc:mysql://localhost:3306/foodBuddy
     username: root
   jpa:
