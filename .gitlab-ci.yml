@@ -5,9 +5,9 @@ build-job:
   stage: build
   script:
     - echo "Script Started from ${PWD}"
-    - cd ./FoodBuddy_DevRole/backEnd/foodBuddy
-    - chmod 777 -R ./FoodBuddy_DevRole/backEnd/foodBuddy
+    - cd FoodBuddy_DevRole/backEnd/foodBuddy
     - echo "Script executed from ${PWD}"
+    - chmod 777 -R FoodBuddy_DevRole/backEnd/foodBuddy
     - mvn clean install
   tags:
     - CSCI5308Grp14
