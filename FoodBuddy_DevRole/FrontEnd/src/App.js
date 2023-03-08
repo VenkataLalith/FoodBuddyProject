@@ -5,6 +5,7 @@ import { Routing } from './Components/Routes.js'
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import Layout from './Components/Layout';
+import { GroupManagement } from './Components/GroupManagement';
 
 function App() {
   axios.interceptors.request.use(config => {
@@ -14,12 +15,14 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Layout>
+      {/* <BrowserRouter>
+        <Layout> */}
           {/* This is where we can add children */}
-          <Routing />
+          {/* <Routing />
         </Layout>
-      </BrowserRouter>
+      </BrowserRouter> */}
+
+      <GroupManagement/>
     </div>
   );
 }

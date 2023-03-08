@@ -8,7 +8,7 @@ html {
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background-color: lavender;
+  background-color: rgb(255,255,255);
   flex-direction: column;
 }
 
@@ -58,11 +58,16 @@ ul li {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   transform: translateY(0);
   transition: transform 0.3s ease;
+  background-color: rgb(255, 212, 0);
+  color: black;
+
 }
 
 ul li:hover {
   transform: translateY(-5px);
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color:#EEE;
+  color: black;
 }
 
 button {
@@ -70,13 +75,46 @@ button {
   margin: 0 10px;
   padding: 10px 20px;
   border-radius: 10px !important;
-  background-color: #EEE;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   transform: translateY(0);
   transition: transform 0.3s ease;
+  background-color: #999999;
+  color: black;
 }
 
 button:hover {
   transform: translateY(-5px);
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #EEE;
+  color: black;
+}
+
+a:link {
+  color: black; 
+  background-color: transparent; 
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: black;
+  background-color: transparent;
+}
+
+a:active {
+  color: black;
+  background-color: transparent;
+}
+
+.center {
+  margin: auto;
+  margin-top: 5%;
+  width: 50%;
+  border: 1px solid black;
+  padding: 30px;
 }
