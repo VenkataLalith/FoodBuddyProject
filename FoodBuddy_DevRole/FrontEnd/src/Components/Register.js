@@ -43,7 +43,7 @@ export const Register = () => {
         <div className='Form-Container'>
           <form className='form'>
             <label> Fisrt Name</label>
-            <input className='input' placeholder='Please enter your Fisrt Name' value={firstName} onChange={e => setFirstName(e.target.value)}></input>
+            <input className='input' placeholder='Please enter your First Name' value={firstName} onChange={e => setFirstName(e.target.value)}></input>
             <label> Last Name</label>
             <input className='input' placeholder='Please enter Last Name' value={lastName} onChange={e => setLastName(e.target.value)}></input>
 

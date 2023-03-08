@@ -33,6 +33,16 @@ public class AppUser implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = true;
 
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     @SequenceGenerator(
             name = "user_sequence",
             sequenceName = "user_sequence",
@@ -65,8 +75,8 @@ public class AppUser implements UserDetails {
 
     }
     
-    public AppUser(String email,String password) {
-        this.email = email;
+    public AppUser(String userName,String password) {
+        this.userName = userName;
         this.password = password;
     }
 
