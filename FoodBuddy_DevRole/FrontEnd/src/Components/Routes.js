@@ -4,6 +4,7 @@ import { Register } from "./Register";
 import { Route, Routes } from 'react-router-dom';
 
 import { Login } from "./Login";
+import { GroupManagement } from "./GroupManagement";
 
 
 export function Routing() {
@@ -12,6 +13,7 @@ export function Routing() {
             <Routes>
                 <Route path='/' element={<Login />} />
                 <Route path='/register' element={<Register />} />
+                <Route path='/grp' element={<GroupManagement />} />
             </Routes>
         </>
     );
