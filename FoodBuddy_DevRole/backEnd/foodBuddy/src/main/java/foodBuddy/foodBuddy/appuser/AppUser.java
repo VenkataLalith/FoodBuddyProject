@@ -35,6 +35,16 @@ public class AppUser implements UserDetails {
 
     private String userName;
 
+    private String groupName;
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
     public String getUserName() {
         return userName;
     }

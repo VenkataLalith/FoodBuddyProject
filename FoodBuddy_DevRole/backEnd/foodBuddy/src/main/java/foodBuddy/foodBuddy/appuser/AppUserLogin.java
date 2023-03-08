@@ -27,6 +27,10 @@ public class AppUserLogin implements UserDetailsService {
         }
 
         @Override
+        public void UpdateGroupName(String groupName, String userName) {
+        }
+
+        @Override
         public void flush() {
 
         }

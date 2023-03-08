@@ -1,16 +1,14 @@
 package foodBuddy.foodBuddy.groupManagement;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
-@Data
+
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Data
 public class GroupCreationRequest {
-	public String groupName;
-	public String groupId;
+	private final String groupName;
+	private final String groupCode;
 	
 }
