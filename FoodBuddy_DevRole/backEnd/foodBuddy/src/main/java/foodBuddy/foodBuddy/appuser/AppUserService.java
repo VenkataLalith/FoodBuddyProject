@@ -15,8 +15,10 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class AppUserService implements UserDetailsService {
-    private final UserRepository  userRepository;
+    private final UserRepository userRepository;
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found";
+
+    private final static String PASSWORD_WRONG ="Wrong Password for email: %s";
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
     @Override
@@ -29,7 +31,8 @@ public class AppUserService implements UserDetailsService {
         boolean userExists = userRepository.findByEmail(appUser.getEmail())
                 .isPresent();
         if (userExists){
-            throw new IllegalStateException("email already taken");
+//            throw new IllegalStateException("email already taken");
+            return "User Exists";
         }
         String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
         appUser.setPassword(encodedPassword);
@@ -47,16 +50,17 @@ public class AppUserService implements UserDetailsService {
     }
     
     public String loginUser(AppUser appUser) {
-    	if(userRepository.findByEmail(appUser.getEmail()).isPresent()) {
-    		String password = userRepository.findPasswordByEmail(appUser.getEmail());
-    		if(password.equals(appUser.getPassword())) {
+    	if(userRepository.findByEmail(appUser.getUserName()).isPresent()) {
+    		String password = userRepository.findPasswordByEmail(appUser.getUserName());
+            Boolean userPassword = (bCryptPasswordEncoder.matches(appUser.getPassword(),password));
+            if(userPassword){
     			return "success";
     		} else {
-    			return "failure";
+    			return String.format(PASSWORD_WRONG,appUser.getUserName());
     		}
     	} else {
     		//throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG,email)));
-    		return "failure";
+    		return String.format(USER_NOT_FOUND_MSG,appUser.getUserName());
     	}
     	
     	
