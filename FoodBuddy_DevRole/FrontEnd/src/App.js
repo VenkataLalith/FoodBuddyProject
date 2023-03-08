@@ -15,14 +15,14 @@ function App() {
 
   return (
     <div className="App">
-      {/* <BrowserRouter>
-        <Layout> */}
+      <BrowserRouter>
+        <Layout>
           {/* This is where we can add children */}
-          {/* <Routing />
+          <Routing />
         </Layout>
-      </BrowserRouter> */}
+      </BrowserRouter>
 
-      <GroupManagement/>
+      {/* <GroupManagement/> */}
     </div>
   );
 }

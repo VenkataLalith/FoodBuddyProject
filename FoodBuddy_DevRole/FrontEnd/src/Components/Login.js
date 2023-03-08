@@ -27,6 +27,8 @@ const handleUsernameChange = (event) => {
         password: password
         };
     callLoginApi(formData);
+    setUsername("");
+    setPassword("");
   }
    const callLoginApi = (formData) => {
      axios.post('/api/v1/login', formData)

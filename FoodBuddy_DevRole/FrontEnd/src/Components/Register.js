@@ -23,6 +23,10 @@ export const Register = () => {
       email: email
     };
     callRegisterapi(formData);
+    setFirstName("");
+    setLastName("");
+    setPassword("");
+    setEmail("");
   }
 
   const callRegisterapi = (formData) => {
