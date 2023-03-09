@@ -1,5 +1,6 @@
 stages:
   - build
+  - cleanup
 
 backend-build-job:
   stage: build
@@ -18,3 +19,10 @@ frontend-build-job:
     - npm run build
   tags:
     - CSCI5308Grp14
+
+cleanup:
+  stage: cleanup
+  script:
+    - sudo chown -R gitlab-runner:gitlab-runner FoodBuddy_DevRole
+    - rm -rf FoodBuddy_DevRole/FrontEnd/node_modules
+    - rm -rf FoodBuddy_DevRole/backEnd/foodBuddy/target
