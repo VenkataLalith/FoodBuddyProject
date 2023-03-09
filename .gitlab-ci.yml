@@ -26,3 +26,5 @@ cleanup:
     - sudo chown -R gitlab-runner:gitlab-runner FoodBuddy_DevRole
     - rm -rf FoodBuddy_DevRole/FrontEnd/node_modules
     - rm -rf FoodBuddy_DevRole/backEnd/foodBuddy/target
+  tags:
+    - CSCI5308Grp14
