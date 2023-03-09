@@ -1,6 +1,5 @@
 stages:
   - build
-  - cleanup
 
 backend-build-job:
   stage: build
@@ -14,17 +13,10 @@ backend-build-job:
 frontend-build-job:
   stage: build
   script:
+    - export PATH=/home/csci5308vm14/.nvm/versions/node/v18.15.0/bin/:$PATH
     - cd FoodBuddy_DevRole/FrontEnd
     - npm install
+    - unset CI 
     - npm run build
-  tags:
-    - CSCI5308Grp14
-
-cleanup:
-  stage: cleanup
-  script:
-    - sudo chown -R gitlab-runner:gitlab-runner FoodBuddy_DevRole
-    - rm -rf FoodBuddy_DevRole/FrontEnd/node_modules
-    - rm -rf FoodBuddy_DevRole/backEnd/foodBuddy/target
   tags:
     - CSCI5308Grp14
