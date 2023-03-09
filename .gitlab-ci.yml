@@ -1,6 +1,6 @@
 stages:
-  - cleanup
   - build
+  - cleanup
 
 backend-build-job:
   stage: build
