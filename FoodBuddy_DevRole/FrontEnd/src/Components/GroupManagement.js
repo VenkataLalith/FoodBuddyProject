@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 export const GroupManagement = () => {
   const [groupName, setGroupName] = useState("");
   const [groupCode, setGroupCode] = useState("");
@@ -11,16 +12,49 @@ export const GroupManagement = () => {
     event.preventDefault();
     console.log(`Creating the group with: ${groupName},and password: ${groupCode}`);
     setFormSubmitted(true);
-    setGroupName("");
-    setGroupCode("");
+    setGroupName(groupName);
+    setGroupCode(groupCode);
+    const formData ={
+            groupName: groupName,
+            groupCode: groupCode
+            };
+    callCreateGroupApi(formData);
+
   }
+  const callCreateGroupApi = (formData) => {
+       axios.post('/api/v1/groupApi/Create', formData)
+         .then(response => {
+           console.log(response);
+         })
+         .catch(error => {
+           console.log(error);
+         });
+     };
 
   const joinGroup = (event) => {
     event.preventDefault();
     console.log(`Joining the group with: ${joinCode}`);
     setFormSubmitted(true);
-    setJoinCode("");
-  }
+    setJoinCode(joinCode);
+    const formDataJoin ={
+                groupCode: joinCode,
+                userName:"abc@gmail.com"
+                };
+    callJoinGroupApi(formDataJoin);
+
+    }
+    const callJoinGroupApi = (formDataJoin) => {
+           axios.post('/api/v1/groupApi/Join', formDataJoin)
+
+             .then(response => {
+               console.log(response);
+             })
+             .catch(error => {
+               console.log(error);
+             });
+         };
+
+
 
   const submitCreate = () => {
     setdisplayCreateGroup(true);
@@ -37,7 +71,7 @@ export const GroupManagement = () => {
 //     setdisplayJoinGroup(false);
 //   }
 
-  
+
     return(
         <div>
             {/* <div>
@@ -96,7 +130,7 @@ export const GroupManagement = () => {
             {formSubmitted && (
              <div> <p>Group joined successfully!</p> </div> )}
             </div>
-)}   
+)}
             {/* {(displayCreateGroup || displayJoinGroup) && (
         <div onClick={closeForms}  ></div>
       )} */}

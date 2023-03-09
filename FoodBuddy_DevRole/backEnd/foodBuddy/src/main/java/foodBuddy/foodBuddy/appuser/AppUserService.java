@@ -54,6 +54,9 @@ public class AppUserService implements UserDetailsService {
     		String password = userRepository.findPasswordByEmail(appUser.getUserName());
             Boolean userPassword = (bCryptPasswordEncoder.matches(appUser.getPassword(),password));
             if(userPassword){
+                /*
+                Need to Fetch the Group Name if exists.
+                 */
     			return "success";
     		} else {
     			return String.format(PASSWORD_WRONG,appUser.getUserName());

@@ -15,6 +15,9 @@ public class GroupServices {
 
     public static String createGroup(GroupCreationRequest request) {
         AppGroup appGroup = new AppGroup(request.getGroupName(),request.getGroupCode());
+        /*
+        Generate a random groupCode, instead of getting from user.
+         */
         String data = appGroupService.CreateGroup(appGroup);
         return data;
     }

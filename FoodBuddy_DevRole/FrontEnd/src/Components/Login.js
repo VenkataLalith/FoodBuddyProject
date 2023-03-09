@@ -29,6 +29,7 @@ const handleUsernameChange = (event) => {
     callLoginApi(formData);
     setUsername("");
     setPassword("");
+    navigate('/grp');// need to validate depending upon response.
   }
    const callLoginApi = (formData) => {
      axios.post('/api/v1/login', formData)
@@ -39,6 +40,7 @@ const handleUsernameChange = (event) => {
          console.log(error);
        });
    };
+
   // const gotoSignUpPage = () => navigate("/register");
 
   return (

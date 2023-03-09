@@ -18,7 +18,9 @@ public class AppGroupService {
         boolean groupExists = groupRepository.findByGroupName(appGroup.getGroupName()).isPresent();
         if (!groupExists){
             groupRepository.save(appGroup);
-
+            /*
+            Need to add the user who is creating the group into the group automatically.
+             */
             return "Group Created Successfully";
         }
         else {
@@ -33,7 +35,7 @@ public class AppGroupService {
             String groupName = groupRepository.findGroupByCode(request.getGroupCode());
             if (!groupExists){
                 userRepository.UpdateGroupName(groupName,userName);
-                return "Joined Success";
+                return "Joined successfully";
             }
             else {
                 return "please verify the groupCode: Unable to join";
