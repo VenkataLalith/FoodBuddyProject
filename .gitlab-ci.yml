@@ -1,11 +1,20 @@
 stages:
   - build
 
-build-job:
+backend-build-job:
   stage: build
   script:
     - chmod 777 -R FoodBuddy_DevRole
     - cd FoodBuddy_DevRole/backEnd/foodBuddy
     - mvn clean install -Dmaven.test.skip=true
+  tags:
+    - CSCI5308Grp14
+
+frontend-build-job:
+  stage: build
+  script:
+    - cd FoodBuddy_DevRole/FrontEnd
+    - npm install
+    - npm run build
   tags:
     - CSCI5308Grp14
