@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { updateGroupName } from '../redux/actions/GroupManagementAction'
+
 export const GroupManagement = () => {
   const [groupName, setGroupName] = useState("");
   const [groupCode, setGroupCode] = useState("");
@@ -7,24 +10,35 @@ export const GroupManagement = () => {
   const[displayCreateGroup, setdisplayCreateGroup] = useState(false);
   const[displayJoinGroup, setdisplayJoinGroup] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
-
+  const userName = useSelector((state) => state.loginLogoutReducer.emailId)
+  const userGroupName = useSelector((state) => state.groupManagementReducer.groupName)
+  const dispatch = useDispatch();
   const createGroup = (event) => {
-    event.preventDefault();
-    console.log(`Creating the group with: ${groupName},and password: ${groupCode}`);
-    setFormSubmitted(true);
-    setGroupName(groupName);
-    setGroupCode(groupCode);
-    const formData ={
-            groupName: groupName,
-            groupCode: groupCode
-            };
-    callCreateGroupApi(formData);
+
+        event.preventDefault();
+            console.log(`Creating the group with: ${groupName},and password: ${groupCode}`);
+
+            setFormSubmitted(true);
+            setGroupName(groupName);
+            setGroupCode(groupCode);
+
+            const formData ={
+                    groupName: groupName,
+                    groupCode: groupCode,
+                    userName: userName
+                    };
+            callCreateGroupApi(formData);
+
 
   }
   const callCreateGroupApi = (formData) => {
        axios.post('/api/v1/groupApi/Create', formData)
          .then(response => {
            console.log(response);
+           if(response.data==="Group Created Successfully"){
+                dispatch(updateGroupName(groupName))
+                alert(`${groupName} Group created successfully with code ${groupCode}`)
+           }
          })
          .catch(error => {
            console.log(error);
@@ -71,7 +85,6 @@ export const GroupManagement = () => {
 //     setdisplayJoinGroup(false);
 //   }
 
-
     return(
         <div>
             {/* <div>
@@ -92,7 +105,8 @@ export const GroupManagement = () => {
       </footer>
     </div> */}
     <div className='centerit'>
-    <button style={{ marginLeft:"639px", marginTop:" 4%", marginRight: "33px"}} onClick={submitCreate}> Create a Group</button>
+    <h1>Group Name : {userGroupName}</h1>
+    <button disabled={(groupName!=="")} style={{ marginLeft:"639px", marginTop:" 4%", marginRight: "33px"}} onClick={submitCreate}> Create a Group</button>
             <button className='input1'  onClick={submitJoin}> Join a Group</button>
     </div>
             
@@ -108,7 +122,7 @@ export const GroupManagement = () => {
             <input style={{marginLeft: "15px", marginBottom:"10px"}} placeholder="Enter group code" type="input" value={groupCode} onChange={(e) => setGroupCode(e.target.value)} />
             </label>
               <br />
-              <button type="submit" onClick={createGroup}>Create Group</button>
+              <button  type="submit" onClick={createGroup}>Create Group</button>
               <button style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
             </form>
             {formSubmitted && (
