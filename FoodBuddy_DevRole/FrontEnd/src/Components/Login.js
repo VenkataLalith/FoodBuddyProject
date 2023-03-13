@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Constants from '../Constants/Constants';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAction } from '../redux/actions/LoginLogoutAction'
+import { updateLoginStatusAction } from '../redux/actions/LoginLogoutAction'
 // import Routes from './Routes';
 
 export const Login = () => {
@@ -15,13 +17,13 @@ const handleUsernameChange = (event) => {
 
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const dispatch = useDispatch();
   // const navigate = useNavigate();
   const navigate = useNavigate();
   const handleClick = () => navigate('/register');
 
   const submitForm = (event) => {
     event.preventDefault();
-    console.log(`Submitted form with username: ${username},and password: ${password}`);
     const formData ={
         username: username,
         password: password
@@ -29,12 +31,19 @@ const handleUsernameChange = (event) => {
     callLoginApi(formData);
     setUsername("");
     setPassword("");
-    navigate('/grp');// need to validate depending upon response.
   }
    const callLoginApi = (formData) => {
      axios.post('/api/v1/login', formData)
        .then(response => {
-         console.log(response);
+         if(response.data==='success'){
+            console.log('login success')
+            dispatch(loginAction(username))
+            dispatch(updateLoginStatusAction(true))
+            navigate('/grp');
+         }
+         else{
+            alert('Invalid Credentials.....pls re-enter proper credentials')
+         }
        })
        .catch(error => {
          console.log(error);
