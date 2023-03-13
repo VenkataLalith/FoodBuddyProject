@@ -4,3 +4,10 @@ export const updateGroupName = (groupName) => {
         payload : groupName
     }
 }
+
+export const updateGroupNumber = (groupCode) => {
+    return{
+        type:"GROUP_JOIN_ACTION",
+        payload : groupCode
+    }
+}

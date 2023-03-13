@@ -12,6 +12,11 @@ export const GroupManagementReducer = (state = defaultstate ,action) => {
                 groupName : action.payload
             }
 
+        case 'GROUP_JOIN_ACTION' :
+            return {
+                groupCode : action.payload
+            }
+
         default : return state
      }
 

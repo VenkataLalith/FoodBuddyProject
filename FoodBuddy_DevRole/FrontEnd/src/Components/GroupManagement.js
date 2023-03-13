@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { updateGroupName } from '../redux/actions/GroupManagementAction'
+import { updateGroupNumber } from '../redux/actions/GroupManagementAction'
 
 export const GroupManagement = () => {
   const [groupName, setGroupName] = useState("");
@@ -10,9 +11,10 @@ export const GroupManagement = () => {
   const[displayCreateGroup, setdisplayCreateGroup] = useState(false);
   const[displayJoinGroup, setdisplayJoinGroup] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const userName = useSelector((state) => state.loginLogoutReducer.emailId)
-  const userGroupName = useSelector((state) => state.groupManagementReducer.groupName)
   const dispatch = useDispatch();
+  const userName = useSelector((state) => state.loginLogoutReducer.emailId);
+  const userGroupName = useSelector((state) => state.groupManagementReducer.groupName);
+  const userGroupNumber = useSelector((state) => state.groupManagementReducer.groupCode);
   const createGroup = (event) => {
 
         event.preventDefault();
@@ -28,7 +30,8 @@ export const GroupManagement = () => {
                     userName: userName
                     };
             callCreateGroupApi(formData);
-
+            setdisplayCreateGroup(false)
+            setdisplayJoinGroup(false)
 
   }
   const callCreateGroupApi = (formData) => {
@@ -46,22 +49,27 @@ export const GroupManagement = () => {
      };
 
   const joinGroup = (event) => {
-    event.preventDefault();
-    console.log(`Joining the group with: ${joinCode}`);
-    setFormSubmitted(true);
-    setJoinCode(joinCode);
-    const formDataJoin ={
-                groupCode: joinCode,
-                userName:"abc@gmail.com"
-                };
-    callJoinGroupApi(formDataJoin);
-
+        event.preventDefault();
+            console.log(`Joining the group with: ${joinCode}`);
+            setFormSubmitted(true);
+            setJoinCode(joinCode);
+            const formDataJoin ={
+                        groupCode: joinCode,
+                        userName: userName
+                        };
+            callJoinGroupApi(formDataJoin);
     }
+    
     const callJoinGroupApi = (formDataJoin) => {
            axios.post('/api/v1/groupApi/Join', formDataJoin)
 
              .then(response => {
-               console.log(response);
+               if(response.data==="Joined successfully"){
+                    dispatch(updateGroupNumber(joinCode))
+                    alert('User joined successfully')
+                     setdisplayCreateGroup(false)
+                     setdisplayJoinGroup(false)
+               }
              })
              .catch(error => {
                console.log(error);
@@ -85,6 +93,7 @@ export const GroupManagement = () => {
 //     setdisplayJoinGroup(false);
 //   }
 
+    console.log(userGroupNumber)
     return(
         <div>
             {/* <div>
@@ -104,10 +113,11 @@ export const GroupManagement = () => {
         <p>FoodBuddy App</p>
       </footer>
     </div> */}
-    <div className='centerit'>
     <h1>Group Name : {userGroupName}</h1>
-    <button disabled={(groupName!=="")} style={{ marginLeft:"639px", marginTop:" 4%", marginRight: "33px"}} onClick={submitCreate}> Create a Group</button>
-            <button className='input1'  onClick={submitJoin}> Join a Group</button>
+    <div className='centerit'>
+
+    <button disabled={(userGroupName!=="")} style={{ marginLeft:"639px", marginTop:" 4%", marginRight: "33px"}} onClick={submitCreate}> Create a Group</button>
+            <button disabled={(userGroupName!=="")}className='input1' disabled={(groupName!=="")} onClick={submitJoin}> Join a Group</button>
     </div>
             
             { displayCreateGroup && (
