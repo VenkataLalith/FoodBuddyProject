@@ -1,10 +1,7 @@
 package foodBuddy.foodBuddy.groupManagement;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/v1/groupApi")
@@ -18,6 +15,11 @@ public class GroupController {
     @PostMapping("/Join")
     public GroupJoinResponse joinGroup(@RequestBody GroupJoinRequest request){
         GroupJoinResponse response = groupServices.joinGroup(request);
+        return response;
+    }
+    @GetMapping("/view")
+    public ViewGroupUsersResponse viewGroup(@RequestParam(value = "groupCode") String groupCode){
+        ViewGroupUsersResponse response = groupServices.viewGroup(groupCode);
         return response;
     }
 }

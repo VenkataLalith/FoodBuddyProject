@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class AppGroupService {
@@ -38,9 +40,9 @@ public class AppGroupService {
         try {
             boolean groupExists = groupRepository.findGroupByCode(request.getGroupCode()).isBlank();
             String userName = request.getUserName();
-            String groupName = groupRepository.findGroupByCode(request.getGroupCode());
+            String groupCode = request.getGroupCode();
             if (!groupExists){
-                userRepository.UpdateGroupName(groupName,userName);
+                userRepository.UpdateGroupName(groupCode,userName);
                 response.setMessage("Joined successfully");
                 response.setStatus("success");
                 return response;
@@ -53,6 +55,32 @@ public class AppGroupService {
         }
         catch (NullPointerException e){
             response.setMessage("please verify the groupCode: Unable to join");
+            response.setStatus("failure");
+            return response;
+        }
+
+    }
+
+    public ViewGroupUsersResponse findGroupUsers(String groupCode) {
+        ViewGroupUsersResponse response = new ViewGroupUsersResponse();
+        try {
+            boolean groupExists =true; //groupRepository.findGroupByCode(groupCode).isBlank();
+            if (groupExists){
+                response.setGroupUsersList(userRepository.findUsersByGroupCode(groupCode));
+                response.setMessage("Found Members");
+                response.setStatus("success");
+                return response;
+            }
+            else {
+                response.setGroupUsersList(null);
+                response.setMessage("Invalid GroupCode");
+                response.setStatus("failure");
+                return response;
+            }
+        }
+        catch (NullPointerException e){
+            response.setGroupUsersList(null);
+            response.setMessage("please verify the groupCode");
             response.setStatus("failure");
             return response;
         }

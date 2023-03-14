@@ -1,5 +1,6 @@
 package foodBuddy.foodBuddy.appuser;
 
+import foodBuddy.foodBuddy.groupManagement.ViewGroupUsers;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +29,10 @@ public class AppUserLogin implements UserDetailsService {
 
         @Override
         public void UpdateGroupName(String groupName, String userName) {
+        }
+        @Override
+        public List<ViewGroupUsers> findUsersByGroupCode(String groupCode){
+            return null;
         }
 
         @Override

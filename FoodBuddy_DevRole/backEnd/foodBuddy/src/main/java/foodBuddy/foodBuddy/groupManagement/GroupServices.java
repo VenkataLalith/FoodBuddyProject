@@ -33,4 +33,10 @@ public class GroupServices {
         GroupJoinResponse response = appGroupService.joinGroup(request);
         return response;
     }
+
+
+    public ViewGroupUsersResponse viewGroup(String groupCode) {
+        ViewGroupUsersResponse response = appGroupService.findGroupUsers(groupCode);
+        return response;
+    }
 }
