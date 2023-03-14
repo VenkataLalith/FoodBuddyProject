@@ -57,7 +57,6 @@ const handleUsernameChange = (event) => {
          if(response.data==='success'){
             console.log('login success')
             dispatch(loginAction(username))
-            dispatch(updateLoginStatusAction(true))
             navigate('/grp');
          }
          else{

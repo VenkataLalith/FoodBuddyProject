@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class GroupController {
     private GroupServices groupServices;
     @PostMapping("/Create")
-    public String createGroup(@RequestBody GroupCreationRequest request){
+    public GroupCreationResponse createGroup(@RequestBody GroupCreationRequest request){
         return groupServices.createGroup(request);
     }
     @PostMapping("/Join")
-    public String joinGroup(@RequestBody GroupJoinRequest request){
-        String data = groupServices.joinGroup(request);
-        return data;
+    public GroupJoinResponse joinGroup(@RequestBody GroupJoinRequest request){
+        GroupJoinResponse response = groupServices.joinGroup(request);
+        return response;
     }
 }
