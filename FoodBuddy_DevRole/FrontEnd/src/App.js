@@ -16,10 +16,11 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Layout>
+        {/* <Layout> */}
           {/* This is where we can add children */}
+          {/* <Login/> */}
           <Routing />
-        </Layout>
+        {/* </Layout> */}
       </BrowserRouter>
 
       {/* <GroupManagement/> */}
