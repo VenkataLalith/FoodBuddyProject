@@ -14,35 +14,47 @@ public class AppGroupService {
     private final UserRepository userRepository;
 
 
-    public String CreateGroup(AppGroup appGroup){
+    public GroupCreationResponse CreateGroup(AppGroup appGroup){
+        GroupCreationResponse response = new GroupCreationResponse();
         boolean groupExists = groupRepository.findByGroupName(appGroup.getGroupName()).isPresent();
         if (!groupExists){
             groupRepository.save(appGroup);
             /*
             Need to add the user who is creating the group into the group automatically.
              */
-            return "Group Created Successfully";
+            response.setMessage("Group created successfully");
+            response.setStatus("success");
+            return response;
         }
         else {
-            return "GroupName Exists";
+            response.setMessage("GroupName Exists");
+            response.setStatus("failure");
+            return response;
         }
     }
 
-    public String joinGroup(GroupJoinRequest request) {
+    public GroupJoinResponse joinGroup(GroupJoinRequest request) {
+        GroupJoinResponse response = new GroupJoinResponse();
         try {
             boolean groupExists = groupRepository.findGroupByCode(request.getGroupCode()).isBlank();
             String userName = request.getUserName();
             String groupName = groupRepository.findGroupByCode(request.getGroupCode());
             if (!groupExists){
                 userRepository.UpdateGroupName(groupName,userName);
-                return "Joined successfully";
+                response.setMessage("Joined successfully");
+                response.setStatus("success");
+                return response;
             }
             else {
-                return "please verify the groupCode: Unable to join";
+                response.setMessage("please verify the groupCode: Unable to join");
+                response.setStatus("failure");
+                return response;
             }
         }
         catch (NullPointerException e){
-            return "please verify the groupCode: Unable to join\"";
+            response.setMessage("please verify the groupCode: Unable to join");
+            response.setStatus("failure");
+            return response;
         }
 
     }

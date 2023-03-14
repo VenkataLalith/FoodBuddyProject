@@ -13,17 +13,24 @@ public class GroupServices {
         this.appGroupService = appGroupService;
     }
 
-    public static String createGroup(GroupCreationRequest request) {
+    public static GroupCreationResponse createGroup(GroupCreationRequest request) {
         AppGroup appGroup = new AppGroup(request.getGroupName(),request.getGroupCode());
         /*
         Generate a random groupCode, instead of getting from user.
          */
-        String data = appGroupService.CreateGroup(appGroup);
-        return data;
+        GroupCreationResponse creationReq = appGroupService.CreateGroup(appGroup);
+        if(creationReq.getStatus().equalsIgnoreCase("success")) {
+            GroupJoinRequest joinReq = new GroupJoinRequest(request.getGroupCode(), request.getUserName());
+            GroupJoinResponse response = appGroupService.joinGroup(joinReq);
+            if (response.getStatus().equalsIgnoreCase("failure")){
+                creationReq.setStatus("joinFailed");
+            }
+        }
+        return creationReq;
     }
 
-    public String joinGroup(GroupJoinRequest request) {
-        String data =appGroupService.joinGroup(request);
-        return data;
+    public GroupJoinResponse joinGroup(GroupJoinRequest request) {
+        GroupJoinResponse response = appGroupService.joinGroup(request);
+        return response;
     }
 }
