@@ -57,6 +57,7 @@ export const InventoryManagement = () => {
       setExpiry(event.target.value);
     };
 
+
   return (
     <div>
       <table>
