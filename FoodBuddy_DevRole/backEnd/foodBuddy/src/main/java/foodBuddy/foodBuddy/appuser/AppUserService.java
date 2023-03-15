@@ -1,5 +1,6 @@
 package foodBuddy.foodBuddy.appuser;
 
+import foodBuddy.foodBuddy.login.LoginResponse;
 import foodBuddy.foodBuddy.registration.token.ConfirmationToken;
 import foodBuddy.foodBuddy.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -49,21 +50,31 @@ public class AppUserService implements UserDetailsService {
         return token;
     }
     
-    public String loginUser(AppUser appUser) {
+    public LoginResponse loginUser(AppUser appUser) {
+        LoginResponse response = new LoginResponse();
     	if(userRepository.findByEmail(appUser.getUserName()).isPresent()) {
     		String password = userRepository.findPasswordByEmail(appUser.getUserName());
             Boolean userPassword = (bCryptPasswordEncoder.matches(appUser.getPassword(),password));
             if(userPassword){
-                /*
-                Need to Fetch the Group Name if exists.
-                 */
-    			return "success";
+                response.setGroupCode(userRepository.findGroupByEmail(appUser.getUserName()));
+                response.setUsername(appUser.getEmail());
+                response.setStatus("success");
+                response.setMessage("Login Successful");
+    			return response;
     		} else {
-    			return String.format(PASSWORD_WRONG,appUser.getUserName());
+                response.setGroupCode(null);
+                response.setUsername(null);
+                response.setStatus("failure");
+                response.setMessage("Login failed");
+                return response;
     		}
     	} else {
     		//throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG,email)));
-    		return String.format(USER_NOT_FOUND_MSG,appUser.getUserName());
+            response.setGroupCode(null);
+            response.setUsername(null);
+            response.setStatus("failure");
+            response.setMessage("Login failed");
+            return response;
     	}
     	
     	

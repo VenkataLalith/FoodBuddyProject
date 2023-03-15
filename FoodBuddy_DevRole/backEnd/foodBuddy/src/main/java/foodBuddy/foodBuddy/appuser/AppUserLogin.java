@@ -36,6 +36,11 @@ public class AppUserLogin implements UserDetailsService {
         }
 
         @Override
+        public String findGroupByEmail(String email){
+            return null;
+        }
+
+        @Override
         public void flush() {
 
         }
