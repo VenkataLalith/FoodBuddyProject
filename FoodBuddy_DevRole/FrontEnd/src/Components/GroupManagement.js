@@ -17,7 +17,7 @@ export const GroupManagement = () => {
   const userName = useSelector((state) => state.loginLogoutReducer.emailId);
   const userGroupName = useSelector((state) => state.groupManagementReducer.groupName);
   const userGroupNumber = useSelector((state) => state.groupManagementReducer.groupCode);
-  const userGroupCode="";
+  const userGroupCode="99999";
 
   const createGroup = (event) => {
 

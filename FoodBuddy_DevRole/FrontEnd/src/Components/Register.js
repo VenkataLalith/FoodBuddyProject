@@ -42,12 +42,14 @@ export const Register = () => {
     setLastName("");
     setPassword("");
     setEmail("");
+    navigate('/')
   }
 
   const callRegisterapi = (formData) => {
     axios.post('/api/v1/registration', formData)
       .then(response => {
         console.log(response);
+        alert('User Created successfully')
       })
       .catch(error => {
         console.log(error);

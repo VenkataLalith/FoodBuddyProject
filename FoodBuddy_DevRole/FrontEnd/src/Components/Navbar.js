@@ -12,13 +12,14 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate } from "react-router-dom";
 // import Footer from './Footet';
 
 const pages = ['Groups', 'Inventory', 'Budget'];
 const settings = ['Logout'];
 
 function ResponsiveAppBar() {
-
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -27,6 +28,7 @@ function ResponsiveAppBar() {
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+    
   };
 
   const handleCloseNavMenu = () => {
@@ -35,6 +37,8 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    // console.log('Index : '+indx)
+    navigate('/');
   };
 
   return (
@@ -47,7 +51,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href="/grp"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },

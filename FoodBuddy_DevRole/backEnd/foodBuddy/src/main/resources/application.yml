@@ -4,8 +4,8 @@ server:
     include-binding-errors: always
 spring:
   datasource:
-    password: Neha@1994
-    url: jdbc:mysql://localhost:3306/foodBuddy
+    password: Lalith@1999
+    url: jdbc:mysql://localhost:3306/foodbuddy
     username: root
   jpa:
     hibernate:
