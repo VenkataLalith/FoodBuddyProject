@@ -1,6 +1,7 @@
 import React from 'react';
 import './Layout.css';
 import Navbar from './Navbar';
+import HomePage from './Home';
 
 
 const Layout = ({ children }) => {
@@ -14,10 +15,7 @@ const Layout = ({ children }) => {
           <li><a href="/register">Register</a></li>
         </ul>
       </nav> */}
-      <Navbar/>
-      <main style={{ height: '100%', marginBottom: '2rem', display: 'flex' }}>
-        {children}
-      </main>
+      {/* <HomePage/> */}
       <footer style={{ backgroundColor: '#e6e6e6', margin: 0, padding: '1rem' }}>
         {/* Footer content */}
         <p>FoodBuddy App</p>

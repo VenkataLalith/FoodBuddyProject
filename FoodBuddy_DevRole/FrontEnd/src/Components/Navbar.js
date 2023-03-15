@@ -15,7 +15,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
 // import Footer from './Footet';
 
-const pages = ['Groups', 'Inventory', 'Budget'];
+const pages = ['Group Management', 'Inventory Management', 'Recipe Management','ExpenseManagement'];
 const settings = ['Logout'];
 
 function ResponsiveAppBar() {

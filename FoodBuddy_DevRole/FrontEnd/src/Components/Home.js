@@ -1,32 +1,74 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "../App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {GroupManagement} from "./GroupManagement";
 import {InventoryManagement} from "./InventoryManagement";
 import RecipeManagement from "./RecipeManagement";
 import ExpenseManagement from "./ExpenseManagement";
+import Navbar from "./Navbar";
+import AdbIcon from '@mui/icons-material/Adb';
+import Typography from '@mui/material/Typography';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { loginAction } from '../redux/actions/LoginLogoutAction'
+
 
 export const HomePage = () => {
 const [activeTab, setActiveTab] = useState("");
+const navigate = useNavigate();
+const dispatch = useDispatch();
+const userName = useSelector((state) => state.loginLogoutReducer.emailId);
+
 const renderTab = () => {
     switch (activeTab) {
       case "GroupManagement":
-        return <GroupManagement />;
+        return (userName==="")?navigate('/'):<GroupManagement />;
       case "InventoryManagement":
-        return <InventoryManagement />;
+        return (userName==="")?navigate('/'):<InventoryManagement />;
       case "RecipeManagement":
-        return <RecipeManagement />;
+        return (userName==="")?navigate('/'):<RecipeManagement />;
       case "ExpenseManagement":
-        return <ExpenseManagement />;
+        return (userName==="")?navigate('/'):<ExpenseManagement />;
+      case "Home" : return handleUserLogout()  
     }
   };
+
+const handleUserLogout = async() => {
+    console.log("In handle User Logout")
+    dispatch(loginAction(""))
+    navigate('/')
+  }
+
+  useEffect(() => {
+    setActiveTab("GroupManagement")
+  },[]);
 return (
     <div className="Home">
-      <header>
+      <header style={{backgroundColor:"#3366cc"}}>
         <nav>
-          <ul>
+          <ul >
             <li>
-              <button onClick={() => setActiveTab("GroupManagement")}>
+            
+          <Typography
+            variant="h7"
+            noWrap
+            component="a"
+            href="/home"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />  Food Buddy
+          </Typography>
+            </li>
+            <li style={{margin:"1%"}}>
+              <button  onClick={() => setActiveTab("GroupManagement")}>
                 Group Management
               </button>
             </li>
@@ -46,7 +88,7 @@ return (
               </button>
             </li>
             <li>
-              <button onClick={() => setActiveTab("Home")}>Home</button>
+              <button onClick={() => setActiveTab("Home")}>Logout</button>
             </li>
           </ul>
         </nav>

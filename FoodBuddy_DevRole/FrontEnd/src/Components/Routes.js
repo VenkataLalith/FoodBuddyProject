@@ -15,8 +15,8 @@ export function Routing() {
             <Routes>
                 <Route path='/' element={<Login />} />
                 <Route path='/register' element={<Register />} />
-                <Route path='/grp' element={<GroupManagement />} />
-                <Route path='/inv' element={<InventoryManagement />} />
+                {/* <Route path='/grp' element={<GroupManagement />} />
+                <Route path='/inv' element={<InventoryManagement />} /> */}
                 <Route path='/home' element={<HomePage />} />
             </Routes>
         </>
