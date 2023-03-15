@@ -17,6 +17,8 @@ public class InventoryService {
     private final GroupRepository groupRepository;
 
     public AddItemResponse addItem(AddItemRequest request) {
+        System.out.println("inside Inventory Add");
+        System.out.println(request);
         AddItemResponse response = new AddItemResponse();
         InventoryEntity inventory = new InventoryEntity(request.getItemName(), request.getExpDate(),request.getQuantity(), request.getGroupCode());
         boolean itemExists = inventoryRepository.findInventoryEntitiesByItemName(inventory.getItemName(),inventory.getGroupCode()).isPresent();

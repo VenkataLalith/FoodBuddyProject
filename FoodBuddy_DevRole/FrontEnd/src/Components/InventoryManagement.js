@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from 'axios';
 
 export const InventoryManagement = () => {
   const [data, setData] = useState([
-    { id: 1, name: "", quantity: 0, expiry: "", amount :0 },
-
   ]);
 
   const [editIndex, setEditIndex] = useState(-1);
@@ -13,6 +12,7 @@ export const InventoryManagement = () => {
   const [newQuantity, setQuantity] = useState("");
   const [newExpiry, setExpiry] = useState(null);
   const [newAmount, setAmount] = useState("");
+  const [newGroupCode, setGroupCode] = useState("");
 
   const handleEdit = (index) => {
     setEditIndex(index);
@@ -25,13 +25,27 @@ export const InventoryManagement = () => {
   const handleSave = (index) => {
     const updatedData = [...data];
     updatedData[index] = { id: data[index].id, name: newName, quantity: newQuantity, expiry: newExpiry, amount:newAmount };
+    const newGroupCode="99999";
+    const formData = {itemName:newName, quantity:newQuantity, expDate:newExpiry, amount:newAmount,groupCode:newGroupCode };
     setData(updatedData);
+    callAddItemApi(formData);
     setEditIndex(-1);
     setNewName("");
     setQuantity("");
     setExpiry("");
     setAmount("");
   };
+  const callAddItemApi = (formData) => {
+      axios.post('/api/v1/inventory/add', formData)
+        .then(response => {
+          console.log(response);
+          alert('Item Added successfully')
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    };
+
 
   const handleCancel = () => {
     setEditIndex(-1);
@@ -45,6 +59,25 @@ export const InventoryManagement = () => {
     const updatedData = data.filter((item) => item.id !== data[index].id);
     setData(updatedData);
   };
+  const handleNotification = (index) => {
+  const updatedData = [...data];
+  updatedData[index] = { id: data[index].id, name: data[index].name, quantity: newQuantity, expiry: newExpiry, amount:newAmount };
+  const newGroupCode="99999";
+  const formDataNotify = {groupCode:newGroupCode,itemName:data[index].name}
+  callSendNotificationApi(formDataNotify);
+ };
+ const callSendNotificationApi = (formDataNotify) => {
+       axios.post("/api/v1/inventory/notify", formDataNotify)
+         .then(response => {
+           console.log(response);
+           alert('Sending in progress')
+         })
+         .catch(error => {
+           console.log(error);
+         });
+     };
+
+
 
   const handleAdd = () => {
     const newId = data.length + 1;
@@ -131,6 +164,7 @@ export const InventoryManagement = () => {
                   <>
                     <button onClick={() => handleEdit(index)}>Edit</button>
                     <button onClick={() => handleDelete(index)}>Delete</button>
+                    <button onClick={() => handleNotification(index)}>Send Notification</button>
                   </>
                 )}
               </td>
