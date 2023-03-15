@@ -1,14 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { updateGroupName } from '../redux/actions/GroupManagementAction'
-import { updateGroupNumber } from '../redux/actions/GroupManagementAction'
-<<<<<<< HEAD
+import { updateGroupName } from '../redux/actions/GroupManagementAction';
+import { updateGroupNumber } from '../redux/actions/GroupManagementAction';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-
-=======
 import { DisplayGroupDetails } from './DisplayGroupDetails'
 import Layout from './Layout'
->>>>>>> 81e4dd5298624065dd227f1a4640c5859964b059
 export const GroupManagement = () => {
   const [groupName, setGroupName] = useState("");
   const [groupCode, setGroupCode] = useState("");
@@ -166,8 +162,6 @@ export const GroupManagement = () => {
         <p>FoodBuddy App</p>
       </footer>
     </div> */}
-
-<<<<<<< HEAD
     <button disabled={(userGroupName!=="")} style={{ marginLeft:"639px", marginTop:" 4%", marginRight: "33px"}} onClick={submitCreate}> Create a Group</button>
             <button disabled={(userGroupName!=="")}className='input1' disabled={(groupName!=="")} onClick={submitJoin}> Join a Group</button>
     </div>
@@ -210,11 +204,9 @@ export const GroupManagement = () => {
             {/* {(displayCreateGroup || displayJoinGroup) && (
         <div onClick={closeForms}  ></div>
       )} */}
-=======
     <Layout />
 
     {(userGroupCode==="")?<CreateJoinFunctionality/>:<DisplayGroupDetails/>}
->>>>>>> 81e4dd5298624065dd227f1a4640c5859964b059
         </div>
 
     )
