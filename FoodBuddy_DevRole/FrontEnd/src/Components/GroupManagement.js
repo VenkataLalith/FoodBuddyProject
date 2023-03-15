@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { updateGroupName } from '../redux/actions/GroupManagementAction'
 import { updateGroupNumber } from '../redux/actions/GroupManagementAction'
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 
 export const GroupManagement = () => {
   const [groupName, setGroupName] = useState("");
@@ -59,7 +59,7 @@ export const GroupManagement = () => {
                         };
             callJoinGroupApi(formDataJoin);
     }
-    
+
     const callJoinGroupApi = (formDataJoin) => {
            axios.post('/api/v1/groupApi/Join', formDataJoin)
 
@@ -98,18 +98,18 @@ export const GroupManagement = () => {
         <div>
             {/* <div>
       <nav style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', backgroundColor: 'rgb(162, 162, 244)', margin: 0, padding: '1rem' }}>
-       
+
         <ul style={{ listStyle: 'none', display: 'flex', gap: '1rem', margin: 0, padding: 0 }}>
           <li><a href="/">Home</a></li>
           <li><a href="/">Grocery Management</a></li>
-          
+
         </ul>
       </nav>
       <main style={{ height: '100%', marginBottom: '2rem', display: 'flex' }}>
-      
+
       </main>
       <footer style={{ backgroundColor: 'rgb(162, 162, 244)', margin: 0, padding: '1rem' }}>
-       
+
         <p>FoodBuddy App</p>
       </footer>
     </div> */}
@@ -119,7 +119,7 @@ export const GroupManagement = () => {
     <button disabled={(userGroupName!=="")} style={{ marginLeft:"639px", marginTop:" 4%", marginRight: "33px"}} onClick={submitCreate}> Create a Group</button>
             <button disabled={(userGroupName!=="")}className='input1' disabled={(groupName!=="")} onClick={submitJoin}> Join a Group</button>
     </div>
-            
+
             { displayCreateGroup && (
             <div class="center" style={{marginLeft:"57%"}}>
             <form>
@@ -147,7 +147,7 @@ export const GroupManagement = () => {
               <input  style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter the group code ' value={joinCode} onChange={(e) => setJoinCode(e.target.value)} />
               </label>
                  <br />
-             
+
               <button type="submit" onClick={joinGroup}>Join Group</button>
               <button  style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
             </form>
@@ -159,6 +159,6 @@ export const GroupManagement = () => {
         <div onClick={closeForms}  ></div>
       )} */}
         </div>
-            
+
     )
 }
