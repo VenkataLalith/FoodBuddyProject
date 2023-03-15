@@ -57,7 +57,7 @@ const handleUsernameChange = (event) => {
          if(response.data==='success'){
             console.log('login success')
             dispatch(loginAction(username))
-            navigate('/grp');
+            navigate('/home');
          }
          else{
             alert('Invalid Credentials.....pls re-enter proper credentials')
