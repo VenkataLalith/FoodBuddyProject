@@ -162,9 +162,11 @@ export const GroupManagement = () => {
         <p>FoodBuddy App</p>
       </footer>
     </div> */}
+    {/*
     <button disabled={(userGroupName!=="")} style={{ marginLeft:"639px", marginTop:" 4%", marginRight: "33px"}} onClick={submitCreate}> Create a Group</button>
             <button disabled={(userGroupName!=="")}className='input1' disabled={(groupName!=="")} onClick={submitJoin}> Join a Group</button>
     </div>
+    */}
 
             { displayCreateGroup && (
             <div class="center" style={{marginLeft:"57%"}}>
