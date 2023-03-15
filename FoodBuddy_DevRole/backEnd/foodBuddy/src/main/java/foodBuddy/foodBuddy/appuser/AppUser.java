@@ -52,7 +52,7 @@ public class AppUser implements UserDetails {
     }
 
     public void setGroupCode(String groupCode) {
-        this.groupName = groupCode;
+        this.groupCode = groupCode;
     }
 
     public String getUserName() {
