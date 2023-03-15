@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { updateGroupName } from '../redux/actions/GroupManagementAction'
 import { updateGroupNumber } from '../redux/actions/GroupManagementAction'
-
+import { DisplayGroupDetails } from './DisplayGroupDetails'
+import Layout from './Layout'
 export const GroupManagement = () => {
   const [groupName, setGroupName] = useState("");
   const [groupCode, setGroupCode] = useState("");
@@ -11,10 +12,13 @@ export const GroupManagement = () => {
   const[displayCreateGroup, setdisplayCreateGroup] = useState(false);
   const[displayJoinGroup, setdisplayJoinGroup] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isUserPartOfGroup, setIsUserPartOfGroup] = useState()
   const dispatch = useDispatch();
   const userName = useSelector((state) => state.loginLogoutReducer.emailId);
   const userGroupName = useSelector((state) => state.groupManagementReducer.groupName);
   const userGroupNumber = useSelector((state) => state.groupManagementReducer.groupCode);
+  const userGroupCode="";
+
   const createGroup = (event) => {
 
         event.preventDefault();
@@ -88,12 +92,57 @@ export const GroupManagement = () => {
     setdisplayCreateGroup(false);
   }
 
+  const CreateJoinFunctionality = () => {
+    return(
+      <div>
+        <div className='centerit'>
+    <button  style={{  marginTop:" 4%", marginRight: "33px"}} onClick={submitCreate}> Create a Group</button>
+    <button className='input1' onClick={submitJoin}> Join a Group</button>
+    </div>
+            
+            { displayCreateGroup && (
+            <div class="center" style={{marginLeft:"25%"}}>
+            <form>
+                <h2> Create a Group</h2>
+                <label> Group Name:
+              <input style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter group name' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
+              </label>
+                 <br />
+                <label> Group Code:
+            <input style={{marginLeft: "15px", marginBottom:"10px"}} placeholder="Enter group code" type="input" value={groupCode} onChange={(e) => setGroupCode(e.target.value)} />
+            </label>
+              <br />
+              <button  type="submit" onClick={createGroup}>Create Group</button>
+              <button style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
+            </form>
+            {formSubmitted && (
+             <div> <p>Group created successfully!</p> </div> )}
+            </div>
+)}
+            { displayJoinGroup && (
+            <div className='center' style={{marginLeft:"25%"}}>
+            <form>
+                <h2> Join a Group</h2>
+                <label> Group Code:
+              <input  style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter the group code ' value={joinCode} onChange={(e) => setJoinCode(e.target.value)} />
+              </label>
+                 <br />
+             
+              <button type="submit" onClick={joinGroup}>Join Group</button>
+              <button  style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
+            </form>
+            {formSubmitted && (
+             <div> <p>Group joined successfully!</p> </div> )}
+            </div>
+)}
+      </div>
+    )
+  }
+
 //   const closeForms = () =>{
 //     setdisplayCreateGroup(false);
 //     setdisplayJoinGroup(false);
 //   }
-
-    console.log(userGroupNumber)
     return(
         <div>
             {/* <div>
@@ -113,51 +162,10 @@ export const GroupManagement = () => {
         <p>FoodBuddy App</p>
       </footer>
     </div> */}
-    <h1>Group Name : {userGroupName}</h1>
-    <div className='centerit'>
 
-    <button disabled={(userGroupName!=="")} style={{ marginLeft:"639px", marginTop:" 4%", marginRight: "33px"}} onClick={submitCreate}> Create a Group</button>
-            <button disabled={(userGroupName!=="")}className='input1' disabled={(groupName!=="")} onClick={submitJoin}> Join a Group</button>
-    </div>
-            
-            { displayCreateGroup && (
-            <div class="center" style={{marginLeft:"57%"}}>
-            <form>
-                <h2> Create a Group</h2>
-                <label> Group Name:
-              <input style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter group name' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
-              </label>
-                 <br />
-                <label> Group Code:
-            <input style={{marginLeft: "15px", marginBottom:"10px"}} placeholder="Enter group code" type="input" value={groupCode} onChange={(e) => setGroupCode(e.target.value)} />
-            </label>
-              <br />
-              <button  type="submit" onClick={createGroup}>Create Group</button>
-              <button style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
-            </form>
-            {formSubmitted && (
-             <div> <p>Group created successfully!</p> </div> )}
-            </div>
-)}
-            { displayJoinGroup && (
-            <div className='center' style={{marginLeft:"57%"}}>
-            <form>
-                <h2> Join a Group</h2>
-                <label> Group Code:
-              <input  style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter the group code ' value={joinCode} onChange={(e) => setJoinCode(e.target.value)} />
-              </label>
-                 <br />
-             
-              <button type="submit" onClick={joinGroup}>Join Group</button>
-              <button  style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
-            </form>
-            {formSubmitted && (
-             <div> <p>Group joined successfully!</p> </div> )}
-            </div>
-)}
-            {/* {(displayCreateGroup || displayJoinGroup) && (
-        <div onClick={closeForms}  ></div>
-      )} */}
+    <Layout />
+
+    {(userGroupCode==="")?<CreateJoinFunctionality/>:<DisplayGroupDetails/>}
         </div>
             
     )
