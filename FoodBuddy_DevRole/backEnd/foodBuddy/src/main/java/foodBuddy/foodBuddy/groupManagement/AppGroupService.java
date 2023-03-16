@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @AllArgsConstructor
@@ -85,5 +86,17 @@ public class AppGroupService {
             return response;
         }
 
+    }
+    public String generateCode(){
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(900000) + 100000;
+        String groupCode = Integer.toString(randomNumber);
+        boolean groupExists = groupRepository.findGroupByCode(groupCode).isBlank();
+        if (groupExists){
+            generateCode();
+        }
+        else {
+            return groupCode;
+        }
     }
 }

@@ -3,6 +3,8 @@ package foodBuddy.foodBuddy.groupManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 //@AllArgsConstructor
 public class GroupServices {
@@ -18,6 +20,9 @@ public class GroupServices {
         /*
         Generate a random groupCode, instead of getting from user.
          */
+        String groupCode = appGroupService.generateCode();// validating for unique groupCode
+
+        appGroup.setGroupCode(groupCode);
         GroupCreationResponse creationReq = appGroupService.CreateGroup(appGroup);
         if(creationReq.getStatus().equalsIgnoreCase("success")) {
             GroupJoinRequest joinReq = new GroupJoinRequest(request.getGroupCode(), request.getUserName());
@@ -39,4 +44,6 @@ public class GroupServices {
         ViewGroupUsersResponse response = appGroupService.findGroupUsers(groupCode);
         return response;
     }
+
+
 }
