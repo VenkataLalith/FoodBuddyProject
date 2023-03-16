@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 public class LoginController {
 	private LoginService loginService;
     @PostMapping
-    public String login(@RequestBody LoginRequest request){
+    public LoginResponse login(@RequestBody LoginRequest request){
         return loginService.login(request);
     }
 

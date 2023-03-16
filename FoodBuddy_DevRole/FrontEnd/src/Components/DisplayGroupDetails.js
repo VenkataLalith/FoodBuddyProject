@@ -9,10 +9,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
+import Alert from '@mui/material/Alert';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -34,15 +32,16 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 
+  
 export const DisplayGroupDetails = () => {
-    const groupCode="99999";
     const api='/api/v1/groupApi/view';
     const [groupData, setGroupData] = useState([]);
+    const userGroupNumber = useSelector((state) => state.groupManagementReducer.groupCode);
 
     const getGroupData = () => {
         const formData = {
             params : {
-                groupCode : groupCode
+                groupCode : userGroupNumber
             }
         }
         axios.get(api,formData).then(response => {
@@ -56,12 +55,16 @@ export const DisplayGroupDetails = () => {
     }
 
     useEffect(() => {
+        console.log(userGroupNumber)
         getGroupData()
       }, []);
 
     return(
         <div>
-            <div style={{margin:"10%"}}>
+            <div style={{margin:"5%"}}>
+            <Alert severity="success" color="info" style={{margin:"2%"}}>
+                <h1>  User Group Code : {userGroupNumber} </h1>
+            </Alert>
             <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
@@ -69,7 +72,6 @@ export const DisplayGroupDetails = () => {
             <StyledTableCell align="center">First Name</StyledTableCell>
             <StyledTableCell align="center">Last Name</StyledTableCell>
             <StyledTableCell align="center">User Email</StyledTableCell>
-            <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -80,15 +82,6 @@ export const DisplayGroupDetails = () => {
               <TableCell align="center">{data.firstName}</TableCell>
               <TableCell align="center">{data.lastName}</TableCell>
               <TableCell align="center">{data.username}</TableCell>
-              <TableCell align="center">
-                <button onClick={console.log('User Removed')} style={{backgroundColor:'transparent'}}>
-                    <Tooltip title="RemoveUser">
-                        <IconButton>
-                            <DeleteIcon />
-                        </IconButton>
-                    </Tooltip>
-                </button>
-              </TableCell>
             </StyledTableRow>
           ))}
         </TableBody>

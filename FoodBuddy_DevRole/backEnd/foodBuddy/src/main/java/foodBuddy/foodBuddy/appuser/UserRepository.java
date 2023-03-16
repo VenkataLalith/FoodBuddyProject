@@ -25,4 +25,7 @@ public interface UserRepository extends JpaRepository<AppUser, Long>  {
     @Query("SELECT new foodBuddy.foodBuddy.groupManagement.ViewGroupUsers(u.email, u.firstName, u.lastName) FROM AppUser u WHERE u.groupCode = :groupCode")
     List<ViewGroupUsers> findUsersByGroupCode(@Param("groupCode") String groupCode);
 
+    @Query("SELECT groupCode FROM AppUser WHERE email = ?1")
+    String findGroupByEmail(String email);
+
 }

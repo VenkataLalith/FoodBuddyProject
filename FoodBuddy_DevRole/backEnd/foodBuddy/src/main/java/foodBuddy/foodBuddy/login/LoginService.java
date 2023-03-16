@@ -22,23 +22,23 @@ public class LoginService {
     @Autowired
     private AppUserService appUserService;
 
-    public String login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
+        LoginResponse response = new LoginResponse();
         try {
             InternetAddress internetAddress = new InternetAddress(request.getUsername());
             internetAddress.validate();
             AppUser appUser =new AppUser(request.getUsername(), request.getPassword());
-            String data = appUserService.loginUser(appUser);
-            return data;
-        } catch (AddressException e) {
+            response = appUserService.loginUser(appUser);
+            return response;
+        } catch (Exception e) {
             // invalid email address
-            return e.toString();
+            response.setStatus("failure");
+            response.setMessage(e.toString());
+            response.setUsername(null);
+            response.setGroupCode(null);
 //            throw new IllegalStateException("Email Not Valid");
-
+            return  response;
         }
-        //        return appUserService.loginUser(new AppUser(
-//        		request.getEmail(),
-//                request.getPassword()
-//                ));
     }
 
 }

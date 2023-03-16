@@ -4,7 +4,7 @@ import axios from 'axios';
 import Constants from '../Constants/Constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../redux/actions/LoginLogoutAction'
-import { updateLoginStatusAction } from '../redux/actions/LoginLogoutAction'
+import { updateGroupNumber } from'../redux/actions/GroupManagementAction';  
 // import Routes from './Routes';
 // import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -54,10 +54,11 @@ const handleUsernameChange = (event) => {
    const callLoginApi = (formData) => {
      axios.post('/api/v1/login', formData)
        .then(response => {
-         if(response.data==='success'){
+         if(response.data.message==='Login Successful'){
             console.log('login success')
             dispatch(loginAction(username))
-            navigate('/grp');
+            dispatch(updateGroupNumber(response.data.groupCode))
+            navigate('/home');
          }
          else{
             alert('Invalid Credentials.....pls re-enter proper credentials')
