@@ -10,6 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import Alert from '@mui/material/Alert';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -60,7 +61,10 @@ export const DisplayGroupDetails = () => {
 
     return(
         <div>
-            <div style={{margin:"10%"}}>
+            <div style={{margin:"5%"}}>
+            <Alert severity="success" color="info" style={{margin:"2%"}}>
+                <h1>  User Group Code : {userGroupNumber} </h1>
+            </Alert>
             <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
