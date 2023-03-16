@@ -12,7 +12,7 @@ export const GroupManagementReducer = (state = defaultstate ,action) => {
                 groupName : action.payload
             }
 
-        case 'GROUP_JOIN_ACTION' :
+        case 'UPDATE_GROUP_CODE' :
             return {
                 groupCode : action.payload
             }

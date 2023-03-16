@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { updateGroupName } from '../redux/actions/GroupManagementAction';
 import { updateGroupNumber } from '../redux/actions/GroupManagementAction';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { DisplayGroupDetails } from './DisplayGroupDetails'
-import Layout from './Layout'
+import Layout from './Layout';
+import { Login } from './Login';
+
 export const GroupManagement = () => {
   const [groupName, setGroupName] = useState("");
   const [groupCode, setGroupCode] = useState("");
@@ -19,6 +22,7 @@ export const GroupManagement = () => {
   const userGroupNumber = useSelector((state) => state.groupManagementReducer.groupCode);
   const userGroupCode="";
 
+  const navigate = useNavigate();
   const createGroup = (event) => {
 
         event.preventDefault();
@@ -42,9 +46,10 @@ export const GroupManagement = () => {
        axios.post('/api/v1/groupApi/Create', formData)
          .then(response => {
            console.log(response);
-           if(response.data==="Group Created Successfully"){
-                dispatch(updateGroupName(groupName))
-                alert(`${groupName} Group created successfully with code ${groupCode}`)
+           if(response.data.message==="Group created successfully"){
+                dispatch(updateGroupNumber(groupCode))
+                alert(`${groupName} Group created successfully with code`)
+                navigate('/home')
            }
          })
          .catch(error => {
@@ -68,19 +73,25 @@ export const GroupManagement = () => {
            axios.post('/api/v1/groupApi/Join', formDataJoin)
 
              .then(response => {
-               if(response.data==="Joined successfully"){
+              console.log(response)
+               if(response.data.message==="Joined successfully"){
                     dispatch(updateGroupNumber(joinCode))
                     alert('User joined successfully')
                      setdisplayCreateGroup(false)
                      setdisplayJoinGroup(false)
+                     navigate('/home')
                }
+
              })
              .catch(error => {
                console.log(error);
              });
          };
 
-
+const handleLeaveGroup = () => {
+  alert('User left successfully')
+  userGroupCode=""
+}
 
   const submitCreate = () => {
     setdisplayCreateGroup(true);
@@ -93,6 +104,14 @@ export const GroupManagement = () => {
   }
 
   const CreateJoinFunctionality = () => {
+
+    useEffect(() => {
+     if(userName===""){
+      navigate('/')
+     } 
+    });
+
+    console.log('User group code '+userGroupNumber)
     return(
       <div>
         <div className='centerit'>
@@ -139,77 +158,25 @@ export const GroupManagement = () => {
     )
   }
 
-//   const closeForms = () =>{
-//     setdisplayCreateGroup(false);
-//     setdisplayJoinGroup(false);
-//   }
+  const DisplayGroupManagementFunctionality = () => {
     return(
-        <div>
-            {/* <div>
-      <nav style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', backgroundColor: 'rgb(162, 162, 244)', margin: 0, padding: '1rem' }}>
+      <div>
+      
+      {/* {(displayCreateGroup || displayJoinGroup) && (
+  <div onClick={closeForms}  ></div>
+)} */}
+<Layout />
 
-        <ul style={{ listStyle: 'none', display: 'flex', gap: '1rem', margin: 0, padding: 0 }}>
-          <li><a href="/">Home</a></li>
-          <li><a href="/">Grocery Management</a></li>
+{(userGroupNumber==="" || userGroupNumber===null)?<CreateJoinFunctionality/>:<div><DisplayGroupDetails/><button onClick={handleLeaveGroup}>Leave Group</button></div>}
+  </div>
+    )
+  }
 
-        </ul>
-      </nav>
-      <main style={{ height: '100%', marginBottom: '2rem', display: 'flex' }}>
 
-      </main>
-      <footer style={{ backgroundColor: 'rgb(162, 162, 244)', margin: 0, padding: '1rem' }}>
+    return(
+       <div>
 
-        <p>FoodBuddy App</p>
-      </footer>
-    </div> */}
-    {/*
-    <button disabled={(userGroupName!=="")} style={{ marginLeft:"639px", marginTop:" 4%", marginRight: "33px"}} onClick={submitCreate}> Create a Group</button>
-            <button disabled={(userGroupName!=="")}className='input1' disabled={(groupName!=="")} onClick={submitJoin}> Join a Group</button>
-    </div>
-    */}
-
-            { displayCreateGroup && (
-            <div class="center" style={{marginLeft:"57%"}}>
-            <form>
-                <h2> Create a Group</h2>
-                <label> Group Name:
-              <input style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter group name' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
-              </label>
-                 <br />
-                <label> Group Code:
-            <input style={{marginLeft: "15px", marginBottom:"10px"}} placeholder="Enter group code" type="input" value={groupCode} onChange={(e) => setGroupCode(e.target.value)} />
-            </label>
-              <br />
-              <button  type="submit" onClick={createGroup}>Create Group</button>
-              <button style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
-            </form>
-            {formSubmitted && (
-             <div> <p>Group created successfully!</p> </div> )}
-            </div>
-)}
-            { displayJoinGroup && (
-            <div className='center' style={{marginLeft:"57%"}}>
-            <form>
-                <h2> Join a Group</h2>
-                <label> Group Code:
-              <input  style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter the group code ' value={joinCode} onChange={(e) => setJoinCode(e.target.value)} />
-              </label>
-                 <br />
-
-              <button type="submit" onClick={joinGroup}>Join Group</button>
-              <button  style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
-            </form>
-            {formSubmitted && (
-             <div> <p>Group joined successfully!</p> </div> )}
-            </div>
-)}
-            {/* {(displayCreateGroup || displayJoinGroup) && (
-        <div onClick={closeForms}  ></div>
-      )} */}
-    <Layout />
-
-    {(userGroupCode==="")?<CreateJoinFunctionality/>:<DisplayGroupDetails/>}
+        {(userName==="")?<div></div>:<DisplayGroupManagementFunctionality/>}
         </div>
-
     )
 }
