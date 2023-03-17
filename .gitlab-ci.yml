@@ -1,5 +1,6 @@
 stages:
   - build
+  
 
 backend-build-job:
   stage: build
@@ -9,6 +10,11 @@ backend-build-job:
     - mvn clean install -Dmaven.test.skip=true
   tags:
     - CSCI5308Grp14
+
+backend-test-job:
+  stage: test
+  script:
+    - mvn test
 
 frontend-build-job:
   stage: build
@@ -20,3 +26,5 @@ frontend-build-job:
     - npm run build
   tags:
     - CSCI5308Grp14
+
+
