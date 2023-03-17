@@ -7,9 +7,8 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupCreationResponse {
+public class LeaveGroupResponse {
     private String status;
-    private String message;
 
-    private String groupCode;
+    private String message;
 }

@@ -3,8 +3,6 @@ package foodBuddy.foodBuddy.groupManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-
 @Service
 //@AllArgsConstructor
 public class GroupServices {
@@ -17,6 +15,7 @@ public class GroupServices {
 
     public static GroupCreationResponse createGroup(GroupCreationRequest request) {
         AppGroup appGroup = new AppGroup(request.getGroupName(),request.getGroupCode());
+        System.out.println("appGroup "+ appGroup);
         /*
         Generate a random groupCode, instead of getting from user.
          */
@@ -25,8 +24,9 @@ public class GroupServices {
         appGroup.setGroupCode(groupCode);
         GroupCreationResponse creationReq = appGroupService.CreateGroup(appGroup);
         if(creationReq.getStatus().equalsIgnoreCase("success")) {
-            GroupJoinRequest joinReq = new GroupJoinRequest(request.getGroupCode(), request.getUserName());
+            GroupJoinRequest joinReq = new GroupJoinRequest(groupCode, request.getUserName());
             GroupJoinResponse response = appGroupService.joinGroup(joinReq);
+            creationReq.setGroupCode(groupCode);
             if (response.getStatus().equalsIgnoreCase("failure")){
                 creationReq.setStatus("joinFailed");
             }
@@ -46,4 +46,8 @@ public class GroupServices {
     }
 
 
+    public LeaveGroupResponse leaveGroup(LeaveGroupRequest request) {
+        LeaveGroupResponse response = appGroupService.leaveGroup(request);
+        return response;
+    }
 }

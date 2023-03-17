@@ -47,7 +47,7 @@ export const GroupManagement = () => {
          .then(response => {
            console.log(response);
            if(response.data.message==="Group created successfully"){
-                dispatch(updateGroupNumber(groupCode))
+                dispatch(updateGroupNumber(response.data.groupCode))
                 alert(`${groupName} Group created successfully with code`)
                 navigate('/home')
            }
@@ -71,7 +71,6 @@ export const GroupManagement = () => {
 
     const callJoinGroupApi = (formDataJoin) => {
            axios.post('/api/v1/groupApi/Join', formDataJoin)
-
              .then(response => {
               console.log(response)
                if(response.data.message==="Joined successfully"){
@@ -88,9 +87,34 @@ export const GroupManagement = () => {
              });
          };
 
-const handleLeaveGroup = () => {
+const handleLeaveGroup = (event) => {
+       event.preventDefault();
+      setFormSubmitted(true);
+  const formDataLeave ={
+      groupCode: userGroupNumber,
+      userName: userName
+      };
+      callLeaveGroupApi(formDataLeave);
   alert('User left successfully')
   userGroupCode=""
+}
+const callLeaveGroupApi = (formDataLeave) => {
+    axios.post('/api/v1/groupApi/Leave', formDataLeave)
+       .then(response => {
+     console.log(response)
+     {/* Need to reload the page, once successfully exited
+        and have to show create group and join group button*/}
+      if(response.data.status==="Success"){
+           dispatch(updateGroupNumber(joinCode))
+           alert('User left group successfully')
+            setdisplayCreateGroup(true)
+            navigate('/home')
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
 }
 
   const submitCreate = () => {

@@ -21,6 +21,7 @@ public class AppGroupService {
         GroupCreationResponse response = new GroupCreationResponse();
         boolean groupExists = groupRepository.findByGroupName(appGroup.getGroupName()).isPresent();
         if (!groupExists){
+            System.out.println("inside createGroup "+appGroup);
             groupRepository.save(appGroup);
             /*
             Need to add the user who is creating the group into the group automatically.
@@ -37,13 +38,16 @@ public class AppGroupService {
     }
 
     public GroupJoinResponse joinGroup(GroupJoinRequest request) {
+        System.out.println("GroupJoinRequest "+request);
         GroupJoinResponse response = new GroupJoinResponse();
         try {
             boolean groupExists = groupRepository.findGroupByCode(request.getGroupCode()).isBlank();
+            System.out.println("groupExists "+ groupExists);
+            String groupName = groupRepository.findGroupByCode(request.getGroupCode());
             String userName = request.getUserName();
             String groupCode = request.getGroupCode();
             if (!groupExists){
-                userRepository.UpdateGroupName(groupCode,userName);
+                userRepository.UpdateGroupName(groupCode,groupName,userName);
                 response.setMessage("Joined successfully");
                 response.setStatus("success");
                 return response;
@@ -91,13 +95,35 @@ public class AppGroupService {
         Random rand = new Random();
         int randomNumber = rand.nextInt(900000) + 100000;
         String groupCode = Integer.toString(randomNumber);
-        boolean groupExists = groupRepository.findGroupByCode(groupCode).isBlank();
-        if (groupExists){
+        String groupExists = groupRepository.findGroupByCode(groupCode);
+        if (groupExists!=null){
             return groupCode = generateCode();
         }
         else {
             return groupCode;
         }
 
+    }
+
+    public LeaveGroupResponse leaveGroup(LeaveGroupRequest request) {
+        String groupCode = request.getGroupCode();
+        String userEmail = request.getUserName();
+        Boolean groupExists = groupRepository.findGroupByCode(groupCode).isBlank();
+        String groupName = groupRepository.findGroupByCode(groupCode);
+        System.out.println(groupExists);
+        System.out.println(groupName);
+        LeaveGroupResponse leaveGroupResponse = new LeaveGroupResponse();
+        if (!groupExists){
+            groupCode="";
+            groupName="";
+            userRepository.UpdateGroupName(groupCode,groupName,userEmail);
+            leaveGroupResponse.setMessage("User Left the group");
+            leaveGroupResponse.setStatus("Success");
+        }
+        else {
+            leaveGroupResponse.setMessage("Does not belong to any group");
+            leaveGroupResponse.setStatus("failure");
+        }
+        return leaveGroupResponse;
     }
 }

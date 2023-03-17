@@ -28,8 +28,11 @@ public class AppUserLogin implements UserDetailsService {
         }
 
         @Override
-        public void UpdateGroupName(String groupName, String userName) {
+        public void UpdateGroupName(String groupCode, String groupName, String userName) {
+
         }
+
+
         @Override
         public List<ViewGroupUsers> findUsersByGroupCode(String groupCode){
             return null;
