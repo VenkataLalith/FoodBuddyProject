@@ -1,5 +1,6 @@
 stages:
   - build
+  - test
   
 
 backend-build-job:
@@ -11,7 +12,7 @@ backend-build-job:
   tags:
     - CSCI5308Grp14
 
-test:
+backend-test-job:
   stage: test
   script:
     - mvn test
