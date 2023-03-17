@@ -28,4 +28,11 @@ frontend-build-job:
   tags:
     - CSCI5308Grp14
 
+frontend-test-job:
+  stage: test
+  before_script:
+    - npm install
+  script:
+    - npm test
+
 
