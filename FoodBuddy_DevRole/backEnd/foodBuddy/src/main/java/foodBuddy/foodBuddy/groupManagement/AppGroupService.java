@@ -93,10 +93,11 @@ public class AppGroupService {
         String groupCode = Integer.toString(randomNumber);
         boolean groupExists = groupRepository.findGroupByCode(groupCode).isBlank();
         if (groupExists){
-            generateCode();
+            return groupCode = generateCode();
         }
         else {
             return groupCode;
         }
+
     }
 }

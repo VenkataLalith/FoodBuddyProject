@@ -120,18 +120,6 @@ ul li {
       /* background-color: rgb(255, 212, 0); */
        color: black;
    }
-  display: inline-flex;
-  margin: 0 10px;
-  /* padding: 10px 20px; */
-  border-radius: 10px;
-  /* background-color: #EEE; */
-  /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); */
-  transform: translateY(0);
-  transition: transform 0.3s ease;
-  /* background-color: rgb(255, 212, 0); */
-  color: black;
-
-}
 
 ul li:hover {
   transform: translateY(-5px);
