@@ -20,6 +20,7 @@ import foodBuddy.foodBuddy.appuser.AppUserService;
 import foodBuddy.foodBuddy.appuser.UserRepository;
 import foodBuddy.foodBuddy.registration.EmailValidator;
 import foodBuddy.foodBuddy.registration.token.ConfirmationTokenRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootTest
 class FoodBuddyApplicationTests {
@@ -35,7 +36,9 @@ class FoodBuddyApplicationTests {
 	
 	@Mock
 	private ConfirmationTokenRepository confirmationTokenRepository;
-	
+
+	@Mock
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Test
 	void loadUserByUserNameTestWhenUserExist() {
@@ -56,10 +59,12 @@ class FoodBuddyApplicationTests {
 	@Test
 	void userLoginSuccessTest() {
 		String email="timH@email.com";
-		when(userRepository.findByEmail(email)).thenReturn(Optional.of(new AppUser("Tim","Hortons","myDemoPassword","timH@email.com",AppUserRole.USER)));
-		when(userRepository.findPasswordByEmail(email)).thenReturn("myDemoPassword");
 		AppUser user = new AppUser("Tim","Hortons","myDemoPassword","timH@email.com",AppUserRole.USER);
-		assertEquals("success",appUserService.loginUser(user));
+		user.setUserName(email);
+		when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+		when(userRepository.findPasswordByEmail(email)).thenReturn("myDemoPassword");
+		when(bCryptPasswordEncoder.matches("myDemoPassword","myDemoPassword")).thenReturn(true);
+		assertEquals("Login Successful",appUserService.loginUser(user).getMessage());
 	}
 	
 	@Test
@@ -69,7 +74,7 @@ class FoodBuddyApplicationTests {
 		when(userRepository.findByEmail(email)).thenReturn(empty);
 		when(userRepository.findPasswordByEmail(email)).thenReturn("myDemoPassword");
 		AppUser user = new AppUser("Tim","Hortons","myDemoPassword","timH@email.com",AppUserRole.USER);
-		assertEquals("failure",appUserService.loginUser(user));
+		assertEquals("Login failed",appUserService.loginUser(user).getMessage());
 	}
 	
 	@Test
@@ -78,7 +83,7 @@ class FoodBuddyApplicationTests {
 		when(userRepository.findByEmail(email)).thenReturn(Optional.of(new AppUser("Tim","Hortons","myDemoPassword","timH@email.com",AppUserRole.USER)));
 		when(userRepository.findPasswordByEmail(email)).thenReturn("myDemoPassword");
 		AppUser user = new AppUser("Tim","Hortons","IncorrectPassword","timH@email.com",AppUserRole.USER);
-		assertEquals("failure",appUserService.loginUser(user));
+		assertEquals("Login failed",appUserService.loginUser(user).getMessage());
 	}
 	
 	@Test
@@ -107,7 +112,7 @@ class FoodBuddyApplicationTests {
     String email = "existingUser@example.com";
     AppUser existingUser = new AppUser("Existing", "User", "password", email, AppUserRole.USER);
     when(userRepository.findByEmail(email)).thenReturn(Optional.of(existingUser));
-    assertThrows(IllegalStateException.class, () -> appUserService.signUpUser(existingUser));
+    assertEquals("User Exists", appUserService.signUpUser(existingUser));
 }
 
 	
