@@ -100,6 +100,12 @@ class FoodBuddyApplicationTests {
     assertThrows(UsernameNotFoundException.class, () -> appUserService.loadUserByUsername(email));
 }
 
+	@Test
+	void userRegistrationWithInvalidEmailTest() {
+    String email = "invalidEmail";
+	Optional<AppUser> empty = Optional.empty();
+    AppUser invalidUser = new AppUser("Invalid", "User", "password", email, AppUserRole.USER);
+}
 
 	@Test
 	void userRegistrationWithExistingEmailTest() {

@@ -22,4 +22,9 @@ public class GroupController {
         ViewGroupUsersResponse response = groupServices.viewGroup(groupCode);
         return response;
     }
+    @PostMapping("/Leave")
+    public LeaveGroupResponse leaveGroup(@RequestBody LeaveGroupRequest request){
+        LeaveGroupResponse response = groupServices.leaveGroup(request);
+        return response;
+    }
 }

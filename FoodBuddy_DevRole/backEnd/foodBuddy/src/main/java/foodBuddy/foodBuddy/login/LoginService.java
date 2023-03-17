@@ -7,7 +7,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
 import foodBuddy.foodBuddy.appuser.AppUser;
-import foodBuddy.foodBuddy.appuser.AppUserRole;
 import foodBuddy.foodBuddy.appuser.AppUserService;
 import foodBuddy.foodBuddy.registration.EmailValidator;
 import foodBuddy.foodBuddy.registration.RegistrationRequest;

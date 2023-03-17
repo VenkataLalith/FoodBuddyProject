@@ -19,8 +19,8 @@ public interface UserRepository extends JpaRepository<AppUser, Long>  {
     String findPasswordByEmail(String email);
 
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE AppUser SET groupCode = :groupCode WHERE email = :userName")
-    void UpdateGroupName(@Param("groupCode") String groupCode,@Param("userName") String userName );
+    @Query("UPDATE AppUser SET groupCode = :groupCode, groupName=:groupName WHERE email = :userName")
+    void UpdateGroupName(@Param("groupCode") String groupCode,@Param("groupName")String groupName,@Param("userName") String userName );
 
     @Query("SELECT new foodBuddy.foodBuddy.groupManagement.ViewGroupUsers(u.email, u.firstName, u.lastName) FROM AppUser u WHERE u.groupCode = :groupCode")
     List<ViewGroupUsers> findUsersByGroupCode(@Param("groupCode") String groupCode);
