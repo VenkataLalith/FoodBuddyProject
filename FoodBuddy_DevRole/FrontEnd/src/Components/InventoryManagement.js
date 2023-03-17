@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 export const InventoryManagement = () => {
   const [data, setData] = useState([
@@ -21,7 +23,7 @@ export const InventoryManagement = () => {
     setExpiry(data[index].expiry);
     setAmount(data[index].amount);
   };
-
+  const userGroupNumber = useSelector((state) => state.groupManagementReducer.groupCode);
   const handleSave = (index) => {
     const updatedData = [...data];
     updatedData[index] = { id: data[index].id, name: newName, quantity: newQuantity, expiry: newExpiry, amount:newAmount };
@@ -31,6 +33,33 @@ export const InventoryManagement = () => {
     setQuantity("");
     setExpiry("");
     setAmount("");
+   // if(userGroupNumber != null){}
+    const formData ={
+      itemName: newName,
+      quantity: newQuantity,
+      expDate: newExpiry,
+      groupCode: userGroupNumber
+      };
+      console.log(formData);
+      saveItem(formData);
+  };
+
+  const saveItem = (formData) => {
+    axios.post('/api/v1/inventory/add', formData)
+      .then(response => {
+        if(response.data.status==='success'){
+           console.log('Item added')
+          //  
+          
+        
+        }
+        else{
+           alert('')
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const handleCancel = () => {
@@ -126,6 +155,7 @@ export const InventoryManagement = () => {
                 {editIndex === index ? (
                   <>
                     <button onClick={() => handleSave(index)}>Save</button>
+
                     <button onClick={handleCancel}>Cancel</button>
                   </>
                 ) : (
