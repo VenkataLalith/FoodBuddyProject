@@ -11,7 +11,7 @@ backend-build-job:
   tags:
     - CSCI5308Grp14
 
-backend-test-job:
+test:
   stage: test
   script:
     - mvn test
