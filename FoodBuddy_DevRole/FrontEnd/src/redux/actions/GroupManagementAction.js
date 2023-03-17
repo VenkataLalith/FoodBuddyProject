@@ -7,7 +7,7 @@ export const updateGroupName = (groupName) => {
 
 export const updateGroupNumber = (groupCode) => {
     return{
-        type:"GROUP_JOIN_ACTION",
+        type:"UPDATE_GROUP_CODE",
         payload : groupCode
     }
 }

@@ -15,11 +15,13 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
 // import Footer from './Footet';
 
-const pages = ['Group Management', 'Inventory Management', 'Recipe Management','ExpenseManagement'];
-const settings = ['Logout'];
+const pages = ['Groups', 'Inventory', 'Budget'];
+// const settings = ['Logout'];
 
 function ResponsiveAppBar() {
+
   const navigate = useNavigate();
+  const handleClick = () => navigate('/');
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -28,7 +30,6 @@ function ResponsiveAppBar() {
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-    
   };
 
   const handleCloseNavMenu = () => {
@@ -37,8 +38,6 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    // console.log('Index : '+indx)
-    navigate('/');
   };
 
   return (
@@ -51,7 +50,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/grp"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -118,7 +117,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            FoodBuddy
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -154,11 +153,11 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+
+                <MenuItem  onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" onClick={handleClick}>Logout</Typography>
                 </MenuItem>
-              ))}
+
             </Menu>
           </Box>
         </Toolbar>

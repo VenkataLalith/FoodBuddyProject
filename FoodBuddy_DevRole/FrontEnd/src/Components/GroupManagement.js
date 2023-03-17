@@ -20,7 +20,7 @@ export const GroupManagement = () => {
   const userName = useSelector((state) => state.loginLogoutReducer.emailId);
   const userGroupName = useSelector((state) => state.groupManagementReducer.groupName);
   const userGroupNumber = useSelector((state) => state.groupManagementReducer.groupCode);
-  const userGroupCode="99999";
+  const userGroupCode="";
 
   const navigate = useNavigate();
   const createGroup = (event) => {
@@ -46,9 +46,10 @@ export const GroupManagement = () => {
        axios.post('/api/v1/groupApi/Create', formData)
          .then(response => {
            console.log(response);
-           if(response.data==="Group Created Successfully"){
-                dispatch(updateGroupName(groupName))
-                alert(`${groupName} Group created successfully with code ${groupCode}`)
+           if(response.data.message==="Group created successfully"){
+                dispatch(updateGroupNumber(groupCode))
+                alert(`${groupName} Group created successfully with code`)
+                navigate('/home')
            }
          })
          .catch(error => {
@@ -72,19 +73,25 @@ export const GroupManagement = () => {
            axios.post('/api/v1/groupApi/Join', formDataJoin)
 
              .then(response => {
-               if(response.data==="Joined successfully"){
+              console.log(response)
+               if(response.data.message==="Joined successfully"){
                     dispatch(updateGroupNumber(joinCode))
                     alert('User joined successfully')
                      setdisplayCreateGroup(false)
                      setdisplayJoinGroup(false)
+                     navigate('/home')
                }
+
              })
              .catch(error => {
                console.log(error);
              });
          };
 
-
+const handleLeaveGroup = () => {
+  alert('User left successfully')
+  userGroupCode=""
+}
 
   const submitCreate = () => {
     setdisplayCreateGroup(true);
@@ -101,9 +108,10 @@ export const GroupManagement = () => {
     useEffect(() => {
      if(userName===""){
       navigate('/')
-     } 
+     }
     });
 
+    console.log('User group code '+userGroupNumber)
     return(
       <div>
         <div className='centerit'>
@@ -153,58 +161,21 @@ export const GroupManagement = () => {
   const DisplayGroupManagementFunctionality = () => {
     return(
       <div>
-      { displayCreateGroup && (
-      <div class="center" style={{marginLeft:"57%"}}>
-      <form>
-          <h2> Create a Group</h2>
-          <label> Group Name:
-        <input style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter group name' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
-        </label>
-           <br />
-          <label> Group Code:
-      <input style={{marginLeft: "15px", marginBottom:"10px"}} placeholder="Enter group code" type="input" value={groupCode} onChange={(e) => setGroupCode(e.target.value)} />
-      </label>
-        <br />
-        <button  type="submit" onClick={createGroup}>Create Group</button>
-        <button style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
-      </form>
-      {formSubmitted && (
-       <div> <p>Group created successfully!</p> </div> )}
-      </div>
-)}
-      { displayJoinGroup && (
-      <div className='center' style={{marginLeft:"57%"}}>
-      <form>
-          <h2> Join a Group</h2>
-          <label> Group Code:
-        <input  style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter the group code ' value={joinCode} onChange={(e) => setJoinCode(e.target.value)} />
-        </label>
-           <br />
 
-        <button type="submit" onClick={joinGroup}>Join Group</button>
-        <button  style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
-      </form>
-      {formSubmitted && (
-       <div> <p>Group joined successfully!</p> </div> )}
-      </div>
-)}
       {/* {(displayCreateGroup || displayJoinGroup) && (
   <div onClick={closeForms}  ></div>
 )} */}
 <Layout />
 
-{(userGroupCode==="")?<CreateJoinFunctionality/>:<DisplayGroupDetails/>}
+{(userGroupNumber==="" || userGroupNumber===null)?<CreateJoinFunctionality/>:<div><DisplayGroupDetails/><button onClick={handleLeaveGroup}>Leave Group</button></div>}
   </div>
     )
-  }
-
-  const handleUnSignedUser = () => {
-    navigate('/')
   }
 
 
     return(
        <div>
+
         {(userName==="")?<div></div>:<DisplayGroupManagementFunctionality/>}
         </div>
     )

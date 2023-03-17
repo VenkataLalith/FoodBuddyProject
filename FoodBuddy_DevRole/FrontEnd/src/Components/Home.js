@@ -29,7 +29,7 @@ const renderTab = () => {
         return (userName==="")?navigate('/'):<RecipeManagement />;
       case "ExpenseManagement":
         return (userName==="")?navigate('/'):<ExpenseManagement />;
-      case "Home" : return handleUserLogout()  
+      case "Home" : return handleUserLogout()
     }
   };
 
@@ -48,12 +48,11 @@ return (
         <nav>
           <ul >
             <li>
-            
+
           <Typography
             variant="h7"
             noWrap
-            component="a"
-            href="/home"
+            component="label"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
