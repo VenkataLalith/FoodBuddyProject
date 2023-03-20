@@ -109,14 +109,14 @@ class AppGroupServiceTest {
         expectedResponse.setStatus("success");
         when(groupRepository.findGroupByCode(groupCode)).thenReturn(groupCode);
         when(userRepository.findByGroupName(groupCode)).thenReturn(users);
-    
+
         // Act
         ViewGroupUsersResponse actualResponse = appGroupService.findGroupUsers(groupCode);
-    
+
         // Assert
         assertEquals(expectedResponse, actualResponse);
     }
-    
+
     @Test
     void testFindGroupUsersFailure() {
         // Arrange
@@ -125,12 +125,13 @@ class AppGroupServiceTest {
         expectedResponse.setMessage("Invalid Group Code");
         expectedResponse.setStatus("failure");
         when(groupRepository.findGroupByCode(groupCode)).thenReturn("");
-    
+
         // Act
         ViewGroupUsersResponse actualResponse = appGroupService.findGroupUsers(groupCode);
-    
+
         // Assert
         verify(userRepository, never()).findByGroupName(groupCode);
         assertEquals(expectedResponse, actualResponse);
     }
+}
     

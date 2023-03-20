@@ -3,13 +3,15 @@ package foodBuddy.foodBuddy.inventory;
 
 import foodBuddy.foodBuddy.notification.NotificationRequest;
 import foodBuddy.foodBuddy.notification.NotificationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/v1/inventory")
 public class InventoryController {
-    private final InventoryService inventoryService;
-    private final NotificationService notificationService;
+
+    private  InventoryService inventoryService;
+    private  NotificationService notificationService;
 
     public InventoryController(InventoryService inventoryService, NotificationService notificationService) {
         this.inventoryService = inventoryService;
@@ -33,7 +35,7 @@ public class InventoryController {
     }
     @PostMapping("/delete")
     public DeleteItemResponse deleteItem(@RequestBody  DeleteItemRequest request) {
-    DeleteItemResponse response = inventoryService.deleteItem(itemName,groupCode);
+    DeleteItemResponse response = inventoryService.deleteItem(request);
     return response;
     }
 

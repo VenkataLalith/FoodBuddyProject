@@ -28,7 +28,7 @@ public interface InventoryRepository extends JpaRepository<InventoryEntity,Long>
     List<ViewItems> findItemList(@Param("groupCode") String groupCode);
 
     @Modifying(clearAutomatically = true)
-    @Query("DELETE FROM item WHERE itemName = :itemName AND groupCode = :groupCode;")
-    void deleteItemfromDB(@Param('itemName') String itemName, @Param("groupCode") String groupCode);
+    @Query("DELETE FROM InventoryEntity WHERE itemName = :itemName AND groupCode = :groupCode")
+    void deleteItemfromDB(@Param("itemName") String itemName, @Param("groupCode") String groupCode);
 
 }

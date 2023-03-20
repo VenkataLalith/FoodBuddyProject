@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -80,8 +82,7 @@ public class InventoryService {
         DeleteItemResponse response = new DeleteItemResponse();
         boolean itemExists = inventoryRepository.findInventoryEntitiesByItemName(request.getItemName(),request.getGroupCode()).isPresent();
         if (itemExists){
-            inventoryRepository.updateItemDetails(request.getItemName(),request.getGroupCode(), request.getExpDate(), request.getQuantity());
-            inventoryRepository.
+            inventoryRepository.deleteItemfromDB(request.getItemName(),request.getGroupCode());
             response.setMessage("Item Updated successfully");
             response.setStatus("success");
             return response;
