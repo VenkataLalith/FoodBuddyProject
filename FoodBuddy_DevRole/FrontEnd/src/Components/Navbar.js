@@ -153,11 +153,11 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-            
+
                 <MenuItem  onClick={handleCloseUserMenu}>
                   <Typography textAlign="center" onClick={handleClick}>Logout</Typography>
                 </MenuItem>
-             
+
             </Menu>
           </Box>
         </Toolbar>

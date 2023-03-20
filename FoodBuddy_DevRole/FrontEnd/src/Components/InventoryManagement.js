@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 export const InventoryManagement = () => {
   const [data, setData] = useState([
-    { id: 1, name: "", quantity: 0, expiry: "", amount :0 },
-
+    // { id: 1, name: "", quantity: 0, expiry: "", amount: 0 },
   ]);
 
   const [editIndex, setEditIndex] = useState(-1);
@@ -13,6 +14,19 @@ export const InventoryManagement = () => {
   const [newQuantity, setQuantity] = useState("");
   const [newExpiry, setExpiry] = useState(null);
   const [newAmount, setAmount] = useState("");
+
+  const [viewData, setviewData] = useState([]);
+  const userGroupNumber = useSelector(
+    (state) => state.groupManagementReducer.groupCode
+  );
+  useEffect(() => {
+    axios
+      .get(`/api/v1/inventory/view?groupCode=${userGroupNumber}`)
+      .then((response) => {
+        console.log(response.data.itemList);
+        setData( response.data.itemList);
+      });
+  }, []);
 
   const handleEdit = (index) => {
     setEditIndex(index);
@@ -24,13 +38,44 @@ export const InventoryManagement = () => {
 
   const handleSave = (index) => {
     const updatedData = [...data];
-    updatedData[index] = { id: data[index].id, name: newName, quantity: newQuantity, expiry: newExpiry, amount:newAmount };
+    updatedData[index] = {
+      id: data[index].id,
+      itemName: newName,
+      quantity: newQuantity,
+      expiry: newExpiry,
+      amount: newAmount,
+    };
     setData(updatedData);
     setEditIndex(-1);
     setNewName("");
     setQuantity("");
     setExpiry("");
     setAmount("");
+    // if(userGroupNumber != null){}
+    const formData = {
+      itemName: newName,
+      quantity: newQuantity,
+      expDate: newExpiry,
+      groupCode: userGroupNumber,
+    };
+    console.log(formData);
+    saveItem(formData);
+  };
+
+  const saveItem = (formData) => {
+    axios
+      .post("/api/v1/inventory/add", formData)
+      .then((response) => {
+        if (response.data.status === "success") {
+          console.log("Item added");
+          //
+        } else {
+          alert("");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleCancel = () => {
@@ -48,20 +93,25 @@ export const InventoryManagement = () => {
 
   const handleAdd = () => {
     const newId = data.length + 1;
-    const newData = { id: newId, name: "", quantity: "",expiry:"",amount:"" };
+    const newData = {
+      id: newId,
+      name: "",
+      quantity: "",
+      expiry: "",
+      amount: "",
+    };
     setData([...data, newData]);
     setEditIndex(newId - 1);
   };
 
   const handleDateSelect = (event) => {
-      setExpiry(event.target.value);
-    };
-
+    setExpiry(event.target.value);
+  };
 
   return (
     <div>
       <table>
-      <button onClick={handleAdd}>Add Item</button>
+        <button onClick={handleAdd}>Add Item</button>
         <thead>
           <tr>
             <th>ID</th>
@@ -73,8 +123,8 @@ export const InventoryManagement = () => {
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
+            <tr key={item.itemName}>
+              <td>{item.itemName}</td>
               <td>
                 {editIndex === index ? (
                   <input
@@ -83,7 +133,7 @@ export const InventoryManagement = () => {
                     onChange={(e) => setNewName(e.target.value)}
                   />
                 ) : (
-                  item.name
+                  item.itemName
                 )}
               </td>
               <td>
@@ -110,7 +160,9 @@ export const InventoryManagement = () => {
                     item.expiry
                   )}
                 </td>*/}
-                <td><input type="date" id="date" onChange={handleDateSelect} /></td>
+              <td>
+                <input type="date" id="date" value={item.expDate} onChange={handleDateSelect} />{" "}
+              </td>
               <td>
                 {editIndex === index ? (
                   <input
@@ -126,6 +178,7 @@ export const InventoryManagement = () => {
                 {editIndex === index ? (
                   <>
                     <button onClick={() => handleSave(index)}>Save</button>
+
                     <button onClick={handleCancel}>Cancel</button>
                   </>
                 ) : (
@@ -139,7 +192,6 @@ export const InventoryManagement = () => {
           ))}
         </tbody>
       </table>
-
     </div>
   );
 };

@@ -52,11 +52,11 @@ public class AppUserService implements UserDetailsService {
     
     public LoginResponse loginUser(AppUser appUser) {
         LoginResponse response = new LoginResponse();
-    	if(userRepository.findByEmail(appUser.getUserName()).isPresent()) {
-    		String password = userRepository.findPasswordByEmail(appUser.getUserName());
+    	if(userRepository.findByEmail(appUser.getEmail()).isPresent()) {
+    		String password = userRepository.findPasswordByEmail(appUser.getEmail());
             Boolean userPassword = (bCryptPasswordEncoder.matches(appUser.getPassword(),password));
             if(userPassword){
-                response.setGroupCode(userRepository.findGroupByEmail(appUser.getUserName()));
+                response.setGroupCode(userRepository.findGroupByEmail(appUser.getEmail()));
                 response.setUsername(appUser.getEmail());
                 response.setStatus("success");
                 response.setMessage("Login Successful");

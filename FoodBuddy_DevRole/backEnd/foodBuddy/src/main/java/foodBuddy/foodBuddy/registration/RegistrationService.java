@@ -1,7 +1,6 @@
 package foodBuddy.foodBuddy.registration;
 
 import foodBuddy.foodBuddy.appuser.AppUser;
-import foodBuddy.foodBuddy.appuser.AppUserRole;
 import foodBuddy.foodBuddy.appuser.AppUserService;
 import foodBuddy.foodBuddy.registration.token.ConfirmationToken;
 import foodBuddy.foodBuddy.registration.token.ConfirmationTokenService;
@@ -26,8 +25,7 @@ public class RegistrationService {
         return appUserService.signUpUser(new AppUser(request.getFirstName(),
                 request.getLastName(),
                 request.getPassword(),
-                request.getEmail(),
-                AppUserRole.USER));
+                request.getEmail()));
     }
 
 

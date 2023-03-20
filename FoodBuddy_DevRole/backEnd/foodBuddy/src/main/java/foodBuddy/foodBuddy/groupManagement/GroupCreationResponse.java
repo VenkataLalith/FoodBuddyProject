@@ -10,4 +10,6 @@ import lombok.*;
 public class GroupCreationResponse {
     private String status;
     private String message;
+
+    private String groupCode;
 }
