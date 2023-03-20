@@ -26,4 +26,9 @@ public interface InventoryRepository extends JpaRepository<InventoryEntity,Long>
 
     @Query("SELECT new foodBuddy.foodBuddy.inventory.ViewItems(inventory.itemName, inventory.expDate, inventory.quantity) FROM InventoryEntity inventory WHERE inventory.groupCode = :groupCode")
     List<ViewItems> findItemList(@Param("groupCode") String groupCode);
+
+    @Modifying(clearAutomatically = true)
+    @Query("DELETE FROM item WHERE itemName = :itemName AND groupCode = :groupCode;")
+    void deleteItemfromDB(@Param('itemName') String itemName, @Param("groupCode") String groupCode);
+
 }

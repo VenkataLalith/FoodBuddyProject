@@ -31,6 +31,12 @@ public class InventoryController {
         ViewItemsResponse response = inventoryService.viewItems(groupCode);
         return response;
     }
+    @PostMapping("/delete")
+    public DeleteItemResponse deleteItem(@RequestBody  DeleteItemRequest request) {
+    DeleteItemResponse response = inventoryService.deleteItem(itemName,groupCode);
+    return response;
+    }
+
     @PostMapping("/notify")
     public String sendNotification(@RequestBody NotificationRequest request){
         notificationService.sendNotification(request);

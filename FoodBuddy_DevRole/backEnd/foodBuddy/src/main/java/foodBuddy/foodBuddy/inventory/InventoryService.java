@@ -76,4 +76,20 @@ public class InventoryService {
         }
 
     }
+    public DeleteItemResponse deleteItem(DeleteItemRequest request) {
+        DeleteItemResponse response = new DeleteItemResponse();
+        boolean itemExists = inventoryRepository.findInventoryEntitiesByItemName(request.getItemName(),request.getGroupCode()).isPresent();
+        if (itemExists){
+            inventoryRepository.updateItemDetails(request.getItemName(),request.getGroupCode(), request.getExpDate(), request.getQuantity());
+            inventoryRepository.
+            response.setMessage("Item Updated successfully");
+            response.setStatus("success");
+            return response;
+        }
+        else {
+            response.setMessage("Item Does not Exists");
+            response.setStatus("failure");
+            return response;
+        }
+    }
 }
