@@ -1,13 +1,9 @@
 package foodBuddy.foodBuddy.inventory;
 
-import foodBuddy.foodBuddy.groupManagement.AppGroup;
 import foodBuddy.foodBuddy.groupManagement.GroupRepository;
-import foodBuddy.foodBuddy.groupManagement.ViewGroupUsersResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service

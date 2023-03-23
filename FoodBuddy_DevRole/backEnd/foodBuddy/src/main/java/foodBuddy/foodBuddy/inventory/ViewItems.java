@@ -6,9 +6,13 @@ import lombok.*;
 @ToString
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class ViewItems {
     private  String itemName;
     private String expDate;
+
+    public ViewItems(String itemName) {
+        this.itemName = itemName;
+    }
+
     private int quantity;
 }

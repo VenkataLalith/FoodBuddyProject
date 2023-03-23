@@ -1,8 +1,5 @@
 package foodBuddy.foodBuddy.inventory;
 
-
-import foodBuddy.foodBuddy.groupManagement.AppGroup;
-import foodBuddy.foodBuddy.groupManagement.ViewGroupUsers;
 import jakarta.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,5 +27,8 @@ public interface InventoryRepository extends JpaRepository<InventoryEntity,Long>
     @Modifying(clearAutomatically = true)
     @Query("DELETE FROM InventoryEntity WHERE itemName = :itemName AND groupCode = :groupCode")
     void deleteItemfromDB(@Param("itemName") String itemName, @Param("groupCode") String groupCode);
+
+    @Query("SELECT new foodBuddy.foodBuddy.inventory.ViewItems(inventory.itemName) FROM InventoryEntity inventory WHERE inventory.groupCode = :groupCode")
+    List<String> findItemNameList(@Param("groupCode") String groupCode);
 
 }
