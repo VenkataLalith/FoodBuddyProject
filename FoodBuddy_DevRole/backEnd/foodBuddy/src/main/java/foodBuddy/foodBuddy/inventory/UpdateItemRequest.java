@@ -14,4 +14,7 @@ public class UpdateItemRequest {
     private final int quantity;
     private final String expDate;
     private final String groupCode;
+
+    private final String emailId;
+
 }

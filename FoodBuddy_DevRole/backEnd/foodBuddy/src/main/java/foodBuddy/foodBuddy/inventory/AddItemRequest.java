@@ -14,4 +14,7 @@ public class AddItemRequest {
     private final int quantity;
     private final String expDate;
     private final String groupCode;
+    private final Double amount;
+
+    private final String emailId;
 }

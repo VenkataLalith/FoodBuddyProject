@@ -23,10 +23,10 @@ public class InventoryController {
         return inventoryService.addItem(request);
     }
 
-    @PostMapping("/update")
-    public UpdateItemResponse updateItem(@RequestBody UpdateItemRequest request){
-        return inventoryService.updateItem(request);
-    }
+//    @PostMapping("/update")
+//    public UpdateItemResponse updateItem(@RequestBody UpdateItemRequest request){
+//        return inventoryService.updateItem(request);
+//    }
 
     @GetMapping("/view")
     public ViewItemsResponse viewItem(@RequestParam(value = "groupCode") String groupCode){

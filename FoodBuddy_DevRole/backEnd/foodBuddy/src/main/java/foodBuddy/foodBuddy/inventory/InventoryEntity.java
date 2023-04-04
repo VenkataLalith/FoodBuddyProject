@@ -12,17 +12,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InventoryEntity {
-    public InventoryEntity(String itemName, String expDate, int quantity) {
+    public InventoryEntity(String itemName, String expDate, int quantity, Double amount) {
         this.itemName = itemName;
         this.expDate = expDate;
         this.quantity = quantity;
+        this.amount =amount;
     }
 
-    public InventoryEntity(String itemName, String expDate, int quantity, String groupCode) {
+    public InventoryEntity(String itemName, String expDate, int quantity, String groupCode, Double amount) {
         this.itemName = itemName;
         this.expDate = expDate;
         this.quantity = quantity;
         this.groupCode = groupCode;
+        this.amount= amount;
     }
 
     private String itemName;
@@ -43,11 +45,17 @@ public class InventoryEntity {
 
     private String groupCode;
 
+    private Double amount;
+
     public String getGroupCode() {
         return groupCode;
     }
 
     public void setGroupCode(String groupCode) {
         this.groupCode = groupCode;
+    }
+
+    public Double getAmount() {
+        return amount;
     }
 }
