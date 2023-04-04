@@ -92,9 +92,38 @@ export const InventoryManagement = () => {
   };
 
   const handleDelete = (index) => {
+    setEditIndex(-1);
     const updatedData = data.filter((item) => item.id !== data[index].id);
     setData(updatedData);
+    const formData = {
+      itemName: data[index].itemName,
+      quantity: newQuantity,
+      expDate: newExpiry,
+      groupCode: userGroupNumber,
+      amount: data[index].amount,
+      emailId:emailId
+
+    };
+    console.log(formData);
+    deleteItem(formData);
+
   };
+  const deleteItem = (formData) => {
+      axios
+        .post("/api/v1/inventory/delete", formData)
+        .then((response) => {
+          if (response.data.status === "success") {
+            console.log("Item added");
+            //
+          } else {
+            alert("");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
 
   const handleAdd = () => {
     const newId = data.length + 1;

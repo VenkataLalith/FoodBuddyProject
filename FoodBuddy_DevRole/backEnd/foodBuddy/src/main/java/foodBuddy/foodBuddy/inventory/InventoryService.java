@@ -45,7 +45,6 @@ public class InventoryService {
         }
         else {
             if (userExpensesExits) {
-                System.out.println("insdeinf sda");
                 expenseRepository.updateUserExpense(request.getAmount(), request.getEmailId());
                 inventoryRepository.updateItemDetails(request.getItemName(), request.getGroupCode(), request.getExpDate(), request.getQuantity(), request.getAmount());
 
@@ -104,6 +103,8 @@ public class InventoryService {
         DeleteItemResponse response = new DeleteItemResponse();
         boolean itemExists = inventoryRepository.findInventoryEntitiesByItemName(request.getItemName(),request.getGroupCode()).isPresent();
         if (itemExists){
+            Double previousAmount = expenseRepository.getPastUserExpenses(request.getEmailId());
+            expenseRepository.updateUserExpense(Math.abs(request.getAmount()-previousAmount), request.getEmailId());
             inventoryRepository.deleteItemfromDB(request.getItemName(),request.getGroupCode());
             response.setMessage("Item Updated successfully");
             response.setStatus("success");

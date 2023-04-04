@@ -12,4 +12,8 @@ import lombok.ToString;
 public class DeleteItemRequest {
     private final String itemName;
     private final String groupCode;
+
+    private final Double amount;
+
+    private final String emailId;
 }
