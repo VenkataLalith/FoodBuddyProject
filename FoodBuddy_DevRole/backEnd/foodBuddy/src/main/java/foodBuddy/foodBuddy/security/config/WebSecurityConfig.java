@@ -37,6 +37,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/v1/groupApi/**").permitAll()
                 .requestMatchers("/api/v1/inventory/**").permitAll()
                 .requestMatchers("/api/v1/recipe/**").permitAll()
+                .requestMatchers("/api/v1/expenses/**").permitAll()
                     // for everything else, the user has to be authenticated
                     .anyRequest().authenticated()
                 // setting stateless session, because we choose to implement Rest API
