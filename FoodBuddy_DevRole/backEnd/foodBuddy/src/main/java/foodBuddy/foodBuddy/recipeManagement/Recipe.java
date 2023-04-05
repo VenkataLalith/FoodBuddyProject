@@ -20,4 +20,5 @@ public class Recipe {
     private List<Ingredient> usedIngredients;
     private List<Ingredient> unusedIngredients;
     private int likes;
+    private String link;
 }
