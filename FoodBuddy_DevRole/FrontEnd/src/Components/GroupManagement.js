@@ -24,7 +24,6 @@ export const GroupManagement = () => {
 
   const navigate = useNavigate();
   const createGroup = (event) => {
-
         event.preventDefault();
             console.log(`Creating the group with: ${groupName},and password: ${groupCode}`);
 
@@ -151,10 +150,6 @@ const callLeaveGroupApi = (formDataLeave) => {
               <input style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter group name' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
               </label>
                  <br />
-                <label> Group Code:
-            <input style={{marginLeft: "15px", marginBottom:"10px"}} placeholder="Enter group code" type="input" value={groupCode} onChange={(e) => setGroupCode(e.target.value)} />
-            </label>
-              <br />
               <button  type="submit" onClick={createGroup}>Create Group</button>
               <button style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
             </form>

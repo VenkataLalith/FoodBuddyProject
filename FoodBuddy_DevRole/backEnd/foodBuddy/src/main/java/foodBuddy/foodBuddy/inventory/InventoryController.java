@@ -11,11 +11,8 @@ import org.springframework.web.bind.annotation.*;
 public class InventoryController {
 
     private  InventoryService inventoryService;
-    private  NotificationService notificationService;
-
-    public InventoryController(InventoryService inventoryService, NotificationService notificationService) {
+    public InventoryController(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
-        this.notificationService = notificationService;
     }
 
     @PostMapping("/add")
@@ -37,11 +34,5 @@ public class InventoryController {
     public DeleteItemResponse deleteItem(@RequestBody  DeleteItemRequest request) {
     DeleteItemResponse response = inventoryService.deleteItem(request);
     return response;
-    }
-
-    @PostMapping("/notify")
-    public String sendNotification(@RequestBody NotificationRequest request){
-        notificationService.sendNotification(request);
-        return "sucess";
     }
 }

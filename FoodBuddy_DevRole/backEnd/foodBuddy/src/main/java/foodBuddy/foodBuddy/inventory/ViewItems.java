@@ -15,4 +15,6 @@ public class ViewItems {
     }
 
     private int quantity;
+
+    private double amount;
 }

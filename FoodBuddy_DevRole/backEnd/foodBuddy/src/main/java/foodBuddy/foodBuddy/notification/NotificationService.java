@@ -1,43 +1,49 @@
 package foodBuddy.foodBuddy.notification;
-
-import foodBuddy.foodBuddy.appuser.UserRepository;
-import foodBuddy.foodBuddy.groupManagement.GroupRepository;
-import foodBuddy.foodBuddy.groupManagement.ViewGroupUsers;
+//import jakarta.mail.MessagingException;
+import javax.mail.MessagingException;
+//import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
-@AllArgsConstructor
-public class NotificationService {
-    @Autowired
-    private final UserRepository userRepository;
-//    @Autowired
-//    private EmailService emailService;
-    public String sendNotification(NotificationRequest request){
-        System.out.println(request);
-        List<ViewGroupUsers> groupName = userRepository.findUsersByGroupCode(request.getGroupCode());
-        List<String> recipients = new ArrayList<>();
-        for (ViewGroupUsers eachUser: groupName) {
-            System.out.println(eachUser.getUsername());
-            recipients.add(eachUser.getUsername());
+public class NotificationService implements EmailSender{
+    private JavaMailSender javaMailSender;
+
+    public NotificationService(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
+
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void sendSimpleEmail() throws MessagingException {
+//        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+//        simpleMailMessage.setTo("sujahidms@gmail.com");
+//        simpleMailMessage.setFrom("foodbuddy.asdc5308@gmail.com");
+//        simpleMailMessage.setSubject("Subject");
+//        simpleMailMessage.setText("text");
+//        javaMailSender.send(simpleMailMessage);
+//    }
+
+    @Override
+    @Async
+    public void send(String to, String email) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message,"utf-8");
+            helper.setFrom(email);
+            helper.setTo(to);
+            helper.setText("BODY");
+            helper.setSubject("subject");
+        } catch (jakarta.mail.MessagingException e) {
+            throw new RuntimeException(e);
         }
-        recipients.add("sujahidms@gmail.com");
-        System.out.println(recipients);
-//        String subject = "Hello from FoodBuddy!";
-//        String body = "This is a test email sent from MyApplication.";
-//        for (String emailId: recipients) {
-//            emailService.sendSimpleMessage(emailId,subject,body);
-//        }
-        return "success";
+
     }
 }

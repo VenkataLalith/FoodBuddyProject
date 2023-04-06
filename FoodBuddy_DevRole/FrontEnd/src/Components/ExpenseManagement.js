@@ -137,7 +137,7 @@ function Expenses() {
 
   return (
     <div>
-      <button onClick={handleTotalClick}>Total Expenses</button>
+      <button onClick={handleTotalClick}>My Expenses</button>
       <button onClick={handleGroupClick}>Group Expenses</button>
       {showTotal && <p>Total Expenses: {showTotal}</p>}
       {showGroup && <GroupExpenses groupExpenses={groupExpenses} />}

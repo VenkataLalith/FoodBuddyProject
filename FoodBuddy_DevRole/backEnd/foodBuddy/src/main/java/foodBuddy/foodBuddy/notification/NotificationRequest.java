@@ -1,17 +1,16 @@
 package foodBuddy.foodBuddy.notification;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-
+@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 @Data
-@AllArgsConstructor
 public class NotificationRequest {
-    private String groupCode = "";
+    private String groupCode;
     private String itemName;
 
-    public NotificationRequest(String groupCode) {
-        this.groupCode = groupCode;
-    }
 }

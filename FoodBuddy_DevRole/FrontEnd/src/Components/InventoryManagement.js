@@ -91,6 +91,35 @@ export const InventoryManagement = () => {
     setAmount("");
   };
 
+  const handleNotification = (index) => {
+      const updatedData = [...data];
+      updatedData[index] = {
+        emailId:emailId,
+
+      };
+      const formData = {
+        groupCode: userGroupNumber,
+        emailId:emailId,
+        itemName: data[index].itemName,
+      };
+      console.log(formData);
+      sendNotification(formData);
+    };
+   const sendNotification = (formData) => {
+       axios
+         .post("/api/v1/notification/notify", formData)
+         .then((response) => {
+           if (response.data.status === "success") {
+             console.log("Item added");
+             //
+           } else {
+             alert("");
+           }
+         })
+         .catch((error) => {
+           console.log(error);
+         });
+     };
   const handleDelete = (index) => {
     setEditIndex(-1);
     const updatedData = data.filter((item) => item.id !== data[index].id);
@@ -206,6 +235,8 @@ export const InventoryManagement = () => {
                         <>
                           <button onClick={() => handleEdit(index)}>Edit</button>
                           <button onClick={() => handleDelete(index)}>Delete</button>
+                          <button onClick={() => handleNotification(index)}>Notify</button>
+
                         </>
                       )}
                     </td>

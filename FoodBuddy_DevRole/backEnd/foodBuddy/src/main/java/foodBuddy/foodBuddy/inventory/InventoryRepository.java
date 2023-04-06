@@ -21,7 +21,7 @@ public interface InventoryRepository extends JpaRepository<InventoryEntity,Long>
     @Query("UPDATE InventoryEntity SET quantity = :quantity, expDate = :expDate, amount=:amount WHERE itemName = :itemName and groupCode = :groupCode")
     void updateItemDetails(@Param("itemName") String itemName ,@Param("groupCode") String groupCode, @Param("expDate") String expDate, @Param("quantity") int quantity,@Param("amount")Double amount);
 
-    @Query("SELECT new foodBuddy.foodBuddy.inventory.ViewItems(inventory.itemName, inventory.expDate, inventory.quantity) FROM InventoryEntity inventory WHERE inventory.groupCode = :groupCode")
+    @Query("SELECT new foodBuddy.foodBuddy.inventory.ViewItems(inventory.itemName, inventory.expDate, inventory.quantity,inventory.amount) FROM InventoryEntity inventory WHERE inventory.groupCode = :groupCode")
     List<ViewItems> findItemList(@Param("groupCode") String groupCode);
 
     @Modifying(clearAutomatically = true)
