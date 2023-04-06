@@ -1,5 +1,8 @@
 package foodBuddy.foodBuddy.recipeManagement;
 
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import foodBuddy.foodBuddy.constants.AppConstants;
 import foodBuddy.foodBuddy.inventory.InventoryRepository;
 import lombok.AllArgsConstructor;
@@ -23,7 +26,7 @@ public class RecipeService {
     RecipeResponse viewRecipe(String groupCode) {
         RecipeResponse response = new RecipeResponse();
         try {
-            response.setRecipeList(callExternalRecipeApi(groupCode));
+            response.setRecipeList(callExternalRecipeApiForRecipeList(groupCode));
             response.setMessage("Found Recipes");
             response.setStatus("success");
             return response;
@@ -40,14 +43,14 @@ public class RecipeService {
         List<String> itemList = inventoryRepository.findItemNameList(groupCode);
         String items= String.join(",+", itemList);
         String encodedItems = URLEncoder.encode(items, "UTF-8");
-        url = AppConstants.getUrl()+AppConstants.getIngredientLiteral()+encodedItems+AppConstants.getAmpersand()+
+        url = AppConstants.getFindByIngredientsUrl()+AppConstants.getIngredientLiteral()+encodedItems+AppConstants.getAmpersand()+
                 AppConstants.getApiKeyLiteral()+AppConstants.getApiKey()
                 +AppConstants.getAmpersand()+AppConstants.getNumberLiteral()+AppConstants.getNumber();
         System.out.println(url);
         return url;
     }
 
-    private List<Recipe> callExternalRecipeApi(String groupCode) throws Exception {
+    private List<Recipe> callExternalRecipeApiForRecipeList(String groupCode) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         String apiUrl = fetchIngredientsAndPrepareUrl(groupCode);
         ResponseEntity<Recipe[]> response = restTemplate.getForEntity(apiUrl, Recipe[].class);
@@ -57,12 +60,28 @@ public class RecipeService {
                     .sorted(Comparator.comparingInt(Recipe::getMissedIngredientCount))
                     .limit(AppConstants.getRecipeCount())
                     .collect(Collectors.toList());
+            for (Recipe recipe : sortedRecipes) {
+                String recipeUrl = getRecipeUrlById(recipe.getId());
+                recipe.setLink(recipeUrl);
+            }
             return sortedRecipes;
         } else {
             throw new RuntimeException("Failed to call external API. Status code: " + response.getStatusCode());
         }
     }
 
-
+    private String getRecipeUrlById(int id) throws Exception {
+        RestTemplate restTemplate = new RestTemplate();
+        String apiUrl = AppConstants.getRecipeUrl() + id + "/information?apiKey=" + AppConstants.getApiKey();
+        ResponseEntity<String> response = restTemplate.getForEntity(apiUrl, String.class);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            String responseBody = response.getBody();
+            JsonObject jsonObject = new JsonParser().parse(responseBody).getAsJsonObject();
+            String recipeUrl = jsonObject.get("sourceUrl").getAsString();
+            return recipeUrl;
+        } else {
+            throw new RuntimeException("Failed to call external API. Status code: " + response.getStatusCode());
+        }
+    }
 
 }
