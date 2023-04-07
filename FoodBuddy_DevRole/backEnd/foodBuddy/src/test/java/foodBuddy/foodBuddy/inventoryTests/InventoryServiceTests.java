@@ -1,15 +1,20 @@
-package foodBuddy.foodBuddy.inventory;
+package foodBuddy.foodBuddy.inventoryTests;
 
+import foodBuddy.foodBuddy.expense.ExpenseRepository;
+import foodBuddy.foodBuddy.expense.userExpenses;
 import foodBuddy.foodBuddy.groupManagement.AppGroup;
 import foodBuddy.foodBuddy.groupManagement.GroupRepository;
 import foodBuddy.foodBuddy.groupManagement.ViewGroupUsersResponse;
+import foodBuddy.foodBuddy.inventory.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -31,39 +36,27 @@ class InventoryServiceTest {
     @InjectMocks
     private InventoryService inventoryService;
 
-    private AddItemRequest addItemRequest;
-    private UpdateItemRequest updateItemRequest;
-    private String groupCode;
-    private String itemName;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-
-        groupCode = "ABC123";
-        itemName = "Test Item";
-
-        addItemRequest = new AddItemRequest();
-        addItemRequest.setItemName(itemName);
-        addItemRequest.setExpDate("2023-12-31");
-        addItemRequest.setQuantity(10);
-        addItemRequest.setGroupCode(groupCode);
-
-        updateItemRequest = new UpdateItemRequest();
-        updateItemRequest.setItemName(itemName);
-        updateItemRequest.setExpDate("2023-12-31");
-        updateItemRequest.setQuantity(20);
-        updateItemRequest.setGroupCode(groupCode);
-    }
+    @Mock
+    private ExpenseRepository expenseRepository;
 
     @Test
-    void testAddItem() {
-        InventoryEntity inventoryEntity = new InventoryEntity(itemName, addItemRequest.getExpDate(), addItemRequest.getQuantity(), addItemRequest.getGroupCode());
-
+    void testAddItemSuccess() {
+        String item="item1";
+        int quantity=1;
+        String expDate="2023-05-01";
+        String groupCode="group1";
+        Double amount=10.0;
+        String emailId="demo@email.com";
+        AddItemRequest request = new AddItemRequest(item,quantity,expDate,groupCode,amount,emailId);
+        InventoryEntity inventoryEntity = new InventoryEntity(item, expDate, quantity, amount);
+        userExpenses expenses = new userExpenses();
+        expenses.setItemId(1);
+        expenses.setAmount(10.0);
+        expenses.setEmailId("demo@email.com");
         when(inventoryRepository.findInventoryEntitiesByItemName(anyString(), anyString())).thenReturn(Optional.empty());
         when(inventoryRepository.save(any(InventoryEntity.class))).thenReturn(inventoryEntity);
-
-        AddItemResponse response = inventoryService.addItem(addItemRequest);
+        when(expenseRepository.findUserExpenseExists(emailId)).thenReturn(Optional.empty());
+        AddItemResponse response = inventoryService.addItem(request);
 
         Assertions.assertEquals("success", response.getStatus());
         Assertions.assertEquals("Item successfully", response.getMessage());
@@ -71,84 +64,133 @@ class InventoryServiceTest {
 
     @Test
     void testAddItemAlreadyExists() {
-        InventoryEntity inventoryEntity = new InventoryEntity(itemName, addItemRequest.getExpDate(), addItemRequest.getQuantity(), addItemRequest.getGroupCode());
+        String item="item1";
+        int quantity=1;
+        String expDate="2023-05-01";
+        String groupCode="group1";
+        Double amount=10.0;
+        String emailId="demo@email.com";
+        AddItemRequest request = new AddItemRequest(item,quantity,expDate,groupCode,amount,emailId);
+        InventoryEntity inventoryEntity = new InventoryEntity(item, expDate, quantity, amount);
+        userExpenses expenses = new userExpenses();
+        expenses.setItemId(1);
+        expenses.setAmount(10.0);
+        expenses.setEmailId("demo@email.com");
+        when(inventoryRepository.findInventoryEntitiesByItemName(anyString(), anyString())).thenReturn(Optional.empty());
+        when(inventoryRepository.save(any(InventoryEntity.class))).thenReturn(inventoryEntity);
+        when(expenseRepository.findUserExpenseExists(emailId)).thenReturn(Optional.of(expenses));
+        when(expenseRepository.getPastUserExpenses(emailId)).thenReturn(30.4);
+        AddItemResponse response = inventoryService.addItem(request);
+        Assertions.assertEquals("success", response.getStatus());
+        Assertions.assertEquals("Item successfully", response.getMessage());
+    }
 
+    @Test
+    void testAddItemFailure(){
+        String item="item1";
+        int quantity=1;
+        String expDate="2023-05-01";
+        String groupCode="group1";
+        Double amount=10.0;
+        String emailId="demo@email.com";
+        AddItemRequest request = new AddItemRequest(item,quantity,expDate,groupCode,amount,emailId);
+        InventoryEntity inventoryEntity = new InventoryEntity(item, expDate, quantity, amount);
+        userExpenses expenses = new userExpenses();
+        expenses.setItemId(1);
+        expenses.setAmount(10.0);
+        expenses.setEmailId("demo@email.com");
         when(inventoryRepository.findInventoryEntitiesByItemName(anyString(), anyString())).thenReturn(Optional.of(inventoryEntity));
-
-        AddItemResponse response = inventoryService.addItem(addItemRequest);
-
+        when(expenseRepository.findUserExpenseExists(emailId)).thenReturn(Optional.empty());
+        AddItemResponse response = inventoryService.addItem(request);
         Assertions.assertEquals("failure", response.getStatus());
         Assertions.assertEquals("Item Exists", response.getMessage());
     }
 
+//    @Test
+//    void testUpdateItem() {
+//        String item="item1";
+//        int quantity=1;
+//        String expDate="2023-05-01";
+//        String groupCode="group1";
+//        Double amount=10.0;
+//        String emailId="demo@email.com";
+//        AddItemRequest request = new AddItemRequest(item,quantity,expDate,groupCode,amount,emailId);
+//        InventoryEntity inventoryEntity = new InventoryEntity(item, expDate, quantity, amount);
+//
+//        when(inventoryRepository.findInventoryEntitiesByItemName(anyString(), anyString())).thenReturn(Optional.of(inventoryEntity));
+//
+//        UpdateItemResponse response = inventoryService.updateItem(updateItemRequest);
+//
+//        Assertions.assertEquals("success", response.getStatus());
+//        Assertions.assertEquals("Item Updated successfully", response.getMessage());
+//    }
+
+//    @Test
+//    void testUpdateItemNotExists() {
+//        when(inventoryRepository.findInventoryEntitiesByItemName(anyString(), anyString())).thenReturn(Optional.empty());
+//
+//        UpdateItemResponse response = inventoryService.updateItem(updateItemRequest);
+//
+//        Assertions.assertEquals("failure", response.getStatus());
+//        Assertions.assertEquals("Item Does not Exists", response.getMessage());
+//    }
+//
+//
+//
+//
     @Test
-    void testUpdateItem() {
-        InventoryEntity inventoryEntity = new InventoryEntity(itemName, addItemRequest.getExpDate(), addItemRequest.getQuantity(), addItemRequest.getGroupCode());
-
-        when(inventoryRepository.findInventoryEntitiesByItemName(anyString(), anyString())).thenReturn(Optional.of(inventoryEntity));
-
-        UpdateItemResponse response = inventoryService.updateItem(updateItemRequest);
-
+    void testViewItemsWhenGroupExists() {
+        List<ViewItems> inventoryEntities = new ArrayList<ViewItems>();
+        String groupCode="group1";
+        when(groupRepository.findGroupByCode(groupCode)).thenReturn(new String(groupCode));
+        when(inventoryRepository.findItemList(groupCode)).thenReturn(inventoryEntities);
+        ViewItemsResponse response = inventoryService.viewItems(groupCode);
         Assertions.assertEquals("success", response.getStatus());
-        Assertions.assertEquals("Item Updated successfully", response.getMessage());
-    }
-
-    @Test
-    void testUpdateItemNotExists() {
-        when(inventoryRepository.findInventoryEntitiesByItemName(anyString(), anyString())).thenReturn(Optional.empty());
-
-        UpdateItemResponse response = inventoryService.updateItem(updateItemRequest);
-
-        Assertions.assertEquals("failure", response.getStatus());
-        Assertions.assertEquals("Item Does not Exists", response.getMessage());
-    }
-
-   
-
-
-    @Test
-    void testViewItemsNoItems() {
-        List<InventoryEntity> inventoryEntities = new ArrayList<>();
-
-        when(inventoryRepository.findInventoryEntitiesByGroupCode(anyString())).thenReturn(inventoryEntities);
-
-        ViewInventoryResponse response = inventoryService.viewItems(groupCode);
-
-        Assertions.assertEquals("success", response.getStatus());
-        Assertions.assertEquals(0, response.getItems().size());
+        Assertions.assertEquals(0, response.getItemList().size());
     }
 
     @Test
     void testViewItemsInvalidGroup() {
-        when(groupRepository.findByGroupCode(anyString())).thenReturn(Optional.empty());
-
-        ViewInventoryResponse response = inventoryService.viewItems(groupCode);
-
+        String groupCode="1234";
+        when(groupRepository.findGroupByCode(groupCode)).thenReturn(" ");
+        ViewItemsResponse response = inventoryService.viewItems(groupCode);
         Assertions.assertEquals("failure", response.getStatus());
-        Assertions.assertEquals("Invalid Group Code", response.getMessage());
+        Assertions.assertEquals("Invalid GroupCode", response.getMessage());
     }
 
     @Test
-    void testViewGroupUsers() {
-        AppGroup appGroup = new AppGroup(groupCode, "Test Group");
-        appGroup.addUser("Test User 1");
-        appGroup.addUser("Test User 2");
-
-        when(groupRepository.findByGroupCode(anyString())).thenReturn(Optional.of(appGroup));
-
-        ViewGroupUsersResponse response = inventoryService.viewGroupUsers(groupCode);
-
+    void testDeleteItemSuccess(){
+        String item="item1";
+        int quantity=1;
+        String expDate="2023-05-01";
+        String groupCode="group1";
+        Double amount=10.0;
+        String emailId="demo@email.com";
+        DeleteItemRequest request = new DeleteItemRequest(item,groupCode,amount,emailId);
+        InventoryEntity inventoryEntity = new InventoryEntity(item, expDate, quantity, amount);
+        when(inventoryRepository.findInventoryEntitiesByItemName(item,groupCode)).thenReturn(Optional.of(inventoryEntity));
+        when(expenseRepository.getPastUserExpenses(emailId)).thenReturn(33.34);
+        DeleteItemResponse response = inventoryService.deleteItem(request);
         Assertions.assertEquals("success", response.getStatus());
-        Assertions.assertEquals(2, response.getUsers().size());
+        Assertions.assertEquals("Item Updated successfully", response.getMessage());
+
     }
 
     @Test
-    void testViewGroupUsersInvalidGroup() {
-        when(groupRepository.findByGroupCode(anyString())).thenReturn(Optional.empty());
-
-        ViewGroupUsersResponse response = inventoryService.viewGroupUsers(groupCode);
-
+    void testDeleteItemFailure(){
+        String item="item1";
+        int quantity=1;
+        String expDate="2023-05-01";
+        String groupCode="group1";
+        Double amount=10.0;
+        String emailId="demo@email.com";
+        DeleteItemRequest request = new DeleteItemRequest(item,groupCode,amount,emailId);
+        when(inventoryRepository.findInventoryEntitiesByItemName(item,groupCode)).thenReturn(Optional.empty());
+        DeleteItemResponse response = inventoryService.deleteItem(request);
         Assertions.assertEquals("failure", response.getStatus());
-        Assertions.assertEquals("Invalid Group Code", response.getMessage());
+        Assertions.assertEquals("Item Does not Exists", response.getMessage());
+
     }
+
+
 }

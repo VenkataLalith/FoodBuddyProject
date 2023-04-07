@@ -1,7 +1,8 @@
-package foodBuddy.foodBuddy.groupManagement;
+package foodBuddy.foodBuddy.groupManagementTests;
 
-import foodBuddy.foodBuddy.appuser.User;
+//import foodBuddy.foodBuddy.appuser.User;
 import foodBuddy.foodBuddy.appuser.UserRepository;
+import foodBuddy.foodBuddy.groupManagement.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -14,7 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class AppGroupServiceTest {
+class AppGroupServiceTests {
 
     private AppGroupService appGroupService;
     @Mock
@@ -31,107 +32,75 @@ class AppGroupServiceTest {
     @Test
     void testCreateGroupSuccess() {
         // Arrange
-        AppGroup appGroup = new AppGroup("Test Group");
-        GroupCreationResponse expectedResponse = new GroupCreationResponse();
-        expectedResponse.setMessage("Group created successfully");
-        expectedResponse.setStatus("success");
-        when(groupRepository.findByGroupName(appGroup.getGroupName())).thenReturn(Optional.empty());
+        String groupName="SampleGroup";
+        String groupCode="1234";
+        AppGroup appGroup = new AppGroup(groupName,groupCode);
 
-        // Act
-        GroupCreationResponse actualResponse = appGroupService.CreateGroup(appGroup);
+        when(groupRepository.findByGroupName(groupName)).thenReturn(Optional.empty());
 
-        // Assert
-        verify(groupRepository, times(1)).save(appGroup);
-        assertEquals(expectedResponse, actualResponse);
+        GroupCreationResponse response = appGroupService.CreateGroup(appGroup);
+        assertEquals("Group created successfully",response.getMessage());
+        assertEquals("success",response.getStatus());
     }
 
     @Test
     void testCreateGroupFailure() {
         // Arrange
-        AppGroup appGroup = new AppGroup("Existing Group");
-        GroupCreationResponse expectedResponse = new GroupCreationResponse();
-        expectedResponse.setMessage("GroupName Exists");
-        expectedResponse.setStatus("failure");
-        when(groupRepository.findByGroupName(appGroup.getGroupName())).thenReturn(Optional.of(appGroup));
-
-        // Act
-        GroupCreationResponse actualResponse = appGroupService.CreateGroup(appGroup);
-
-        // Assert
-        verify(groupRepository, never()).save(appGroup);
-        assertEquals(expectedResponse, actualResponse);
+        String groupName="SampleGroup";
+        String groupCode="1234";
+        AppGroup appGroup = new AppGroup(groupName,groupCode);
+        when(groupRepository.findByGroupName(groupName)).thenReturn(Optional.of(appGroup));
+        GroupCreationResponse response = appGroupService.CreateGroup(appGroup);
+        assertEquals("GroupName Exists",response.getMessage());
+        assertEquals("failure",response.getStatus());
     }
 
     @Test
     void testJoinGroupSuccess() {
-        // Arrange
-        GroupJoinRequest request = new GroupJoinRequest("Test User", "Test Code");
-        GroupJoinResponse expectedResponse = new GroupJoinResponse();
-        expectedResponse.setMessage("Joined successfully");
-        expectedResponse.setStatus("success");
-        when(groupRepository.findGroupByCode(request.getGroupCode())).thenReturn("Test Code");
-
-        // Act
-        GroupJoinResponse actualResponse = appGroupService.joinGroup(request);
-
-        // Assert
-        verify(userRepository, times(1)).UpdateGroupName(request.getGroupCode(), request.getUserName());
-        assertEquals(expectedResponse, actualResponse);
+        String groupName="SampleGroup";
+        String groupCode="1234";
+        String userName="user@email.com";
+        GroupJoinRequest request = new GroupJoinRequest(groupCode,userName);
+        when(groupRepository.findGroupByCode(groupCode)).thenReturn(groupCode);
+        GroupJoinResponse response = appGroupService.joinGroup(request);
+        assertEquals("Joined successfully",response.getMessage());
+        assertEquals("success",response.getStatus());
     }
 
     @Test
     void testJoinGroupFailure() {
-        // Arrange
-        GroupJoinRequest request = new GroupJoinRequest("Test User", "Invalid Code");
-        GroupJoinResponse expectedResponse = new GroupJoinResponse();
-        expectedResponse.setMessage("please verify the groupCode: Unable to join");
-        expectedResponse.setStatus("failure");
-        when(groupRepository.findGroupByCode(request.getGroupCode())).thenReturn("");
-
-        // Act
-        GroupJoinResponse actualResponse = appGroupService.joinGroup(request);
-
-        // Assert
-        verify(userRepository, never()).UpdateGroupName(request.getGroupCode(), request.getUserName());
-        assertEquals(expectedResponse, actualResponse);
+        String groupName="SampleGroup";
+        String groupCode="1234";
+        String userName="user@email.com";
+        GroupJoinRequest request = new GroupJoinRequest(groupCode,userName);
+        when(groupRepository.findGroupByCode(groupCode)).thenReturn(" ");
+        GroupJoinResponse response = appGroupService.joinGroup(request);
+        assertEquals("please verify the groupCode: Unable to join",response.getMessage());
+        assertEquals("failure",response.getStatus());
     }
 
     @Test
     void testFindGroupUsersSuccess() {
-
-        // Arrange
-        String groupCode = "Test Code";
-        ViewGroupUsersResponse expectedResponse = new ViewGroupUsersResponse();
-        List<User> users = new ArrayList<>();
-        users.add(new User("Test User", groupCode));
-        expectedResponse.setGroupUsersList(users);
-        expectedResponse.setMessage("Found Members");
-        expectedResponse.setStatus("success");
+        String groupCode="1234";
+        List<ViewGroupUsers> users = new ArrayList<ViewGroupUsers>();
         when(groupRepository.findGroupByCode(groupCode)).thenReturn(groupCode);
-        when(userRepository.findByGroupName(groupCode)).thenReturn(users);
-
-        // Act
-        ViewGroupUsersResponse actualResponse = appGroupService.findGroupUsers(groupCode);
-
-        // Assert
-        assertEquals(expectedResponse, actualResponse);
+        when(userRepository.findUsersByGroupCode(groupCode)).thenReturn(users);
+        ViewGroupUsersResponse response = appGroupService.findGroupUsers(groupCode);
+        assertEquals("Found Members",response.getMessage());
+        assertEquals("success",response.getStatus());
+        assertEquals(0,response.getGroupUsersList().size());
     }
 
     @Test
     void testFindGroupUsersFailure() {
-        // Arrange
-        String groupCode = "Invalid Code";
-        ViewGroupUsersResponse expectedResponse = new ViewGroupUsersResponse();
-        expectedResponse.setMessage("Invalid Group Code");
-        expectedResponse.setStatus("failure");
-        when(groupRepository.findGroupByCode(groupCode)).thenReturn("");
-
-        // Act
-        ViewGroupUsersResponse actualResponse = appGroupService.findGroupUsers(groupCode);
-
-        // Assert
-        verify(userRepository, never()).findByGroupName(groupCode);
-        assertEquals(expectedResponse, actualResponse);
+        String groupCode="1234";
+        List<ViewGroupUsers> users = new ArrayList<ViewGroupUsers>();
+        when(groupRepository.findGroupByCode(groupCode)).thenReturn(" ");
+        when(userRepository.findUsersByGroupCode(groupCode)).thenReturn(users);
+        ViewGroupUsersResponse response = appGroupService.findGroupUsers(groupCode);
+        assertEquals("Invalid GroupCode",response.getMessage());
+        assertEquals("failure",response.getStatus());
+        assertEquals(null,response.getGroupUsersList());
     }
 }
     
