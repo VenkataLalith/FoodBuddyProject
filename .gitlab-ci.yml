@@ -2,43 +2,59 @@ stages:
   - build
   - test
   - code_quality
-  
+
 include:
   - template: Code-Quality.gitlab-ci.yml
 
+code_quality:
+  stage: code_quality
+  image: docker:stable
+  services:
+    - name : docker:dind
+      alias: thedockerhost
+  variables:
+    DOCKER_HOST: tcp://thedockerhost:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  artifacts:
+    paths: [gl-code-quality-report.json]
+  tags:
+    - csci5408grp14
+
 backend-build-job:
   stage: build
+  image: maven:latest
+  services:
+    - docker:dind
   script:
     - chmod 777 -R FoodBuddy_DevRole
     - cd FoodBuddy_DevRole/backEnd/foodBuddy
     - mvn clean install -Dmaven.test.skip=true
+  artifacts:
+    paths:
+      - FoodBuddy_DevRole/backEnd/foodBuddy/target
   tags:
-    - CSCI5308Grp14
+    - csci5408grp14
 
 backend-test-job:
   stage: test
+  image: maven:latest
   script:
     - cd FoodBuddy_DevRole/backEnd/foodBuddy
     - mvn test
   tags:
-    - CSCI5308Grp14
+    - csci5408grp14
 
 frontend-build-job:
   stage: build
+  image: node:latest
   script:
-    - export PATH=/home/csci5308vm14/.nvm/versions/node/v18.15.0/bin/:$PATH
     - cd FoodBuddy_DevRole/FrontEnd
     - npm install
     - unset CI 
     - npm run build
   tags:
-    - CSCI5308Grp14
-
-code_quality:
-  stage: code_quality
+    - csci5408grp14
   artifacts:
-    expose_as: 'Code Quality Report'
-    paths: [gl-code-quality-report.json]
-
-
-
+    paths:
+      - FoodBuddy_DevRole/FrontEnd/build/
