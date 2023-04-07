@@ -153,8 +153,8 @@ const callLeaveGroupApi = (formDataLeave) => {
               <button  type="submit" onClick={createGroup}>Create Group</button>
               <button style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
             </form>
-            {formSubmitted && (
-             <div> <p>Group created successfully!</p> </div> )}
+            {/* {formSubmitted && (
+             <div> <p>Group created successfully!</p> </div> )} */}
             </div>
 )}
             { displayJoinGroup && (
@@ -169,8 +169,8 @@ const callLeaveGroupApi = (formDataLeave) => {
               <button type="submit" onClick={joinGroup}>Join Group</button>
               <button  style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
             </form>
-            {formSubmitted && (
-             <div> <p>Group joined successfully!</p> </div> )}
+            {/* {formSubmitted && (
+             <div> <p>Group joined successfully!</p> </div> )} */}
             </div>
 )}
       </div>
