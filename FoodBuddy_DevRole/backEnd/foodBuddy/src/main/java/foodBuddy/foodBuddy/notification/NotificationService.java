@@ -1,49 +1,49 @@
 package foodBuddy.foodBuddy.notification;
-//import jakarta.mail.MessagingException;
-import javax.mail.MessagingException;
-//import jakarta.mail.internet.MimeMessage;
-import jakarta.mail.internet.MimeMessage;
-import lombok.AllArgsConstructor;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-@Service
-public class NotificationService implements EmailSender{
-    private JavaMailSender javaMailSender;
 
-    public NotificationService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
+import foodBuddy.foodBuddy.appuser.UserRepository;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+
+@Service
+public class NotificationService implements EmailSender {
+    private final JavaMailSender mailSender;
+    private final UserRepository userRepository;
+
+    public NotificationService(JavaMailSender mailSender, UserRepository userRepository) {
+        this.mailSender = mailSender;
+        this.userRepository = userRepository;
+    }
+    @Override
+    public String send(String[] toEmailsIds, String itemName) {
+        try {
+            String[] recipients = toEmailsIds;
+
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom("foodbuddydal@gmail.com");
+            helper.setTo(recipients);
+            helper.setSubject("Action Required: Grocery Inventory Update");
+
+            String htmlContent = "<html><body><p>Dear Group Users,</p>"
+                    + "<p>This email is to inform you that our grocery inventory is running short on <b>" + itemName + "</b>. To avoid any inconvenience or delay in meal preparation, we kindly request that you add <b>" + itemName + "</b> to our grocery list or purchase it at your earliest convenience.</p>"
+                    + "<p>Your prompt attention to this matter is appreciated. Thank you for your cooperation.</p>"
+                    + "<p>Best regards,<br>FoodBuddy App</p>"
+                    + "</body></html>";
+            helper.setText(htmlContent, true);
+
+            mailSender.send(message);
+            return "success";
+        } catch (MessagingException me) {
+            System.err.println(me.getMessage());
+            return "failure";
+        }
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void sendSimpleEmail() throws MessagingException {
-//        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-//        simpleMailMessage.setTo("sujahidms@gmail.com");
-//        simpleMailMessage.setFrom("foodbuddy.asdc5308@gmail.com");
-//        simpleMailMessage.setSubject("Subject");
-//        simpleMailMessage.setText("text");
-//        javaMailSender.send(simpleMailMessage);
-//    }
-
-    @Override
-    @Async
-    public void send(String to, String email) {
-        try {
-            MimeMessage message = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message,"utf-8");
-            helper.setFrom(email);
-            helper.setTo(to);
-            helper.setText("BODY");
-            helper.setSubject("subject");
-        } catch (jakarta.mail.MessagingException e) {
-            throw new RuntimeException(e);
-        }
-
+    public String fetchEmailAndSend(String groupCode, String itemName) {
+        String [] toEmails = userRepository.findUsernames(groupCode).toArray(new String[0]);
+        return send(toEmails,itemName);
     }
 }

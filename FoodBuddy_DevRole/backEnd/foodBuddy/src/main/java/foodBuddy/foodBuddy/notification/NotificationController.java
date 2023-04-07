@@ -22,11 +22,8 @@ public class NotificationController {
 
 
     @PostMapping("/notify")
-    public String sendNotification(@RequestBody NotificationRequest request) throws MessagingException, jakarta.mail.MessagingException {
-        System.out.println("inside controller");
-//        notificationService.sendSimpleEmail();
-        notificationService.send("sujahidms@gmail.com","foodbuddy.asdc5308@gmail.com");
-
+    public String sendNotification(@RequestBody NotificationRequest request) {
+        notificationService.fetchEmailAndSend(request.getGroupCode(),request.getItemName());
         return "success";
     }
 

@@ -99,7 +99,6 @@ export const InventoryManagement = () => {
       };
       const formData = {
         groupCode: userGroupNumber,
-        emailId:emailId,
         itemName: data[index].itemName,
       };
       console.log(formData);
@@ -110,10 +109,10 @@ export const InventoryManagement = () => {
          .post("/api/v1/notification/notify", formData)
          .then((response) => {
            if (response.data.status === "success") {
-             console.log("Item added");
+             console.log("Email sent to group members");
              //
            } else {
-             alert("");
+             alert("Could Not send email. Please try again later");
            }
          })
          .catch((error) => {
