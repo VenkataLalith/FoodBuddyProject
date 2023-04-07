@@ -2,6 +2,7 @@ stages:
   - build
   - test
   - code_quality
+  - deploy
 
 include:
   - template: Code-Quality.gitlab-ci.yml
@@ -58,3 +59,10 @@ frontend-build-job:
   artifacts:
     paths:
       - FoodBuddy_DevRole/FrontEnd/build/
+deploy:
+  stage: deploy
+  script:
+    - apt-get update && apt-get install -y sshpass
+    - sshpass -p $SSH_PASSWORD scp -o StrictHostKeyChecking=no /builds/courses/2023-winter/csci-5308/group14/FoodBuddy_DevRole/backEnd/foodBuddy/target/* $SSH_USER@$HOST_IP:/home/csci5308vm14/foodbuddy/backend
+  tags:
+    - csci5408grp14
