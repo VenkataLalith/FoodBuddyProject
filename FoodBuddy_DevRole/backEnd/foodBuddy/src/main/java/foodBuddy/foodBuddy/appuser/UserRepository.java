@@ -28,4 +28,7 @@ public interface UserRepository extends JpaRepository<AppUser, Long>  {
     @Query("SELECT groupCode FROM AppUser WHERE email = ?1")
     String findGroupByEmail(String email);
 
+    @Query("SELECT u.email FROM AppUser u WHERE u.groupCode = :groupCode")
+    List<String> findUsernames(@Param("groupCode") String groupCode);
+
 }

@@ -44,6 +44,11 @@ public class AppUserLogin implements UserDetailsService {
         }
 
         @Override
+        public List<String> findUsernames(String groupCode) {
+            return null;
+        }
+
+        @Override
         public void flush() {
 
         }

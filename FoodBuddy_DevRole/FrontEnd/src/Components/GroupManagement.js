@@ -94,7 +94,7 @@ const handleLeaveGroup = (event) => {
       userName: userName
       };
       callLeaveGroupApi(formDataLeave);
-  alert('User left successfully')
+  //alert('User left successfully')
   userGroupCode=""
 }
 const callLeaveGroupApi = (formDataLeave) => {
@@ -132,7 +132,7 @@ const callLeaveGroupApi = (formDataLeave) => {
      if(userName===""){
       navigate('/')
      }
-    });
+    },[]);
 
     console.log('User group code '+userGroupNumber)
     return(
@@ -143,18 +143,18 @@ const callLeaveGroupApi = (formDataLeave) => {
     </div>
             
             { displayCreateGroup && (
-            <div class="center" style={{marginLeft:"25%"}}>
+            <div className="center" style={{marginLeft:"25%"}}>
             <form>
                 <h2> Create a Group</h2>
                 <label> Group Name:
-              <input style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter group name' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
+              <input style={{marginLeft: "15px", marginBottom:"10px"}} type="input" autoFocus placeholder='Enter group name' value={groupName} onChange={(e) =>{ setGroupName(e.target.value)}} />
               </label>
                  <br />
               <button  type="submit" onClick={createGroup}>Create Group</button>
               <button style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
             </form>
-            {formSubmitted && (
-             <div> <p>Group created successfully!</p> </div> )}
+            {/* {formSubmitted && (
+             <div> <p>Group created successfully!</p> </div> )} */}
             </div>
 )}
             { displayJoinGroup && (
@@ -162,15 +162,15 @@ const callLeaveGroupApi = (formDataLeave) => {
             <form>
                 <h2> Join a Group</h2>
                 <label> Group Code:
-              <input  style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter the group code ' value={joinCode} onChange={(e) => setJoinCode(e.target.value)} />
+              <input  style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter the group code ' value={joinCode} autoFocus onChange={(e) => setJoinCode(e.target.value)} />
               </label>
                  <br />
              
               <button type="submit" onClick={joinGroup}>Join Group</button>
               <button  style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
             </form>
-            {formSubmitted && (
-             <div> <p>Group joined successfully!</p> </div> )}
+            {/* {formSubmitted && (
+             <div> <p>Group joined successfully!</p> </div> )} */}
             </div>
 )}
       </div>
@@ -186,7 +186,7 @@ const callLeaveGroupApi = (formDataLeave) => {
 )} */}
 <Layout />
 
-{(userGroupNumber==="" || userGroupNumber===null)?<CreateJoinFunctionality/>:<div><DisplayGroupDetails/><button onClick={handleLeaveGroup}>Leave Group</button></div>}
+{(userGroupNumber==="" || userGroupNumber===null)?<CreateJoinFunctionality/>:<div><DisplayGroupDetails/><button onClick={(e)=>{handleLeaveGroup(e)}}>Leave Group</button></div>}
   </div>
     )
   }

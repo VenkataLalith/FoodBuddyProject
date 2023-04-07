@@ -171,8 +171,8 @@ a:active {
 
 .center {
   margin: auto;
-  margin-top: auto;
-  width: auto;
+  margin-top: 3%;
+  width: 50%;
   border: 1px solid black;
   padding: 30px;
 }
