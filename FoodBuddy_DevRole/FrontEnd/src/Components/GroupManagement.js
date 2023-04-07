@@ -132,7 +132,7 @@ const callLeaveGroupApi = (formDataLeave) => {
      if(userName===""){
       navigate('/')
      }
-    });
+    },[]);
 
     console.log('User group code '+userGroupNumber)
     return(
@@ -143,11 +143,11 @@ const callLeaveGroupApi = (formDataLeave) => {
     </div>
             
             { displayCreateGroup && (
-            <div class="center" style={{marginLeft:"25%"}}>
+            <div className="center" style={{marginLeft:"25%"}}>
             <form>
                 <h2> Create a Group</h2>
                 <label> Group Name:
-              <input style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter group name' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
+              <input style={{marginLeft: "15px", marginBottom:"10px"}} type="input" autoFocus placeholder='Enter group name' value={groupName} onChange={(e) =>{ setGroupName(e.target.value)}} />
               </label>
                  <br />
               <button  type="submit" onClick={createGroup}>Create Group</button>
@@ -162,7 +162,7 @@ const callLeaveGroupApi = (formDataLeave) => {
             <form>
                 <h2> Join a Group</h2>
                 <label> Group Code:
-              <input  style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter the group code ' value={joinCode} onChange={(e) => setJoinCode(e.target.value)} />
+              <input  style={{marginLeft: "15px", marginBottom:"10px"}} type="input" placeholder='Enter the group code ' value={joinCode} autoFocus onChange={(e) => setJoinCode(e.target.value)} />
               </label>
                  <br />
              
