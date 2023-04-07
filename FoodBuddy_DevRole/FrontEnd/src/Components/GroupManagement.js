@@ -94,7 +94,7 @@ const handleLeaveGroup = (event) => {
       userName: userName
       };
       callLeaveGroupApi(formDataLeave);
-  alert('User left successfully')
+  //alert('User left successfully')
   userGroupCode=""
 }
 const callLeaveGroupApi = (formDataLeave) => {
@@ -186,7 +186,7 @@ const callLeaveGroupApi = (formDataLeave) => {
 )} */}
 <Layout />
 
-{(userGroupNumber==="" || userGroupNumber===null)?<CreateJoinFunctionality/>:<div><DisplayGroupDetails/><button onClick={handleLeaveGroup}>Leave Group</button></div>}
+{(userGroupNumber==="" || userGroupNumber===null)?<CreateJoinFunctionality/>:<div><DisplayGroupDetails/><button onClick={(e)=>{handleLeaveGroup(e)}}>Leave Group</button></div>}
   </div>
     )
   }
