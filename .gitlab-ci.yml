@@ -30,7 +30,7 @@ backend-build-job:
   script:
     - chmod 777 -R FoodBuddy_DevRole
     - cd FoodBuddy_DevRole/backEnd/foodBuddy
-    - mvn clean install -Dmaven.test.skip=true
+    - mvn clean install
   artifacts:
     paths:
       - FoodBuddy_DevRole/backEnd/foodBuddy/target
