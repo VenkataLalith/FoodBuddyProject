@@ -29,8 +29,8 @@ backend-build-job:
     - docker:dind
   script:
     - chmod 777 -R FoodBuddy_DevRole
-    - cd FoodBuddy_DevRole/backEnd/foodBuddy
-    - mvn clean install -Dmaven.test.skip=true
+    - cd FoodBuddy_DevRole/backEnd/foodBuddy/foodBuddy
+    - mvn clean install 
   artifacts:
     paths:
       - FoodBuddy_DevRole/backEnd/foodBuddy/target
@@ -41,7 +41,7 @@ backend-test-job:
   stage: test
   image: maven:latest
   script:
-    - cd FoodBuddy_DevRole/backEnd/foodBuddy
+    - cd FoodBuddy_DevRole/backEnd/foodBuddy/foodBuddy
     - mvn test
   tags:
     - csci5408grp14
