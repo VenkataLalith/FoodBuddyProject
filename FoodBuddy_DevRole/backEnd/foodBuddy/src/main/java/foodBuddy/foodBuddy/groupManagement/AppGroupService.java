@@ -69,8 +69,8 @@ public class AppGroupService {
     public ViewGroupUsersResponse findGroupUsers(String groupCode) {
         ViewGroupUsersResponse response = new ViewGroupUsersResponse();
         try {
-            boolean groupExists = true;//groupRepository.findGroupByCode(groupCode).isBlank();
-            if (groupExists){
+            boolean groupExists = groupRepository.findGroupByCode(groupCode).isBlank();
+            if (!groupExists){
                 response.setGroupUsersList(userRepository.findUsersByGroupCode(groupCode));
                 response.setMessage("Found Members");
                 response.setStatus("success");

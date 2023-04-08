@@ -77,8 +77,8 @@ public class InventoryService {
     public ViewItemsResponse viewItems(String groupCode) {
         ViewItemsResponse response = new ViewItemsResponse();
         try {
-            boolean groupExists = true;//groupRepository.findGroupByCode(groupCode).isBlank();
-            if (groupExists){
+            boolean groupExists = groupRepository.findGroupByCode(groupCode).isBlank();
+            if (!groupExists){
                 response.setItemList(inventoryRepository.findItemList(groupCode));
                 response.setMessage("Found Group Items");
                 response.setStatus("success");
