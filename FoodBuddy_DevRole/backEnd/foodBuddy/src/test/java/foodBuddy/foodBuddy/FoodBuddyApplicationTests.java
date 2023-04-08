@@ -7,9 +7,14 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import foodBuddy.foodBuddy.groupManagement.AppGroupService;
+import foodBuddy.foodBuddy.groupManagement.GroupRepository;
+import foodBuddy.foodBuddy.registration.token.ConfirmationTokenService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,21 +29,31 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 class FoodBuddyApplicationTests {
 
-	@InjectMocks
 	private AppUserService appUserService;
-	
+	private ConfirmationTokenService confirmationTokenService;
 	@InjectMocks
 	private EmailValidator emailValidator;
 	
 	@Mock
 	private UserRepository userRepository;
+
+	@Mock
+	private GroupRepository groupRepository;
 	
 	@Mock
 	private ConfirmationTokenRepository confirmationTokenRepository;
 
+
 	@Mock
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
+	@BeforeEach
+	void setUp() {
+		MockitoAnnotations.openMocks(this);
+		confirmationTokenService = new ConfirmationTokenService(confirmationTokenRepository);
+		appUserService = new AppUserService(userRepository,bCryptPasswordEncoder,confirmationTokenService);
+	}
+
 	@Test
 	void loadUserByUserNameTestWhenUserExist() {
 		String email="timH@email.com";
