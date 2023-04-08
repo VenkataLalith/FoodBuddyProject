@@ -29,7 +29,7 @@ backend-build-job:
     - docker:dind
   script:
     - chmod 777 -R FoodBuddy_DevRole
-    - cd FoodBuddy_DevRole/backEnd/foodBuddy/foodBuddy
+    - cd FoodBuddy_DevRole/backEnd/foodBuddy
     - mvn clean install 
   artifacts:
     paths:
@@ -41,7 +41,7 @@ backend-test-job:
   stage: test
   image: maven:latest
   script:
-    - cd FoodBuddy_DevRole/backEnd/foodBuddy/foodBuddy
+    - cd FoodBuddy_DevRole/backEnd/foodBuddy
     - mvn test
   tags:
     - csci5408grp14
