@@ -21,7 +21,7 @@ import foodBuddy.foodBuddy.registration.EmailValidator;
 import foodBuddy.foodBuddy.registration.token.ConfirmationTokenRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@SpringBootTest
+
 class FoodBuddyApplicationTests {
 
 	@InjectMocks
