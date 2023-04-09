@@ -2,7 +2,7 @@ server:
   error:
     include-message: always
     include-binding-errors: always
-  port: 8081
+  port: 8080
 spring:
   datasource:
     password: rie5amaeRa
