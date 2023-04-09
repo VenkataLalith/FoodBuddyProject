@@ -9,7 +9,7 @@ import { GroupManagement } from './Components/GroupManagement';
 
 function App() {
   axios.interceptors.request.use(config => {
-    config.headers['Origin'] = '/';
+    config.headers['Origin'] = 'http://csci5308vm14.research.cs.dal.ca:8080';
     return config;
   });
 
