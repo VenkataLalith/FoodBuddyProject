@@ -1,6 +1,7 @@
 import React, { useEffect,useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import callViewGroupDataApi from '../Constants/Constants';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -25,6 +26,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
+    // hide last border
     '&:last-child td, &:last-child th': {
       border: 0,
     },
