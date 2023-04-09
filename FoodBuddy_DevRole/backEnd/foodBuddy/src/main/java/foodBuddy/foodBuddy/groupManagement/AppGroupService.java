@@ -114,7 +114,7 @@ public class AppGroupService {
     }
     public String generateCode(){
         Random rand = new Random();
-        int randomNumber = rand.nextInt(AppConstants.RANDOM_NUMBER_MAX) + AppConstants.RANDOM_NUMBER_MIN    ;
+        int randomNumber = rand.nextInt(Integer.parseInt(AppConstants.RANDOM_NUMBER_MAX.getValue().toString()) + Integer.parseInt(AppConstants.RANDOM_NUMBER_MIN.getValue().toString()));
         String groupCode = Integer.toString(randomNumber);
         String groupExists = groupRepository.findGroupByCode(groupCode);
         if (groupExists!=null){

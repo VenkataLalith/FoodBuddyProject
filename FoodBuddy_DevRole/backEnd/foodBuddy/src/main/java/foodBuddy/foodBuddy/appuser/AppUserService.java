@@ -52,7 +52,7 @@ public class AppUserService implements UserDetailsService {
     private ConfirmationToken generateConfirmationToken(AppUser appUser) {
         String token = UUID.randomUUID().toString();
         LocalDateTime createdDate = LocalDateTime.now();
-        LocalDateTime expirationDate = createdDate.plusMinutes(AppConstants.TOKEN_EXPIRATION_MINUTES);
+        LocalDateTime expirationDate = createdDate.plusMinutes(Integer.parseInt(AppConstants.TOKEN_EXPIRATION_MINUTES.getValue().toString()));
         return new ConfirmationToken(token, createdDate, expirationDate, appUser);
     }
 

@@ -56,11 +56,11 @@ public class RecipeService {
     }
 
     private String buildUrl(String encodedItems) {
-        return AppConstants.getFindByIngredientsUrl() +
-                AppConstants.getIngredientLiteral() + encodedItems +
-                AppConstants.getAmpersand() + AppConstants.getApiKeyLiteral() +
-                AppConstants.getApiKey() + AppConstants.getAmpersand() +
-                AppConstants.getNumberLiteral() + AppConstants.getNumber();
+        return AppConstants.FIND_BY_INGREDIENTS_URL.getValue().toString() +
+                AppConstants.INGREDIENT_LITERAL.getValue().toString() + encodedItems +
+                AppConstants.AMPERSAND.getValue().toString() + AppConstants.API_KEY_LITERAL.getValue().toString() +
+                AppConstants.API_KEY.getValue().toString() + AppConstants.AMPERSAND.getValue().toString() +
+                AppConstants.NUMBER_LITERAL.getValue().toString() + AppConstants.NUMBER.getValue().toString();
     }
 
 
@@ -81,7 +81,7 @@ public class RecipeService {
     private List<Recipe> getSortedRecipes(List<Recipe> recipes) {
         return recipes.stream()
                 .sorted(Comparator.comparingInt(Recipe::getMissedIngredientCount))
-                .limit(AppConstants.getRecipeCount())
+                .limit(Integer.parseInt(AppConstants.RECIPE_COUNT.getValue().toString()))
                 .collect(Collectors.toList());
     }
 
@@ -95,7 +95,7 @@ public class RecipeService {
 
     private String getRecipeUrlById(int id) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
-        String apiUrl = AppConstants.getRecipeUrl() + id + "/information?apiKey=" + AppConstants.getApiKey();
+        String apiUrl = AppConstants.RECIPE_URL.getValue().toString() + id + "/information?apiKey=" + AppConstants.API_KEY.getValue().toString();
         ResponseEntity<String> response = restTemplate.getForEntity(apiUrl, String.class);
         if (response.getStatusCode().is2xxSuccessful()) {
             String responseBody = response.getBody();
