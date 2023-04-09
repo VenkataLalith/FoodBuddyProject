@@ -70,6 +70,8 @@ code-quality:       # This job runs in the build stage, which runs first.
     paths:
       - smells/
       - $SOURCE_CODE
+  tags:
+     - csci5308grp14_shell
 
 issue-job:
   stage: code_quality
@@ -81,4 +83,6 @@ issue-job:
     - python --version
     - pip install -r $SOURCE_CODE/.gitlab/requirements.txt
     - python $SOURCE_CODE/.gitlab/issue.py $CI_COMMIT_SHA
+  tags:
+    - csci5308grp14_shell
 
