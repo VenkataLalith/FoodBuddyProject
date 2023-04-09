@@ -33,6 +33,7 @@ public class RecipeServiceTests {
         recipeService = new RecipeService(inventoryRepository);
     }
 
+//<<<<<<< HEAD
     @Test
     void viewRecipieTestSuccess() throws UnsupportedEncodingException {
        String groupCode = "1234";
@@ -46,10 +47,29 @@ public class RecipeServiceTests {
 
         RecipeResponse response  = recipeService.viewRecipe(groupCode);
 
-//        assertEquals("Found Recipes",response.getMessage());
-//        assertEquals("success",response.getStatus());
+        assertEquals("Found Recipes",response.getMessage());
+        assertEquals("success",response.getStatus());
 
     }
+//=======
+//    @Test
+//    void viewRecipieTestSuccess() throws UnsupportedEncodingException {
+//       String groupCode = "1234";
+//       List<String> itemList = new ArrayList<String>();
+//       itemList.add("Biryani");
+//       itemList.add("fried rice");
+//       itemList.add("Pizza");
+//       String items= String.join(",+",itemList);
+//       when(inventoryRepository.findItemNameList(groupCode)).thenReturn(itemList);
+//
+//
+//        RecipeResponse response  = recipeService.viewRecipe(groupCode);
+//
+//        assertEquals("Found Recipes",response.getMessage());
+//        assertEquals("success",response.getStatus());
+//
+//    }
+//>>>>>>> c9be001b84c94f651c98183c57026d091e6143ea
 
     @Test
     void viewRecipieTestFailure() throws UnsupportedEncodingException {
@@ -60,6 +80,7 @@ public class RecipeServiceTests {
         assertEquals("failure",response.getStatus());
 
     }
+    
 
     @Test
     void viewRecipieTestWhenNoListIsPresent() throws UnsupportedEncodingException {
@@ -68,12 +89,13 @@ public class RecipeServiceTests {
         String items= String.join(",+",itemList);
         when(inventoryRepository.findItemNameList(groupCode)).thenReturn(itemList);
         RecipeResponse response  = recipeService.viewRecipe(groupCode);
-//        assertEquals("Found Recipes",response.getMessage());
-//        assertEquals("success",response.getStatus());
-//        assertEquals(0,response.getRecipeList().size());
+        assertEquals("Found Recipes",response.getMessage());
+        assertEquals("success",response.getStatus());
+        assertEquals(0,response.getRecipeList().size());
 
 
     }
+//>>>>>>> c9be001b84c94f651c98183c57026d091e6143ea
 
     
 
