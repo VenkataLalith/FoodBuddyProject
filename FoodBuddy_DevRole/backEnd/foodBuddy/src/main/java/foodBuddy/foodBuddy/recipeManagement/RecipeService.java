@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class RecipeService {
     @Autowired
     private final InventoryRepository inventoryRepository;
-    RecipeResponse viewRecipe(String groupCode) {
+    public RecipeResponse viewRecipe(String groupCode) {
         RecipeResponse response = new RecipeResponse();
         try {
             response.setRecipeList(callExternalRecipeApiForRecipeList(groupCode));
@@ -38,7 +38,7 @@ public class RecipeService {
         }
     }
 
-    private String fetchIngredientsAndPrepareUrl(String groupCode) throws UnsupportedEncodingException {
+    public String fetchIngredientsAndPrepareUrl(String groupCode) throws UnsupportedEncodingException {
         String url = null;
         List<String> itemList = inventoryRepository.findItemNameList(groupCode);
         String items= String.join(",+", itemList);
