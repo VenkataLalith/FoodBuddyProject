@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://csci5308vm14.research.cs.dal.ca',
+      target: 'http://172.17.0.203:8080',
       changeOrigin: true,
     })
   );
