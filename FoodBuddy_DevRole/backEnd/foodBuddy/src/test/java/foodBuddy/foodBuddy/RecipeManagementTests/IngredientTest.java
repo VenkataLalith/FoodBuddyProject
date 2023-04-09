@@ -1,8 +1,8 @@
 package foodBuddy.foodBuddy.RecipeManagementTests;
 
 import foodBuddy.foodBuddy.constants.AppConstants;
-import foodBuddy.foodBuddy.recipeManagement.Ingredient;
-import foodBuddy.foodBuddy.recipeManagement.Meta;
+import foodBuddy.foodBuddy.recipeManagement.Model.Ingredient;
+import foodBuddy.foodBuddy.recipeManagement.Model.Meta;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,6 @@
 package foodBuddy.foodBuddy.recipeManagement;
 
+import foodBuddy.foodBuddy.recipeManagement.Model.Recipe;
 import lombok.*;
 
 import java.util.List;

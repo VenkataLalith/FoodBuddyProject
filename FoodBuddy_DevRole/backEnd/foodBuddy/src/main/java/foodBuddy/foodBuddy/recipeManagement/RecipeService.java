@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import foodBuddy.foodBuddy.constants.AppConstants;
 import foodBuddy.foodBuddy.inventory.InventoryRepository;
+import foodBuddy.foodBuddy.recipeManagement.Model.Recipe;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

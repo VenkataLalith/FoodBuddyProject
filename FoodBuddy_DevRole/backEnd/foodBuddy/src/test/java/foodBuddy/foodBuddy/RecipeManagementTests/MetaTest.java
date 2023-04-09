@@ -1,6 +1,6 @@
 package foodBuddy.foodBuddy.RecipeManagementTests;
 
-import foodBuddy.foodBuddy.recipeManagement.Meta;
+import foodBuddy.foodBuddy.recipeManagement.Model.Meta;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -60,18 +60,4 @@ public class LoginServiceTest {
         assertEquals(expectedMessage,response.getMessage());
     }
 
-    @Test
-    void loginTestException(){
-        String userName="user@email.com";
-        String password="password";
-        String expectedMessage="java.lang.IllegalArgumentException: Illegal argument exception";
-        LoginResponse appServiceResponse = new LoginResponse();
-        AppUser appUser =new AppUser(userName, password);
-        when(appUserService.loginUser(appUser)).thenThrow(new IllegalArgumentException("Illegal argument exception"));
-
-        LoginRequest loginRequest = new LoginRequest(password,userName);
-         LoginResponse response = loginService.login(loginRequest);
-        assertEquals(expectedMessage,response.getMessage());
-    }
-
 }

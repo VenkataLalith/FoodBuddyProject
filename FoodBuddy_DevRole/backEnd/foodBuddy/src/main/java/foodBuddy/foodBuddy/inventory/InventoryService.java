@@ -155,8 +155,8 @@ public class InventoryService {
 
     private void updateExpense(String emailId, Double amount) {
         if (amount != null) {
-            Double previousAmount = expenseRepository.getPastUserExpenses(emailId);
-            expenseRepository.updateUserExpense(Math.abs(amount - previousAmount), emailId);
+//            Double previousAmount = expenseRepository.getPastUserExpenses(emailId);
+            expenseRepository.updateUserExpense(Math.abs(amount), emailId);
         }
     }
 

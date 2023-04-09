@@ -2,6 +2,7 @@ package foodBuddy.foodBuddy.groupManagement;
 
 import foodBuddy.foodBuddy.appuser.UserRepository;
 import foodBuddy.foodBuddy.constants.AppConstants;
+import foodBuddy.foodBuddy.expense.ExpenseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class AppGroupService {
     private final GroupRepository groupRepository;
     @Autowired
     private final UserRepository userRepository;
+    @Autowired
+    private ExpenseRepository expenseRepository;
+
 
     public GroupCreationResponse createGroup(GroupCreationRequest request) {
         AppGroup appGroup = new AppGroup(request.getGroupName(),request.getGroupCode());
@@ -138,6 +142,7 @@ public class AppGroupService {
             groupCode="";
             groupName="";
             userRepository.UpdateGroupName(groupCode,groupName,userEmail);
+            expenseRepository.updateUserExpense(Double.parseDouble(AppConstants.NUM_ZERO.getValue().toString()),userEmail);
             leaveGroupResponse.setMessage("User Left the group");
             leaveGroupResponse.setStatus("Success");
         }
