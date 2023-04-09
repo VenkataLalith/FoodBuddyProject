@@ -13,10 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
-// import Footer from './Footet';
 
 const pages = ['Groups', 'Inventory', 'Budget'];
-// const settings = ['Logout'];
 
 function ResponsiveAppBar() {
 
@@ -164,7 +162,6 @@ function ResponsiveAppBar() {
       </Container>
     </AppBar>
 
-{/* <Footer/> */}
 </>
   );
 }

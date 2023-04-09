@@ -1,4 +1,4 @@
-package foodBuddy.foodBuddy.registration;
+package foodBuddy.foodBuddy.appuser;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

@@ -3,42 +3,55 @@ package foodBuddy.foodBuddy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
+import foodBuddy.foodBuddy.groupManagement.GroupRepository;
+import foodBuddy.foodBuddy.appuser.registration.token.ConfirmationTokenService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import foodBuddy.foodBuddy.appuser.AppUser;
 import foodBuddy.foodBuddy.appuser.AppUserService;
 import foodBuddy.foodBuddy.appuser.UserRepository;
-import foodBuddy.foodBuddy.registration.EmailValidator;
-import foodBuddy.foodBuddy.registration.token.ConfirmationTokenRepository;
+import foodBuddy.foodBuddy.appuser.EmailValidator;
+import foodBuddy.foodBuddy.appuser.registration.token.ConfirmationTokenRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@SpringBootTest
+
 class FoodBuddyApplicationTests {
 
-	@InjectMocks
 	private AppUserService appUserService;
-	
+	private ConfirmationTokenService confirmationTokenService;
 	@InjectMocks
 	private EmailValidator emailValidator;
 	
 	@Mock
 	private UserRepository userRepository;
+
+	@Mock
+	private GroupRepository groupRepository;
 	
 	@Mock
 	private ConfirmationTokenRepository confirmationTokenRepository;
 
+
 	@Mock
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
+	@BeforeEach
+	void setUp() {
+		MockitoAnnotations.openMocks(this);
+		confirmationTokenService = new ConfirmationTokenService(confirmationTokenRepository);
+		appUserService = new AppUserService(userRepository,bCryptPasswordEncoder,confirmationTokenService);
+	}
+
 	@Test
 	void loadUserByUserNameTestWhenUserExist() {
 		String email="timH@email.com";
@@ -100,17 +113,23 @@ class FoodBuddyApplicationTests {
 }
 
 	@Test
-	void userRegistrationWithInvalidEmailTest() {
-    String email = "invalidEmail";
-	Optional<AppUser> empty = Optional.empty();
-    AppUser invalidUser = new AppUser("Invalid", "User", "password", email);
+	void userRegistrationSuccess() {
+		String fName="userFname";
+		String lName="userLname";
+		String password="mypass";
+    String emailId="user@email.com";
+	AppUser user = new AppUser(fName,lName,password,emailId);
+	when(userRepository.findByEmail(emailId)).thenReturn(Optional.empty());
+	String resultToke = appUserService.signUpUser(user);
+	verify(userRepository, atLeastOnce()).save(user);
+
 }
 
 	@Test
 	void userRegistrationWithExistingEmailTest() {
     String email = "existingUser@example.com";
     AppUser existingUser = new AppUser("Existing", "User", "password", email);
-    when(userRepository.findByEmail(email)).thenReturn(Optional.of(existingUser));
+	when(userRepository.findByEmail(email)).thenReturn(Optional.of(existingUser));
     assertEquals("User Exists", appUserService.signUpUser(existingUser));
 }
 }

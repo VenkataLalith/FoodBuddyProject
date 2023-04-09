@@ -1,4 +1,4 @@
-package foodBuddy.foodBuddy.registration;
+package foodBuddy.foodBuddy.appuser;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,5 +28,13 @@ public class EmailValidator implements Predicate<String> {
         System.out.println("<><><><><><");
         System.out.println(matcher.matches());
         return matcher.matches();
+    }
+
+    public boolean validate(String email) {
+        return test(email);
+    }
+
+    public Object isValid(String any) {
+        return test(any);
     }
 }

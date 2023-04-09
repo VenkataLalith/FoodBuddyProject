@@ -21,4 +21,8 @@ public class Ingredient {
     private String originalName;
     private List<Meta> meta;
     private String image;
+
+    public Ingredient(String pepper, String s) {
+
+    }
 }

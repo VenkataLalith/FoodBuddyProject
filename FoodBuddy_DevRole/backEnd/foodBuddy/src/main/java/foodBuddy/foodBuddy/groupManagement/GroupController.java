@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @CrossOrigin
 public class GroupController {
-    private GroupServices groupServices;
     private AppGroupService appGroupService;
     @PostMapping("/Create")
     public GroupCreationResponse createGroup(@RequestBody GroupCreationRequest request){

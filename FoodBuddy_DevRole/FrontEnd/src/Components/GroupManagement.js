@@ -1,12 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { updateGroupName } from '../redux/actions/GroupManagementAction';
 import { updateGroupNumber } from '../redux/actions/GroupManagementAction';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { DisplayGroupDetails } from './DisplayGroupDetails'
 import Layout from './Layout';
-import { Login } from './Login';
 
 export const GroupManagement = () => {
   const [groupName, setGroupName] = useState("");
@@ -42,7 +40,7 @@ export const GroupManagement = () => {
 
   }
   const callCreateGroupApi = (formData) => {
-       axios.post('/api/v1/groupApi/Create', formData)
+       axios.post('http://172.17.0.203:8080/api/v1/groupApi/Create', formData)
          .then(response => {
            console.log(response);
            if(response.data.message==="Group created successfully"){
@@ -69,7 +67,7 @@ export const GroupManagement = () => {
     }
 
     const callJoinGroupApi = (formDataJoin) => {
-           axios.post('/api/v1/groupApi/Join', formDataJoin)
+           axios.post('http://172.17.0.203:8080/api/v1/groupApi/Join', formDataJoin)
              .then(response => {
               console.log(response)
                if(response.data.message==="Joined successfully"){
@@ -94,17 +92,16 @@ const handleLeaveGroup = (event) => {
       userName: userName
       };
       callLeaveGroupApi(formDataLeave);
-  //alert('User left successfully')
   userGroupCode=""
 }
 const callLeaveGroupApi = (formDataLeave) => {
-    axios.post('/api/v1/groupApi/Leave', formDataLeave)
+    axios.post('http://172.17.0.203:8080/api/v1/groupApi/Leave', formDataLeave)
        .then(response => {
      console.log(response)
      {/* Need to reload the page, once successfully exited
         and have to show create group and join group button*/}
       if(response.data.status==="Success"){
-           dispatch(updateGroupNumber(joinCode))
+           dispatch(updateGroupNumber(""))
            alert('User left group successfully')
             setdisplayCreateGroup(true)
             navigate('/home')
@@ -153,8 +150,6 @@ const callLeaveGroupApi = (formDataLeave) => {
               <button  type="submit" onClick={createGroup}>Create Group</button>
               <button style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
             </form>
-            {/* {formSubmitted && (
-             <div> <p>Group created successfully!</p> </div> )} */}
             </div>
 )}
             { displayJoinGroup && (
@@ -169,8 +164,6 @@ const callLeaveGroupApi = (formDataLeave) => {
               <button type="submit" onClick={joinGroup}>Join Group</button>
               <button  style={{marginLeft: "5%"}} onClick={() => setdisplayCreateGroup(false)}>Close</button>
             </form>
-            {/* {formSubmitted && (
-             <div> <p>Group joined successfully!</p> </div> )} */}
             </div>
 )}
       </div>
@@ -181,9 +174,6 @@ const callLeaveGroupApi = (formDataLeave) => {
     return(
       <div>
 
-      {/* {(displayCreateGroup || displayJoinGroup) && (
-  <div onClick={closeForms}  ></div>
-)} */}
 <Layout />
 
 {(userGroupNumber==="" || userGroupNumber===null)?<CreateJoinFunctionality/>:<div><DisplayGroupDetails/><button onClick={(e)=>{handleLeaveGroup(e)}}>Leave Group</button></div>}

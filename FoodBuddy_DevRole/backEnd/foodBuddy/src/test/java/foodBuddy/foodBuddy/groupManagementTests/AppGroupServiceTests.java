@@ -102,5 +102,45 @@ class AppGroupServiceTests {
         assertEquals("failure",response.getStatus());
         assertEquals(null,response.getGroupUsersList());
     }
+
+    @Test
+    void testLeaveGroupNotInGroup() {
+    // Arrange
+    String groupCode = "1234";
+    String userName = "JohnDoe";
+    LeaveGroupRequest request = new LeaveGroupRequest(groupCode, userName);
+
+    when(groupRepository.findGroupByCode(groupCode)).thenReturn("");
+
+    LeaveGroupResponse response = appGroupService.leaveGroup(request);
+    assertEquals("Does not belong to any group", response.getMessage());
+    assertEquals("failure", response.getStatus());
+  }
+
+  @Test
+  void testGenerateCode() {
+    // Arrange
+    when(groupRepository.findGroupByCode(anyString())).thenReturn(null);
+
+    // Act
+    String groupCode = appGroupService.generateCode();
+
+    // Assert
+    assertNotNull(groupCode);
+    assertTrue(groupCode.matches("\\d{6}")); // assert that the generated code is a 6-digit number
+  }
+
+  @Test
+   void testFindGroupUsersInvalidGroupCode() {
+    // Arrange
+    String groupCode = "invalidCode";
+
+    when(groupRepository.findGroupByCode(groupCode)).thenReturn("");
+
+    ViewGroupUsersResponse response = appGroupService.findGroupUsers(groupCode);
+    assertNull(response.getGroupUsersList());
+    assertEquals("Invalid GroupCode", response.getMessage());
+    assertEquals("failure", response.getStatus());
+  }
 }
     

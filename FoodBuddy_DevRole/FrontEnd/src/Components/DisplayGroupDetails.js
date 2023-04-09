@@ -34,7 +34,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
   
 export const DisplayGroupDetails = () => {
-    const api='/api/v1/groupApi/view';
+    const api='http://172.17.0.203:8080/api/v1/groupApi/view';
     const [groupData, setGroupData] = useState([]);
     const userGroupNumber = useSelector((state) => state.groupManagementReducer.groupCode);
 

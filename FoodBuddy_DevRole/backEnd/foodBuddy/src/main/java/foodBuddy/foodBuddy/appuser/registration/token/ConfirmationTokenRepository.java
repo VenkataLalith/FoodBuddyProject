@@ -1,4 +1,4 @@
-package foodBuddy.foodBuddy.registration.token;
+package foodBuddy.foodBuddy.appuser.registration.token;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
