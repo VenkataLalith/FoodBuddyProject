@@ -1,5 +1,6 @@
 package foodBuddy.foodBuddy.ExpenseManagementTests;
 
+import foodBuddy.foodBuddy.constants.AppConstants;
 import foodBuddy.foodBuddy.expense.userExpenses;
 import org.junit.jupiter.api.Test;
 
@@ -9,15 +10,15 @@ public class UserExpensesTest {
 
     @Test
     void getEmailIdTest(){
-        userExpenses usp = new userExpenses("user@email.com",3534.44);
+        userExpenses usp = new userExpenses("user@email.com",(Double.parseDouble(AppConstants.DEFAULT_EXPENSE.getValue().toString())));
         String result = usp.getEmailId();
         assertEquals("user@email.com",result);
     }
 
     @Test
     void getAmountTest(){
-        userExpenses usp = new userExpenses("user@email.com",3534.44);
+        userExpenses usp = new userExpenses("user@email.com",(Double.parseDouble(AppConstants.DEFAULT_EXPENSE.getValue().toString())));
         Double result = usp.getAmount();
-        assertEquals(3534.44,result);
+        assertEquals((Double.parseDouble(AppConstants.DEFAULT_EXPENSE.getValue().toString())),result);
     }
 }
