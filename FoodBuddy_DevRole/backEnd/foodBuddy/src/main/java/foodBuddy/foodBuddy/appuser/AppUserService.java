@@ -1,5 +1,6 @@
 package foodBuddy.foodBuddy.appuser;
 
+import foodBuddy.foodBuddy.constants.AppConstants;
 import foodBuddy.foodBuddy.login.LoginResponse;
 import foodBuddy.foodBuddy.registration.token.ConfirmationToken;
 import foodBuddy.foodBuddy.registration.token.ConfirmationTokenService;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,32 +26,37 @@ public class AppUserService implements UserDetailsService {
     private final ConfirmationTokenService confirmationTokenService;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).
-                orElseThrow(() ->
-                new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG,email)));
+        Optional<AppUser> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email));
+        }
+        return userOptional.get();
     }
-    public String signUpUser (AppUser appUser){
-        boolean userExists = userRepository.findByEmail(appUser.getEmail())
-                .isPresent();
-        if (userExists){
-//            throw new IllegalStateException("email already taken");
+
+    public String signUpUser(AppUser appUser) {
+        boolean userExists = userRepository.findByEmail(appUser.getEmail()).isPresent();
+        if (userExists) {
             return "User Exists";
         }
+
         String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
         appUser.setPassword(encodedPassword);
         userRepository.save(appUser);
-        // for tokenization
-        String token = UUID.randomUUID().toString();
-        ConfirmationToken confirmationToken = new ConfirmationToken(token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                appUser
-                );
+
+        ConfirmationToken confirmationToken = generateConfirmationToken(appUser);
         confirmationTokenService.saveConfirmationToken(confirmationToken);
-        // send email
-        return token;
+
+        return confirmationToken.getToken();
     }
-    
+
+    private ConfirmationToken generateConfirmationToken(AppUser appUser) {
+        String token = UUID.randomUUID().toString();
+        LocalDateTime createdDate = LocalDateTime.now();
+        LocalDateTime expirationDate = createdDate.plusMinutes(AppConstants.TOKEN_EXPIRATION_MINUTES);
+        return new ConfirmationToken(token, createdDate, expirationDate, appUser);
+    }
+
+
     public LoginResponse loginUser(AppUser appUser) {
         LoginResponse response = new LoginResponse();
     	if(userRepository.findByEmail(appUser.getEmail()).isPresent()) {

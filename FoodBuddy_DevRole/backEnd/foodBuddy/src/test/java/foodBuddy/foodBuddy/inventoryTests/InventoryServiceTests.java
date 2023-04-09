@@ -1,27 +1,23 @@
 package foodBuddy.foodBuddy.inventoryTests;
 
+import foodBuddy.foodBuddy.constants.AppConstants;
 import foodBuddy.foodBuddy.expense.ExpenseRepository;
 import foodBuddy.foodBuddy.expense.userExpenses;
-import foodBuddy.foodBuddy.groupManagement.AppGroup;
 import foodBuddy.foodBuddy.groupManagement.GroupRepository;
-import foodBuddy.foodBuddy.groupManagement.ViewGroupUsersResponse;
 import foodBuddy.foodBuddy.inventory.*;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,13 +41,13 @@ class InventoryServiceTest {
         int quantity=1;
         String expDate="2023-05-01";
         String groupCode="group1";
-        Double amount=10.0;
+        Double amount= AppConstants.ITEM_AMOUNT;
         String emailId="demo@email.com";
         AddItemRequest request = new AddItemRequest(item,quantity,expDate,groupCode,amount,emailId);
         InventoryEntity inventoryEntity = new InventoryEntity(item, expDate, quantity, amount);
         userExpenses expenses = new userExpenses();
         expenses.setItemId(1);
-        expenses.setAmount(10.0);
+        expenses.setAmount(AppConstants.ITEM_AMOUNT);
         expenses.setEmailId("demo@email.com");
         when(inventoryRepository.findInventoryEntitiesByItemName(anyString(), anyString())).thenReturn(Optional.empty());
         when(inventoryRepository.save(any(InventoryEntity.class))).thenReturn(inventoryEntity);
@@ -68,18 +64,18 @@ class InventoryServiceTest {
         int quantity=1;
         String expDate="2023-05-01";
         String groupCode="group1";
-        Double amount=10.0;
+        Double amount= AppConstants.ITEM_AMOUNT;
         String emailId="demo@email.com";
         AddItemRequest request = new AddItemRequest(item,quantity,expDate,groupCode,amount,emailId);
         InventoryEntity inventoryEntity = new InventoryEntity(item, expDate, quantity, amount);
         userExpenses expenses = new userExpenses();
         expenses.setItemId(1);
-        expenses.setAmount(10.0);
+        expenses.setAmount(AppConstants.ITEM_AMOUNT);
         expenses.setEmailId("demo@email.com");
         when(inventoryRepository.findInventoryEntitiesByItemName(anyString(), anyString())).thenReturn(Optional.empty());
         when(inventoryRepository.save(any(InventoryEntity.class))).thenReturn(inventoryEntity);
         when(expenseRepository.findUserExpenseExists(emailId)).thenReturn(Optional.of(expenses));
-        when(expenseRepository.getPastUserExpenses(emailId)).thenReturn(30.4);
+        when(expenseRepository.getPastUserExpenses(emailId)).thenReturn(AppConstants.PAST_USER_EXPENSES);
         AddItemResponse response = inventoryService.addItem(request);
         Assertions.assertEquals("success", response.getStatus());
         Assertions.assertEquals("Item successfully", response.getMessage());
@@ -91,13 +87,13 @@ class InventoryServiceTest {
         int quantity=1;
         String expDate="2023-05-01";
         String groupCode="group1";
-        Double amount=10.0;
+        Double amount= AppConstants.ITEM_AMOUNT;
         String emailId="demo@email.com";
         AddItemRequest request = new AddItemRequest(item,quantity,expDate,groupCode,amount,emailId);
         InventoryEntity inventoryEntity = new InventoryEntity(item, expDate, quantity, amount);
         userExpenses expenses = new userExpenses();
         expenses.setItemId(1);
-        expenses.setAmount(10.0);
+        expenses.setAmount(AppConstants.ITEM_AMOUNT);
         expenses.setEmailId("demo@email.com");
         when(inventoryRepository.findInventoryEntitiesByItemName(anyString(), anyString())).thenReturn(Optional.of(inventoryEntity));
         when(expenseRepository.findUserExpenseExists(emailId)).thenReturn(Optional.empty());
@@ -164,12 +160,12 @@ class InventoryServiceTest {
         int quantity=1;
         String expDate="2023-05-01";
         String groupCode="group1";
-        Double amount=10.0;
+        Double amount=AppConstants.ITEM_AMOUNT;
         String emailId="demo@email.com";
         DeleteItemRequest request = new DeleteItemRequest(item,groupCode,amount,emailId);
         InventoryEntity inventoryEntity = new InventoryEntity(item, expDate, quantity, amount);
         when(inventoryRepository.findInventoryEntitiesByItemName(item,groupCode)).thenReturn(Optional.of(inventoryEntity));
-        when(expenseRepository.getPastUserExpenses(emailId)).thenReturn(33.34);
+        when(expenseRepository.getPastUserExpenses(emailId)).thenReturn(AppConstants.PAST_USER_EXPENSES1);
         DeleteItemResponse response = inventoryService.deleteItem(request);
         Assertions.assertEquals("success", response.getStatus());
         Assertions.assertEquals("Item Updated successfully", response.getMessage());
@@ -182,7 +178,7 @@ class InventoryServiceTest {
         int quantity=1;
         String expDate="2023-05-01";
         String groupCode="group1";
-        Double amount=10.0;
+        Double amount=AppConstants.ITEM_AMOUNT;
         String emailId="demo@email.com";
         DeleteItemRequest request = new DeleteItemRequest(item,groupCode,amount,emailId);
         when(inventoryRepository.findInventoryEntitiesByItemName(item,groupCode)).thenReturn(Optional.empty());

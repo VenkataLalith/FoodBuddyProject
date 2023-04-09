@@ -1,11 +1,11 @@
 package foodBuddy.foodBuddy.groupManagement;
 
 import foodBuddy.foodBuddy.appuser.UserRepository;
+import foodBuddy.foodBuddy.constants.AppConstants;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Random;
 
 @Service
@@ -114,7 +114,7 @@ public class AppGroupService {
     }
     public String generateCode(){
         Random rand = new Random();
-        int randomNumber = rand.nextInt(900000) + 100000;
+        int randomNumber = rand.nextInt(AppConstants.RANDOM_NUMBER_MAX) + AppConstants.RANDOM_NUMBER_MIN    ;
         String groupCode = Integer.toString(randomNumber);
         String groupExists = groupRepository.findGroupByCode(groupCode);
         if (groupExists!=null){

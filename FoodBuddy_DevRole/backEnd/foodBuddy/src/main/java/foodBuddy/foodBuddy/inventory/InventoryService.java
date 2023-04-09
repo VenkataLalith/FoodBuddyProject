@@ -21,41 +21,75 @@ public class InventoryService {
     private final ExpenseRepository expenseRepository;
 
     public AddItemResponse addItem(AddItemRequest request) {
-        System.out.println("inside Inventory Add");
-        System.out.println(request);
         AddItemResponse response = new AddItemResponse();
-        InventoryEntity inventory = new InventoryEntity(request.getItemName(), request.getExpDate(),request.getQuantity(), request.getGroupCode(), request.getAmount());
-        boolean itemExists = inventoryRepository.findInventoryEntitiesByItemName(inventory.getItemName(),inventory.getGroupCode()).isPresent();
-        boolean userExpensesExits = expenseRepository.findUserExpenseExists(request.getEmailId()).isPresent();
-        System.out.println("itemExists: "+itemExists);
-        userExpenses userExpenses = new userExpenses(request.getEmailId(), request.getAmount());
-        if (!itemExists){
-            System.out.println("userExpensesExits: "+userExpensesExits);
-            if (userExpensesExits){
-                Double previousAmount = expenseRepository.getPastUserExpenses(request.getEmailId());
-                expenseRepository.updateUserExpense(request.getAmount()+previousAmount, request.getEmailId());
-                inventoryRepository.updateItemDetails(request.getItemName(), request.getGroupCode(), request.getExpDate(), request.getQuantity(), request.getAmount());
+        InventoryEntity inventory = createInventory(request);
+        boolean itemExists = checkInventoryExists(inventory);
+        boolean userExpensesExists = checkUserExpensesExists(request);
+        if (!itemExists) {
+            if (userExpensesExists) {
+                updateExistingUserExpense(request);
+                updateInventoryDetails(request, inventory);
+            } else {
+                saveNewUserExpense(request);
             }
-            else {
-                expenseRepository.save(userExpenses);
-            }
-            inventoryRepository.save(inventory);
+            saveNewInventory(inventory);
             response.setMessage("Item successfully");
             response.setStatus("success");
-        }
-        else {
-            if (userExpensesExits) {
-                expenseRepository.updateUserExpense(request.getAmount(), request.getEmailId());
-                inventoryRepository.updateItemDetails(request.getItemName(), request.getGroupCode(), request.getExpDate(), request.getQuantity(), request.getAmount());
-
+        } else {
+            if (userExpensesExists) {
+                updateExistingUserExpense(request);
+                updateInventoryDetails(request, inventory);
             } else {
                 response.setMessage("Item Exists");
                 response.setStatus("failure");
             }
         }
-
         return response;
     }
+
+    private InventoryEntity createInventory(AddItemRequest request) {
+        return new InventoryEntity(
+                request.getItemName(),
+                request.getExpDate(),
+                request.getQuantity(),
+                request.getGroupCode(),
+                request.getAmount()
+        );
+    }
+
+    private boolean checkInventoryExists(InventoryEntity inventory) {
+        return inventoryRepository
+                .findInventoryEntitiesByItemName(inventory.getItemName(), inventory.getGroupCode())
+                .isPresent();
+    }
+
+    private boolean checkUserExpensesExists(AddItemRequest request) {
+        return expenseRepository.findUserExpenseExists(request.getEmailId()).isPresent();
+    }
+
+    private void updateExistingUserExpense(AddItemRequest request) {
+        Double previousAmount = expenseRepository.getPastUserExpenses(request.getEmailId());
+        expenseRepository.updateUserExpense(request.getAmount() + previousAmount, request.getEmailId());
+    }
+
+    private void updateInventoryDetails(AddItemRequest request, InventoryEntity inventory) {
+        inventoryRepository.updateItemDetails(
+                request.getItemName(),
+                request.getGroupCode(),
+                request.getExpDate(),
+                request.getQuantity(),
+                request.getAmount()
+        );
+    }
+
+    private void saveNewUserExpense(AddItemRequest request) {
+        expenseRepository.save(new userExpenses(request.getEmailId(), request.getAmount()));
+    }
+
+    private void saveNewInventory(InventoryEntity inventory) {
+        inventoryRepository.save(inventory);
+    }
+
 
 //    public UpdateItemResponse updateItem(UpdateItemRequest request) {
 //        System.out.println(request);
@@ -101,21 +135,28 @@ public class InventoryService {
     }
     public DeleteItemResponse deleteItem(DeleteItemRequest request) {
         DeleteItemResponse response = new DeleteItemResponse();
-        boolean itemExists = inventoryRepository.findInventoryEntitiesByItemName(request.getItemName(),request.getGroupCode()).isPresent();
-        if (itemExists){
-            Double previousAmount = expenseRepository.getPastUserExpenses(request.getEmailId());
-            if(request.getAmount() != null) {
-                expenseRepository.updateUserExpense(Math.abs(request.getAmount() - previousAmount), request.getEmailId());
-            }
-            inventoryRepository.deleteItemfromDB(request.getItemName(),request.getGroupCode());
+        boolean itemExists = inventoryRepository.findInventoryEntitiesByItemName(request.getItemName(), request.getGroupCode()).isPresent();
+        if (itemExists) {
+            updateExpense(request.getEmailId(), request.getAmount());
+            deleteItemFromInventory(request.getItemName(), request.getGroupCode());
             response.setMessage("Item Updated successfully");
             response.setStatus("success");
-            return response;
-        }
-        else {
+        } else {
             response.setMessage("Item Does not Exists");
             response.setStatus("failure");
-            return response;
+        }
+        return response;
+    }
+
+    private void updateExpense(String emailId, Double amount) {
+        if (amount != null) {
+            Double previousAmount = expenseRepository.getPastUserExpenses(emailId);
+            expenseRepository.updateUserExpense(Math.abs(amount - previousAmount), emailId);
         }
     }
+
+    private void deleteItemFromInventory(String itemName, String groupCode) {
+        inventoryRepository.deleteItemfromDB(itemName, groupCode);
+    }
+
 }
