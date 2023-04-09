@@ -9,7 +9,7 @@ import { GroupManagement } from './Components/GroupManagement';
 
 function App() {
   axios.interceptors.request.use(config => {
-    config.headers['Origin'] = 'http://172.17.0.203:8080';
+    config.headers['Origin'] = 'http://172.17.0.203:3000';
     return config;
   });
 
