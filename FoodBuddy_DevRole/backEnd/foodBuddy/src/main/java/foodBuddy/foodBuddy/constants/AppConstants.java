@@ -5,7 +5,7 @@ public enum AppConstants {
     RECIPE_URL("https://api.spoonacular.com/recipes/"),
     INGREDIENT_LITERAL("ingredients="),
     API_KEY_LITERAL("apiKey="),
-    API_KEY("fab641bba03c4195be52c40c98f8ac24"),
+    API_KEY("9da1dbe7a8454d1aa4809d05d9c6ba06"),
     AMPERSAND("&"),
     RECIPE_COUNT(2),
     MAIL_PORT(587),
