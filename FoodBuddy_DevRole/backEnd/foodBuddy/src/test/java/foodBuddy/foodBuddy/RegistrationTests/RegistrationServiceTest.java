@@ -7,12 +7,9 @@ import static org.mockito.Mockito.when;
 
 import foodBuddy.foodBuddy.appuser.AppUser;
 import foodBuddy.foodBuddy.appuser.AppUserService;
-import foodBuddy.foodBuddy.registration.EmailValidator;
-import foodBuddy.foodBuddy.registration.RegistrationRequest;
-import foodBuddy.foodBuddy.registration.RegistrationService;
-import foodBuddy.foodBuddy.registration.token.ConfirmationToken;
-import foodBuddy.foodBuddy.registration.token.ConfirmationTokenService;
-import java.util.Optional;
+import foodBuddy.foodBuddy.appuser.EmailValidator;
+import foodBuddy.foodBuddy.appuser.RegistrationRequest;
+import foodBuddy.foodBuddy.appuser.RegistrationService;
 import org.junit.Before;
 import org.junit.Test;
 public class RegistrationServiceTest {

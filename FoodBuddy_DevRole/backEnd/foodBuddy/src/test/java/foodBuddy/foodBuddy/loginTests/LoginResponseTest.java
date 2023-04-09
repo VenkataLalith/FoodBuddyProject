@@ -1,6 +1,6 @@
 package foodBuddy.foodBuddy.loginTests;
 
-import foodBuddy.foodBuddy.login.LoginResponse;
+import foodBuddy.foodBuddy.appuser.LoginResponse;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

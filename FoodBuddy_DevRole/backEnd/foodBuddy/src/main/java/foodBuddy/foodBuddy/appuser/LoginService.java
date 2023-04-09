@@ -1,16 +1,7 @@
-package foodBuddy.foodBuddy.login;
+package foodBuddy.foodBuddy.appuser;
 
-import foodBuddy.foodBuddy.appuser.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import foodBuddy.foodBuddy.appuser.AppUser;
-import foodBuddy.foodBuddy.appuser.AppUserService;
-import foodBuddy.foodBuddy.registration.EmailValidator;
-import foodBuddy.foodBuddy.registration.RegistrationRequest;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 

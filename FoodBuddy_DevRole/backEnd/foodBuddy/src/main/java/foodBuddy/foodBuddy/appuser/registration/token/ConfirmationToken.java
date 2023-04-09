@@ -1,6 +1,6 @@
-package foodBuddy.foodBuddy.registration.token;
+package foodBuddy.foodBuddy.appuser.registration.token;
 
-import foodBuddy.foodBuddy.appuser.AppUser;
+//import foodBuddy.foodBuddy.appuser.AppUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,17 +32,15 @@ public class ConfirmationToken {
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
 
-    @ManyToOne
-    @JoinColumn(
-            nullable = false,
-            name = "app_user_id"
-    )
-    private AppUser appUser;
+//    @ManyToOne
+//    @JoinColumn(
+//            nullable = false,
+//            name = "app_user_id"
+//    )
 
-    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt ,AppUser appUser) {
+    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.appUser = appUser;
     }
 }

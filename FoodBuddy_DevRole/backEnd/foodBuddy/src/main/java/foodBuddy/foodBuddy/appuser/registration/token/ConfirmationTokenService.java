@@ -1,4 +1,4 @@
-package foodBuddy.foodBuddy.registration.token;
+package foodBuddy.foodBuddy.appuser.registration.token;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,5 +12,6 @@ public class ConfirmationTokenService {
         confirmationTokenRepository.save(token);
 
     }
+
 
 }

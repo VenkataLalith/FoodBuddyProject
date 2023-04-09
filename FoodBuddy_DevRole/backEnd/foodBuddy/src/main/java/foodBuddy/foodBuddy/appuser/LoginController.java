@@ -1,4 +1,4 @@
-package foodBuddy.foodBuddy.login;
+package foodBuddy.foodBuddy.appuser;
 
 import org.springframework.web.bind.annotation.*;
 

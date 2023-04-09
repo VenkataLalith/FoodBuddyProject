@@ -1,11 +1,6 @@
-package foodBuddy.foodBuddy.registration;
+package foodBuddy.foodBuddy.appuser;
 
-import foodBuddy.foodBuddy.appuser.AppUser;
-import foodBuddy.foodBuddy.appuser.AppUserService;
-import foodBuddy.foodBuddy.registration.token.ConfirmationToken;
-import foodBuddy.foodBuddy.registration.token.ConfirmationTokenService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RegistrationService {

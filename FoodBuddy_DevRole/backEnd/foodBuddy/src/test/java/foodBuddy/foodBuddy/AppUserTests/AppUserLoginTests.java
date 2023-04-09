@@ -2,10 +2,8 @@ package foodBuddy.foodBuddy.AppUserTests;
 
 import foodBuddy.foodBuddy.appuser.AppUser;
 import foodBuddy.foodBuddy.appuser.AppUserLogin;
-import foodBuddy.foodBuddy.appuser.AppUserService;
 import foodBuddy.foodBuddy.appuser.UserRepository;
 import foodBuddy.foodBuddy.groupManagement.ViewGroupUsers;
-import foodBuddy.foodBuddy.registration.token.ConfirmationTokenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -14,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;

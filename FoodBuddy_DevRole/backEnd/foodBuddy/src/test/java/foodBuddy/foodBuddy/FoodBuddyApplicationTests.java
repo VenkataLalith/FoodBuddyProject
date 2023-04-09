@@ -7,23 +7,21 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
-import foodBuddy.foodBuddy.groupManagement.AppGroupService;
 import foodBuddy.foodBuddy.groupManagement.GroupRepository;
-import foodBuddy.foodBuddy.registration.token.ConfirmationTokenService;
+import foodBuddy.foodBuddy.appuser.registration.token.ConfirmationTokenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import foodBuddy.foodBuddy.appuser.AppUser;
 import foodBuddy.foodBuddy.appuser.AppUserService;
 import foodBuddy.foodBuddy.appuser.UserRepository;
-import foodBuddy.foodBuddy.registration.EmailValidator;
-import foodBuddy.foodBuddy.registration.token.ConfirmationTokenRepository;
+import foodBuddy.foodBuddy.appuser.EmailValidator;
+import foodBuddy.foodBuddy.appuser.registration.token.ConfirmationTokenRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 

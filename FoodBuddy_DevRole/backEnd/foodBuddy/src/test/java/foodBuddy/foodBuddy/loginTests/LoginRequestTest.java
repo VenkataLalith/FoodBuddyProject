@@ -1,6 +1,6 @@
 package foodBuddy.foodBuddy.loginTests;
 
-import foodBuddy.foodBuddy.login.LoginRequest;
+import foodBuddy.foodBuddy.appuser.LoginRequest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
