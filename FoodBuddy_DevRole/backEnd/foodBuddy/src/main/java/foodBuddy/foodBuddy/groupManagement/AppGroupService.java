@@ -1,11 +1,11 @@
 package foodBuddy.foodBuddy.groupManagement;
 
 import foodBuddy.foodBuddy.appuser.UserRepository;
+import foodBuddy.foodBuddy.constants.AppConstants;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Random;
 
 @Service
@@ -15,6 +15,27 @@ public class AppGroupService {
     private final GroupRepository groupRepository;
     @Autowired
     private final UserRepository userRepository;
+
+    public GroupCreationResponse createGroup(GroupCreationRequest request) {
+        AppGroup appGroup = new AppGroup(request.getGroupName(),request.getGroupCode());
+        System.out.println("appGroup "+ appGroup);
+        /*
+        Generate a random groupCode, instead of getting from user.
+         */
+        String groupCode = generateCode();// validating for unique groupCode
+
+        appGroup.setGroupCode(groupCode);
+        GroupCreationResponse creationReq = CreateGroup(appGroup);
+        if(creationReq.getStatus().equalsIgnoreCase("success")) {
+            GroupJoinRequest joinReq = new GroupJoinRequest(groupCode, request.getUserName());
+            GroupJoinResponse response = joinGroup(joinReq);
+            creationReq.setGroupCode(groupCode);
+            if (response.getStatus().equalsIgnoreCase("failure")){
+                creationReq.setStatus("joinFailed");
+            }
+        }
+        return creationReq;
+    }
 
 
     public GroupCreationResponse CreateGroup(AppGroup appGroup){
@@ -93,7 +114,7 @@ public class AppGroupService {
     }
     public String generateCode(){
         Random rand = new Random();
-        int randomNumber = rand.nextInt(900000) + 100000;
+        int randomNumber = rand.nextInt(AppConstants.RANDOM_NUMBER_MAX) + AppConstants.RANDOM_NUMBER_MIN    ;
         String groupCode = Integer.toString(randomNumber);
         String groupExists = groupRepository.findGroupByCode(groupCode);
         if (groupExists!=null){
@@ -127,3 +148,5 @@ public class AppGroupService {
         return leaveGroupResponse;
     }
 }
+
+

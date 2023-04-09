@@ -1,9 +1,10 @@
 package foodBuddy.foodBuddy.notification;
+
+import foodBuddy.foodBuddy.constants.AppConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Properties;
 
@@ -16,7 +17,7 @@ public class MailConfig {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
         mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        mailSender.setPort(AppConstants.MAIL_PORT);
         mailSender.setUsername("foodbuddydal@gmail.com");
         mailSender.setPassword(mailPassword);
 

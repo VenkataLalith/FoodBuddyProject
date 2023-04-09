@@ -5,9 +5,9 @@ server:
   port: 8081
 spring:
   datasource:
-    password: rie5amaeRa #Neha@1994 rie5amaeRa
-    url: jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_14_DEVINT #db-5308.cs.dal.ca
-    username: CSCI5308_14_DEVINT_USER #root #
+    password: rie5amaeRa
+    url: jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_14_DEVINT
+    username: CSCI5308_14_DEVINT_USER
     hikari:
       maximum-pool-size: 2
   jpa:
@@ -22,7 +22,7 @@ mail:
   protocol: smtp
   tls: true
   properties.mail.smtp:
-      auth: true
-      starttls.enable: true
-      ssl.trust: smtp.gmail.com
+    auth: true
+    starttls.enable: true
+    ssl.trust: smtp.gmail.com
 
