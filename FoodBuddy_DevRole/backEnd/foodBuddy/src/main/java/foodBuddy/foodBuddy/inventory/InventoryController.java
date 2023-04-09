@@ -1,9 +1,11 @@
 package foodBuddy.foodBuddy.inventory;
 
 
-import foodBuddy.foodBuddy.notification.NotificationRequest;
-import foodBuddy.foodBuddy.notification.NotificationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import foodBuddy.foodBuddy.inventory.invenotryResponses.AddItemResponse;
+import foodBuddy.foodBuddy.inventory.invenotryResponses.DeleteItemResponse;
+import foodBuddy.foodBuddy.inventory.invenotryResponses.ViewItemsResponse;
+import foodBuddy.foodBuddy.inventory.inventoryRequests.AddItemRequest;
+import foodBuddy.foodBuddy.inventory.inventoryRequests.DeleteItemRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,7 +34,7 @@ public class InventoryController {
         return response;
     }
     @PostMapping("/delete")
-    public DeleteItemResponse deleteItem(@RequestBody  DeleteItemRequest request) {
+    public DeleteItemResponse deleteItem(@RequestBody DeleteItemRequest request) {
     DeleteItemResponse response = inventoryService.deleteItem(request);
     return response;
     }

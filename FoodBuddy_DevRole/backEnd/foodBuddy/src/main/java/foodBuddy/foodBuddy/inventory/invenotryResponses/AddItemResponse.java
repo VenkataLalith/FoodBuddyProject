@@ -1,4 +1,4 @@
-package foodBuddy.foodBuddy.inventory;
+package foodBuddy.foodBuddy.inventory.invenotryResponses;
 
 import foodBuddy.foodBuddy.groupManagement.ViewGroupUsers;
 import lombok.*;
@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeleteItemResponse {
+public class AddItemResponse {
     private String status;
     private String message;
     //private int itemId;
