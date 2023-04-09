@@ -33,23 +33,23 @@ public class RecipeServiceTests {
         recipeService = new RecipeService(inventoryRepository);
     }
 
-//    @Test
-//    void viewRecipieTestSuccess() throws UnsupportedEncodingException {
-//       String groupCode = "1234";
-//       List<String> itemList = new ArrayList<String>();
-//       itemList.add("Biryani");
-//       itemList.add("fried rice");
-//       itemList.add("Pizza");
-//       String items= String.join(",+",itemList);
-//       when(inventoryRepository.findItemNameList(groupCode)).thenReturn(itemList);
-//
-//
-//        RecipeResponse response  = recipeService.viewRecipe(groupCode);
-//
-//        assertEquals("Found Recipes",response.getMessage());
-//        assertEquals("success",response.getStatus());
-//
-//    }
+    @Test
+    void viewRecipieTestSuccess() throws UnsupportedEncodingException {
+       String groupCode = "1234";
+       List<String> itemList = new ArrayList<String>();
+       itemList.add("Biryani");
+       itemList.add("fried rice");
+       itemList.add("Pizza");
+       String items= String.join(",+",itemList);
+       when(inventoryRepository.findItemNameList(groupCode)).thenReturn(itemList);
+
+
+        RecipeResponse response  = recipeService.viewRecipe(groupCode);
+
+        assertEquals("Found Recipes",response.getMessage());
+        assertEquals("success",response.getStatus());
+
+    }
 
     @Test
     void viewRecipieTestFailure() throws UnsupportedEncodingException {
@@ -61,19 +61,19 @@ public class RecipeServiceTests {
 
     }
 
-//    @Test
-//    void viewRecipieTestWhenNoListIsPresent() throws UnsupportedEncodingException {
-//        String groupCode = "1234";
-//        List<String> itemList = new ArrayList<String>();
-//        String items= String.join(",+",itemList);
-//        when(inventoryRepository.findItemNameList(groupCode)).thenReturn(itemList);
-//        RecipeResponse response  = recipeService.viewRecipe(groupCode);
-//        assertEquals("Found Recipes",response.getMessage());
-//        assertEquals("success",response.getStatus());
-//        assertEquals(0,response.getRecipeList().size());
-//
-//
-//    }
+    @Test
+    void viewRecipieTestWhenNoListIsPresent() throws UnsupportedEncodingException {
+        String groupCode = "1234";
+        List<String> itemList = new ArrayList<String>();
+        String items= String.join(",+",itemList);
+        when(inventoryRepository.findItemNameList(groupCode)).thenReturn(itemList);
+        RecipeResponse response  = recipeService.viewRecipe(groupCode);
+        assertEquals("Found Recipes",response.getMessage());
+        assertEquals("success",response.getStatus());
+        assertEquals(0,response.getRecipeList().size());
+
+
+    }
 
     
 
