@@ -16,7 +16,7 @@ import java.util.function.Function;
 
 
 public class AppUserLogin implements UserDetailsService {
-    private final UserRepository  userRepository = new UserRepository() {
+    public final UserRepository  userRepository = new UserRepository() {
         @Override
         public Optional<AppUser> findByEmail(String email) {
             return Optional.empty();

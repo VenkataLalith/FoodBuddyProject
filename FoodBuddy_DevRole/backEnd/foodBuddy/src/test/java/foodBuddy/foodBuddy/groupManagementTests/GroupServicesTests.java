@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 public class GroupServicesTests {
@@ -17,6 +18,7 @@ public class GroupServicesTests {
 
     private GroupServices groupServices;
 
+    @Mock
     private GroupRepository groupRepository;
 
     @Mock
@@ -29,67 +31,36 @@ public class GroupServicesTests {
         groupServices = new GroupServices(appGroupService);
     }
 
-    @Test
-    public void testCreateGroup_success() {
-//        String groupName="Demo Group";
-//        String groupCode="1234";
-//        String userName="user@email.com";
-//        GroupCreationRequest request = new GroupCreationRequest(groupName,groupCode,userName);
-//        AppGroup appGroup = new AppGroup(groupName,groupCode);
-//
-//        GroupJoinRequest joinRequest = new GroupJoinRequest(groupCode, userName);
-//        GroupJoinResponse joinResponse = new GroupJoinResponse();
-//        joinResponse.setStatus("success");
-//        GroupCreationResponse creationResponse = new GroupCreationResponse();
-//        creationResponse.setStatus("success");
 
-//        when(appGroupService.generateCode()).thenReturn(groupCode);
-//        when(groupRepository.findGroupByCode(groupCode)).thenReturn(" ");
-//        when(appGroupService.CreateGroup(appGroup)).thenReturn(creationResponse);
-//        when(appGroupService.joinGroup(joinRequest)).thenReturn(joinResponse);
-//
-//        GroupCreationResponse response = groupServices.createGroup(request);
-//        System.out.println(" "+response.getStatus()+" "+response.getMessage());
-//        assertEquals("success", response.getStatus());
+    @Test
+    public void testCreateGroupSuccess() {
+
+        String groupCode="1234";
+        String groupName="DemoGroup";
+        String userName="user@email.com";
+        GroupCreationRequest request = new GroupCreationRequest(groupCode,groupCode,userName);
+        GroupJoinRequest joinReq = new GroupJoinRequest(groupCode, userName);
+        GroupJoinResponse groupJoinResponse = new GroupJoinResponse();
+        groupJoinResponse.setStatus("success");
+        groupJoinResponse.setMessage("Joined successfully");
+        when(appGroupService.generateCode()).thenReturn(groupCode);
+        GroupCreationResponse response = groupServices.createGroup(request);
+        assertEquals("Group created successfully",response.getMessage());
     }
 
-//    @Test
-//    public void testCreateGroup_joinFailed() {
-//        GroupCreationRequest request = new GroupCreationRequest("Group1", "ABC");
-//        AppGroup appGroup = new AppGroup(request.getGroupName(), request.getGroupCode());
-//        GroupCreationResponse creationResponse = new GroupCreationResponse("success");
-//        GroupJoinRequest joinRequest = new GroupJoinRequest(request.getGroupCode(), "User1");
-//        GroupJoinResponse joinResponse = new GroupJoinResponse("failure");
-//
-//        when(appGroupService.CreateGroup(appGroup)).thenReturn(creationResponse);
-//        when(appGroupService.joinGroup(joinRequest)).thenReturn(joinResponse);
-//
-//        GroupCreationResponse response = groupServices.createGroup(request);
-//
-//        assertEquals("joinFailed", response.getStatus());
-//    }
-//
-//    @Test
-//    public void testJoinGroup() {
-//        GroupJoinRequest request = new GroupJoinRequest("ABC", "User1");
-//        GroupJoinResponse response = new GroupJoinResponse("success");
-//
-//        when(appGroupService.joinGroup(request)).thenReturn(response);
-//
-//        GroupJoinResponse joinResponse = groupServices.joinGroup(request);
-//
-//        assertEquals("success", joinResponse.getStatus());
-//    }
-//
-//    @Test
-//    public void testViewGroup() {
-//        String groupCode = "ABC";
-//        ViewGroupUsersResponse response = new ViewGroupUsersResponse(groupCode);
-//
-//        when(appGroupService.findGroupUsers(groupCode)).thenReturn(response);
-//
-//        ViewGroupUsersResponse viewResponse = groupServices.viewGroup(groupCode);
-//
-//        assertEquals(groupCode, viewResponse.getGroupCode());
-//    }
+    @Test
+    public void testCreateGroupFailure() {
+
+        String groupCode="1234";
+        String groupName="DemoGroup";
+        String userName="user@email.com";
+        GroupCreationRequest request = new GroupCreationRequest(groupCode,groupCode,userName);
+        GroupJoinRequest joinReq = new GroupJoinRequest(groupCode, userName);
+        GroupJoinResponse groupJoinResponse = new GroupJoinResponse();
+        groupJoinResponse.setStatus("success");
+        groupJoinResponse.setMessage("Joined successfully");
+        when(appGroupService.generateCode()).thenReturn(groupCode);
+        GroupCreationResponse response = groupServices.createGroup(request);
+        assertEquals("joinFailed",response.getStatus());
+    }
 }

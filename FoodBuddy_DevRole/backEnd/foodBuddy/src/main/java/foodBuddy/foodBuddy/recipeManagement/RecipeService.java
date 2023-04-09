@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class RecipeService {
     @Autowired
     private final InventoryRepository inventoryRepository;
-    RecipeResponse viewRecipe(String groupCode) {
+    public RecipeResponse viewRecipe(String groupCode) {
         RecipeResponse response = new RecipeResponse();
         try {
             response.setRecipeList(callExternalRecipeApiForRecipeList(groupCode));

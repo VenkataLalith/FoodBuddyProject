@@ -1,5 +1,10 @@
 package foodBuddy.foodBuddy.groupManagementTests;
 
+import foodBuddy.foodBuddy.appuser.UserRepository;
+import foodBuddy.foodBuddy.groupManagement.GroupRepository;
+import foodBuddy.foodBuddy.groupManagement.GroupServices;
+import foodBuddy.foodBuddy.recipeManagement.RecipeService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -18,39 +23,39 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@SpringJUnitConfig
-//@WebMvcTest(GroupController.class)
 class GroupControllerTests {
-//
-//    @MockBean
-//    private GroupServices groupServices;
-//
+
+    private GroupServices groupServices;
+
+//    private App
+
 //    @Mock
 //    private GroupCreationRequest groupCreationRequest;
-//
+
 //    @Mock
 //    private GroupJoinRequest groupJoinRequest;
-//
+
 //    @Mock
 //    private ViewGroupUsersResponse viewGroupResponse;
-//
+
 //    @Mock
 //    private GroupCreationResponse groupCreationResponse;
-//
+
 //    @Mock
 //    private GroupJoinResponse groupJoinResponse;
-//
-//    @Mock
+
+    @Mock
 //    private GroupRepository groupRepository;
 //
 //    @Mock
 //    private UserRepository userRepository;
-//
-//    private MockMvc mockMvc;
-//
+
+    private MockMvc mockMvc;
+
 //    @BeforeEach
 //    void setUp() {
 //        MockitoAnnotations.openMocks(this);
+//        groupServices = new GroupServices(groupRepository);
 //    }
 //
 //    @Test

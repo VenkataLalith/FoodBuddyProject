@@ -29,4 +29,12 @@ public class EmailValidator implements Predicate<String> {
         System.out.println(matcher.matches());
         return matcher.matches();
     }
+
+    public boolean validate(String email) {
+        return test(email);
+    }
+
+    public Object isValid(String any) {
+        return test(any);
+    }
 }
