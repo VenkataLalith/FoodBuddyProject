@@ -46,7 +46,7 @@ export const Register = () => {
   }
 
   const callRegisterapi = (formData) => {
-    axios.post('/api/v1/registration', formData)
+    axios.post('http://172.17.0.203:3000/api/v1/registration', formData)
       .then(response => {
         console.log(response);
         alert('User Created successfully')
