@@ -104,7 +104,7 @@ const callLeaveGroupApi = (formDataLeave) => {
      {/* Need to reload the page, once successfully exited
         and have to show create group and join group button*/}
       if(response.data.status==="Success"){
-           dispatch(updateGroupNumber(joinCode))
+           dispatch(updateGroupNumber(""))
            alert('User left group successfully')
             setdisplayCreateGroup(true)
             navigate('/home')

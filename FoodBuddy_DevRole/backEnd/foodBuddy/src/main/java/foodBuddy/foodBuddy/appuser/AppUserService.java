@@ -5,6 +5,7 @@ import foodBuddy.foodBuddy.login.LoginResponse;
 import foodBuddy.foodBuddy.registration.token.ConfirmationToken;
 import foodBuddy.foodBuddy.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +22,6 @@ public class AppUserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found";
 
-    private final static String PASSWORD_WRONG ="Wrong Password for email: %s";
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
     @Override
@@ -52,7 +52,7 @@ public class AppUserService implements UserDetailsService {
     private ConfirmationToken generateConfirmationToken(AppUser appUser) {
         String token = UUID.randomUUID().toString();
         LocalDateTime createdDate = LocalDateTime.now();
-        LocalDateTime expirationDate = createdDate.plusMinutes(AppConstants.TOKEN_EXPIRATION_MINUTES);
+        LocalDateTime expirationDate = createdDate.plusMinutes(Integer.parseInt(AppConstants.TOKEN_EXPIRATION_MINUTES.getValue().toString()));
         return new ConfirmationToken(token, createdDate, expirationDate, appUser);
     }
 
