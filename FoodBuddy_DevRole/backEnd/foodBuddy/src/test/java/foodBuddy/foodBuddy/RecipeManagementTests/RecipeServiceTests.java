@@ -52,6 +52,24 @@ public class RecipeServiceTests {
 //    }
 
     @Test
+    void viewRecipieTestSuccessOne() throws UnsupportedEncodingException {
+       String groupCode = "1234";
+       List<String> itemList = new ArrayList<String>();
+       itemList.add("Biryani");
+       itemList.add("fried rice");
+       itemList.add("Pizza");
+       String items= String.join(",+",itemList);
+       when(inventoryRepository.findItemNameList(groupCode)).thenReturn(itemList);
+
+
+        RecipeResponse response  = recipeService.viewRecipe(groupCode);
+
+        assertEquals("Found Recipes",response.getMessage());
+        assertEquals("success",response.getStatus());
+
+    }
+
+    @Test
     void viewRecipieTestFailure() throws UnsupportedEncodingException {
         String groupCode = "1234";
         when(inventoryRepository.findItemNameList(groupCode)).thenReturn(null);
@@ -60,6 +78,7 @@ public class RecipeServiceTests {
         assertEquals("failure",response.getStatus());
 
     }
+    
 
 //    @Test
 //    void viewRecipieTestWhenNoListIsPresent() throws UnsupportedEncodingException {
@@ -74,8 +93,5 @@ public class RecipeServiceTests {
 //
 //
 //    }
-
-    
-
 
 }
