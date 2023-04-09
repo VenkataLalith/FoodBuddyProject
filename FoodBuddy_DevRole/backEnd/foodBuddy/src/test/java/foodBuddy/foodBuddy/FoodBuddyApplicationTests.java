@@ -3,7 +3,7 @@ package foodBuddy.foodBuddy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
@@ -115,17 +115,23 @@ class FoodBuddyApplicationTests {
 }
 
 	@Test
-	void userRegistrationWithInvalidEmailTest() {
-    String email = "invalidEmail";
-	Optional<AppUser> empty = Optional.empty();
-    AppUser invalidUser = new AppUser("Invalid", "User", "password", email);
+	void userRegistrationSuccess() {
+		String fName="userFname";
+		String lName="userLname";
+		String password="mypass";
+    String emailId="user@email.com";
+	AppUser user = new AppUser(fName,lName,password,emailId);
+	when(userRepository.findByEmail(emailId)).thenReturn(Optional.empty());
+	String resultToke = appUserService.signUpUser(user);
+	verify(userRepository, atLeastOnce()).save(user);
+
 }
 
 	@Test
 	void userRegistrationWithExistingEmailTest() {
     String email = "existingUser@example.com";
     AppUser existingUser = new AppUser("Existing", "User", "password", email);
-    when(userRepository.findByEmail(email)).thenReturn(Optional.of(existingUser));
+	when(userRepository.findByEmail(email)).thenReturn(Optional.of(existingUser));
     assertEquals("User Exists", appUserService.signUpUser(existingUser));
 }
 }
