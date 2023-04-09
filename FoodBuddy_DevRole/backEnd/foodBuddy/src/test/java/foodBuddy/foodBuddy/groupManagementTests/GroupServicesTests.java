@@ -16,8 +16,6 @@ public class GroupServicesTests {
 
     private AppGroupService appGroupService;
 
-    private GroupServices groupServices;
-
     @Mock
     private GroupRepository groupRepository;
 
@@ -28,7 +26,6 @@ public class GroupServicesTests {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         appGroupService = new AppGroupService(groupRepository, userRepository);
-        groupServices = new GroupServices(appGroupService);
     }
 
 
@@ -44,7 +41,7 @@ public class GroupServicesTests {
         groupJoinResponse.setStatus("success");
         groupJoinResponse.setMessage("Joined successfully");
         when(appGroupService.generateCode()).thenReturn(groupCode);
-        GroupCreationResponse response = groupServices.createGroup(request);
+        GroupCreationResponse response = appGroupService.createGroup(request);
         assertEquals("Group created successfully",response.getMessage());
     }
 
@@ -60,7 +57,7 @@ public class GroupServicesTests {
         groupJoinResponse.setStatus("success");
         groupJoinResponse.setMessage("Joined successfully");
         when(appGroupService.generateCode()).thenReturn(groupCode);
-        GroupCreationResponse response = groupServices.createGroup(request);
+        GroupCreationResponse response = appGroupService.createGroup(request);
         assertEquals("joinFailed",response.getStatus());
     }
 }
