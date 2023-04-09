@@ -1,18 +1,53 @@
 # Food-Buddy-App
 
-## Description
-Welcome to our project! The project aims to develop a standalone Web app that enables effective shared grocery and expense management. The app automates inventory management and sends notifications when supplies run low, reducing the risk of running out of essential items. It also facilitates expense management by allowing users to split grocery bills and track expenses in real-time. The app further aims to reduce food waste and expenses through monthly usage analysis, providing users with insights into their consumption patterns and enabling them to make informed decisions about their shopping habits. Overall, the app offers a convenient and efficient solution to grocery and expense management for individuals and households.
+## Description of the Project
 
-## Instructions
-1. Fork this repository
-2. Clone the forked repository
-3. Add your contributions (code or documentation)
-4. Commit and push
-5. Wait for pull request to be merged
+Welcome to our project! Food-Buddy,The project aims to develop a standalone Web app that enables effective shared grocery and 
+expense management. The app automates inventory management and sends notifications when supplies run low, reducing the 
+risk of running out of essential items. It also facilitates expense management by allowing users to split grocery bills 
+and track expenses in real-time. The app further aims to reduce food waste and expenses through monthly usage analysis,
+providing users with insights into their consumption patterns and enabling them to make informed decisions about their 
+shopping habits. Overall, the app offers a convenient and efficient solution to grocery and expense management for 
+individuals and households.
 
 ## Dependencies
 
+This project has a few dependencies that need to be installed before it can be run successfully. 
+Please follow the instructions below to install the necessary dependencies:
+
+
+Note: If you encounter any issues during the installation process, please refer to the 
+documentation of each library for troubleshooting or contact the library's support team.
+
+Thank you for using this project!
+
+
 ## Build/Deployment Instructions
+
+This project can be deployed in a variety of ways depending on your needs.
+Below are some general instructions for deploying this project:
+
+1. Clone the project: First, you need to clone the project from the source code repository to your 
+   local machine using the following command:
+
+git clone https://github.com/[username]/[project-name].git
+
+Note: Replace [username] with your GitHub username and [project-name] with the name of your project.
+
+2. Install dependencies: Before deploying the project, make sure to install the required dependencies
+   by following the instructions provided in the Dependencies section of this README file.
+
+3. Set up environment variables: If your project requires environment variables, create a .env file in the 
+   root directory of your project and set the required environment variables. You can also set environment variables 
+   on your deployment platform if necessary.
+
+4. Deploy the project: Once you have chosen a deployment platform, follow the instructions provided by the platform 
+   to deploy your project. This may involve creating a deployment package, setting up a server or container, and 
+   configuring any necessary settings.
+
+Congratulations, your project is now deployed and ready to use! If you encounter any issues during the deployment process, 
+please refer to the documentation provided by your deployment platform or contact their support team for assistance.
+
 
 ## Usage Scenario
 
@@ -23,7 +58,6 @@ Welcome to our project! The project aims to develop a standalone Web app that en
 Actors:
 
 1. User
-2. Admin
 
 ### Preconditions:
 
