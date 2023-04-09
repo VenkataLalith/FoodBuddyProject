@@ -1,5 +1,6 @@
-package foodBuddy.foodBuddy.recipeManagement;
+package foodBuddy.foodBuddy.recipeManagement.Model;
 
+import foodBuddy.foodBuddy.recipeManagement.Model.Ingredient;
 import lombok.*;
 
 import java.util.List;

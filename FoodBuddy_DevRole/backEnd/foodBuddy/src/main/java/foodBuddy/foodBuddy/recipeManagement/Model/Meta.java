@@ -1,4 +1,4 @@
-package foodBuddy.foodBuddy.recipeManagement;
+package foodBuddy.foodBuddy.recipeManagement.Model;
 
 import lombok.*;
 
