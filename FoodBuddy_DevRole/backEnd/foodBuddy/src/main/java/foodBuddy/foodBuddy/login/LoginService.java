@@ -4,6 +4,7 @@ import foodBuddy.foodBuddy.appuser.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import foodBuddy.foodBuddy.appuser.AppUser;
@@ -17,10 +18,13 @@ import javax.mail.internet.InternetAddress;
 @Service
 public class LoginService {
 	private EmailValidator emailValidator;
-
-    @Autowired
     private AppUserService appUserService;
 
+
+    public LoginService(AppUserService appUserService, EmailValidator emailValidator) {
+        this.appUserService = appUserService;
+        this.emailValidator = emailValidator;
+    }
     public LoginResponse login(LoginRequest request) {
         LoginResponse response = new LoginResponse();
         try {

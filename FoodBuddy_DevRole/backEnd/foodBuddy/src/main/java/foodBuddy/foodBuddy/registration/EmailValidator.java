@@ -33,4 +33,8 @@ public class EmailValidator implements Predicate<String> {
     public boolean validate(String email) {
         return test(email);
     }
+
+    public Object isValid(String any) {
+        return test(any);
+    }
 }
