@@ -2,11 +2,14 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+  port: 8081
 spring:
   datasource:
-    password: Pakshal@6451
-    url: jdbc:mysql://localhost:3306/foodbuddy
-    username: root
+    password: rie5amaeRa #Neha@1994 rie5amaeRa
+    url: jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_14_DEVINT #db-5308.cs.dal.ca
+    username: CSCI5308_14_DEVINT_USER #root #
+    hikari:
+      maximum-pool-size: 2
   jpa:
     hibernate:
       ddl-auto: update
