@@ -9,7 +9,7 @@ import { GroupManagement } from './Components/GroupManagement';
 
 function App() {
   axios.interceptors.request.use(config => {
-    config.headers['Origin'] = 'http://localhost:3000';
+    config.headers['Origin'] = 'http://172.17.0.203:3000';
     return config;
   });
 
@@ -18,7 +18,7 @@ function App() {
       <BrowserRouter>
         {/* <Layout> */}
           {/* This is where we can add children */}
-          {/* <Login/> */}
+          {/* <Login/> */},
           <Routing />
         {/* </Layout> */}
       </BrowserRouter>
