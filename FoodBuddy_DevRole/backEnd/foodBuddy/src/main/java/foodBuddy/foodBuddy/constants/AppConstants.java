@@ -23,7 +23,8 @@ public enum AppConstants {
     DEFAULT_PAST_EXPENSES1(34.5),
     DEFAULT_PAST_EXPENSES2(44.5),
     DEFAULT_PAST_EXPENSES3(54.5),
-    DEFAULT_LONG_VALUE(334L);
+    DEFAULT_LONG_VALUE(334L),
+    NUM_ZERO(0);
     private final Object value;
 
     private AppConstants(Object value) {
