@@ -4,61 +4,61 @@ stages:
   - code_quality
   - issue
 
-# include:
-#   - template: Code-Quality.gitlab-ci.yml
+include:
+  - template: Code-Quality.gitlab-ci.yml
 
-# code_quality:
-#   stage: code_quality
-#   image: docker:stable
-#   services:
-#     - name : docker:dind
-#       alias: thedockerhost
-#   variables:
-#     DOCKER_HOST: tcp://thedockerhost:2375/
-#     DOCKER_DRIVER: overlay2
-#     DOCKER_TLS_CERTDIR: ""
-#   artifacts:
-#     paths: [gl-code-quality-report.json]
-#   tags:
-#     - csci5408grp14
+code_quality:
+  stage: code_quality
+  image: docker:stable
+  services:
+    - name : docker:dind
+      alias: thedockerhost
+  variables:
+    DOCKER_HOST: tcp://thedockerhost:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  artifacts:
+    paths: [gl-code-quality-report.json]
+  tags:
+    - csci5408grp14
 
-# backend-build-job:
-#   stage: build
-#   script:
-#     - chmod 777 -R FoodBuddy_DevRole
-#     - cd FoodBuddy_DevRole/backEnd/foodBuddy
-#     - mvn clean install -Dmaven.test.skip=true
-#     - cd target
-#     - cp ./*.jar /home/csci5308vm14/foodbuddy/backend
-#   artifacts:
-#     paths:
-#       - FoodBuddy_DevRole/backEnd/foodBuddy/target
-#   tags:
-#     - csci5308grp14_shell
+backend-build-job:
+  stage: build
+  script:
+    - chmod 777 -R FoodBuddy_DevRole
+    - cd FoodBuddy_DevRole/backEnd/foodBuddy
+    - mvn clean install -Dmaven.test.skip=true
+    - cd target
+    - cp ./*.jar /home/csci5308vm14/foodbuddy/backend
+  artifacts:
+    paths:
+      - FoodBuddy_DevRole/backEnd/foodBuddy/target
+  tags:
+    - csci5308grp14_shell
 
-# backend-test-job:
-#   stage: test
-#   image: maven:latest
-#   script:
-#     - cd FoodBuddy_DevRole/backEnd/foodBuddy
-#     - mvn test
-#   tags:
-#     - csci5308grp14_shell
+backend-test-job:
+  stage: test
+  image: maven:latest
+  script:
+    - cd FoodBuddy_DevRole/backEnd/foodBuddy
+    - mvn test
+  tags:
+    - csci5308grp14_shell
 
-# frontend-build-job:
-#   stage: build
-#   script:
-#     - export PATH=/home/csci5308vm14/.nvm/versions/node/v18.15.0/bin/:$PATH
-#     - cd FoodBuddy_DevRole/FrontEnd
-#     - npm install
-#     - unset CI 
-#     - npm run build
-#     - cp -R build /home/csci5308vm14/foodbuddy/frontend
-#   tags:
-#     - csci5308grp14_shell
-#   artifacts:
-#     paths:
-#       - FoodBuddy_DevRole/FrontEnd/build/
+frontend-build-job:
+  stage: build
+  script:
+    - export PATH=/home/csci5308vm14/.nvm/versions/node/v18.15.0/bin/:$PATH
+    - cd FoodBuddy_DevRole/FrontEnd
+    - npm install
+    - unset CI 
+    - npm run build
+    - cp -R build /home/csci5308vm14/foodbuddy/frontend
+  tags:
+    - csci5308grp14_shell
+  artifacts:
+    paths:
+      - FoodBuddy_DevRole/FrontEnd/build/
 
 code-quality:       # This job runs in the build stage, which runs first.
   stage: code_quality
