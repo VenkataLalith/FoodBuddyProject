@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -19,13 +21,10 @@ public class ExpenseService {
     @Autowired
     private UserRepository userRepository;
 
-    public ExpenseResponse getTotalUserExpenses(String emailId){
-        ExpenseResponse response = new ExpenseResponse();
-        response.setTotalUserExpense(expenseRepository.getPastUserExpenses(emailId));
-        response.setStatus("success");
-        response.setMessage("success");
-        return response ;
+    public double getTotalUserExpenses(String emailId) {
+        return expenseRepository.getPastUserExpenses(emailId);
     }
+
 
     public GroupExpenseResponse getGroupExpenses(GroupExpenseRequest request) {
         GroupExpenseResponse response = new GroupExpenseResponse();

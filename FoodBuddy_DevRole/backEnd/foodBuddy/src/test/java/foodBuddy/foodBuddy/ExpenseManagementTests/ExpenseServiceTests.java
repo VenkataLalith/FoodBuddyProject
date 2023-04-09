@@ -35,8 +35,8 @@ public class ExpenseServiceTests {
     void getTotalUserExpensesTestSuccess(){
         String emailId="user@email.com";
         when(expenseRepository.getPastUserExpenses(emailId)).thenReturn(33.33);
-        ExpenseResponse response = expenseService.getTotalUserExpenses(emailId);
-        assertEquals("success",response.getMessage());
+        Double response= expenseService.getTotalUserExpenses(emailId);
+        assertEquals(33.33,response);
     }
 
     @Test
