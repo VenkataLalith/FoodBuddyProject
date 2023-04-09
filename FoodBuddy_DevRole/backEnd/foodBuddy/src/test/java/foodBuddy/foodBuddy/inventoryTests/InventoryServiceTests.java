@@ -170,7 +170,6 @@ class InventoryServiceTest {
         DeleteItemRequest request = new DeleteItemRequest(item,groupCode,amount,emailId);
         InventoryEntity inventoryEntity = new InventoryEntity(item, expDate, quantity, amount);
         when(inventoryRepository.findInventoryEntitiesByItemName(item,groupCode)).thenReturn(Optional.of(inventoryEntity));
-        when(expenseRepository.getPastUserExpenses(emailId)).thenReturn(Double.parseDouble(AppConstants.PAST_USER_EXPENSES1.getValue().toString()));
         DeleteItemResponse response = inventoryService.deleteItem(request);
         Assertions.assertEquals("success", response.getStatus());
         Assertions.assertEquals("Item Updated successfully", response.getMessage());

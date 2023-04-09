@@ -2,6 +2,7 @@ package foodBuddy.foodBuddy.groupManagementTests;
 
 
 import foodBuddy.foodBuddy.appuser.UserRepository;
+import foodBuddy.foodBuddy.expense.ExpenseRepository;
 import foodBuddy.foodBuddy.groupManagement.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,11 +22,13 @@ public class GroupServicesTests {
 
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private ExpenseRepository expenseRepository;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        appGroupService = new AppGroupService(groupRepository, userRepository);
+        appGroupService = new AppGroupService(groupRepository, userRepository, expenseRepository);
     }
 
 
