@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/api/v1/groupApi")
 @AllArgsConstructor
+@CrossOrigin
 public class GroupController {
     private GroupServices groupServices;
     private AppGroupService appGroupService;

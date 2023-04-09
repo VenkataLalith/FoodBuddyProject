@@ -1,7 +1,7 @@
 package foodBuddy.foodBuddy.expense;
 
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/api/v1/expenses")
 public class ExpenseController {

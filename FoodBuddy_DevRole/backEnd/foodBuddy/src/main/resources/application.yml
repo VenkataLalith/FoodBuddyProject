@@ -4,9 +4,11 @@ server:
     include-binding-errors: always
 spring:
   datasource:
-    password: Guddi@2000
-    url: jdbc:mysql://localhost:3306/foodbuddy
-    username: root
+    password: rie5amaeRa
+    url: jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_14_DEVINT
+    username: CSCI5308_14_DEVINT_USER
+    hikari:
+      maximum-pool-size: 2
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,7 +21,7 @@ mail:
   protocol: smtp
   tls: true
   properties.mail.smtp:
-      auth: true
-      starttls.enable: true
-      ssl.trust: smtp.gmail.com
+    auth: true
+    starttls.enable: true
+    ssl.trust: smtp.gmail.com
 
