@@ -27,13 +27,18 @@ public class NotificationService implements EmailSender {
             helper.setTo(recipients);
             helper.setSubject("Action Required: Grocery Inventory Update");
 
-            String htmlContent = "<html><body><p>Dear Group Users,</p>"
-                    + "<p>This email is to inform you that our grocery inventory is running short on <b>" + itemName + "</b>. To avoid any inconvenience or delay in meal preparation, we kindly request that you add <b>" + itemName + "</b> to our grocery list or purchase it at your earliest convenience.</p>"
-                    + "<p>Your prompt attention to this matter is appreciated. Thank you for your cooperation.</p>"
-                    + "<p>Best regards,<br>FoodBuddy App</p>"
-                    + "</body></html>";
-            helper.setText(htmlContent, true);
+            StringBuilder sb = new StringBuilder();
+            sb.append("<html><body><p>Dear Group Users,</p>")
+                    .append("<p>This email is to inform you that your grocery inventory is running short on <b>")
+                    .append(itemName)
+                    .append("</b>. To avoid any inconvenience or delay in meal preparation, we kindly request that you add <b>")
+                    .append(itemName)
+                    .append("</b> to your grocery list or purchase it at your earliest convenience.</p>")
+                    .append("<p>Your prompt attention to this matter is appreciated. Thank you for your cooperation.</p>")
+                    .append("<p>Best regards,<br>FoodBuddy App</p>")
+                    .append("</body></html>");
 
+            helper.setText(sb.toString(), true);
             mailSender.send(message);
             return "success";
         } catch (MessagingException me) {
@@ -41,6 +46,7 @@ public class NotificationService implements EmailSender {
             return "failure";
         }
     }
+
 
     public String fetchEmailAndSend(String groupCode, String itemName) {
         String [] toEmails = userRepository.findUsernames(groupCode).toArray(new String[0]);

@@ -39,36 +39,59 @@ public class RecipeService {
     }
 
     private String fetchIngredientsAndPrepareUrl(String groupCode) throws UnsupportedEncodingException {
-        String url = null;
         List<String> itemList = inventoryRepository.findItemNameList(groupCode);
-        String items= String.join(",+", itemList);
-        String encodedItems = URLEncoder.encode(items, "UTF-8");
-        url = AppConstants.getFindByIngredientsUrl()+AppConstants.getIngredientLiteral()+encodedItems+AppConstants.getAmpersand()+
-                AppConstants.getApiKeyLiteral()+AppConstants.getApiKey()
-                +AppConstants.getAmpersand()+AppConstants.getNumberLiteral()+AppConstants.getNumber();
+        String items = buildItemString(itemList);
+        String encodedItems = encodeString(items);
+        String url = buildUrl(encodedItems);
         System.out.println(url);
         return url;
     }
+
+    private String buildItemString(List<String> itemList) {
+        return String.join(",+", itemList);
+    }
+
+    private String encodeString(String str) throws UnsupportedEncodingException {
+        return URLEncoder.encode(str, "UTF-8");
+    }
+
+    private String buildUrl(String encodedItems) {
+        return AppConstants.getFindByIngredientsUrl() +
+                AppConstants.getIngredientLiteral() + encodedItems +
+                AppConstants.getAmpersand() + AppConstants.getApiKeyLiteral() +
+                AppConstants.getApiKey() + AppConstants.getAmpersand() +
+                AppConstants.getNumberLiteral() + AppConstants.getNumber();
+    }
+
 
     private List<Recipe> callExternalRecipeApiForRecipeList(String groupCode) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         String apiUrl = fetchIngredientsAndPrepareUrl(groupCode);
         ResponseEntity<Recipe[]> response = restTemplate.getForEntity(apiUrl, Recipe[].class);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            List<Recipe> recipes = Arrays.asList(response.getBody());
-            List<Recipe> sortedRecipes = recipes.stream()
-                    .sorted(Comparator.comparingInt(Recipe::getMissedIngredientCount))
-                    .limit(AppConstants.getRecipeCount())
-                    .collect(Collectors.toList());
-            for (Recipe recipe : sortedRecipes) {
-                String recipeUrl = getRecipeUrlById(recipe.getId());
-                recipe.setLink(recipeUrl);
-            }
-            return sortedRecipes;
-        } else {
+        if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RuntimeException("Failed to call external API. Status code: " + response.getStatusCode());
         }
+
+        List<Recipe> recipes = Arrays.asList(response.getBody());
+        List<Recipe> sortedRecipes = getSortedRecipes(recipes);
+        setRecipeLinks(sortedRecipes);
+        return sortedRecipes;
     }
+
+    private List<Recipe> getSortedRecipes(List<Recipe> recipes) {
+        return recipes.stream()
+                .sorted(Comparator.comparingInt(Recipe::getMissedIngredientCount))
+                .limit(AppConstants.getRecipeCount())
+                .collect(Collectors.toList());
+    }
+
+    private void setRecipeLinks(List<Recipe> recipes) throws Exception {
+        for (Recipe recipe : recipes) {
+            String recipeUrl = getRecipeUrlById(recipe.getId());
+            recipe.setLink(recipeUrl);
+        }
+    }
+
 
     private String getRecipeUrlById(int id) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
