@@ -17,7 +17,7 @@ function RecipeManagement() {
   );
   useEffect(() => {
     axios
-      .get(`http://172.17.0.203:8080/api/v1/recipe/view?groupCode=${userGroupNumber}`)
+      .get('http://172.17.0.203:8080/api/v1/recipe/view?groupCode=${userGroupNumber}')
       .then((response) => {
         console.log("recipe: ",response.data.recipeList);
         setData( response.data.recipeList);
