@@ -10,6 +10,7 @@ public class RegistrationController {
     private RegistrationService registrationService;
     @PostMapping
     public String register(@RequestBody RegistrationRequest request){
+        System.out.println("request :::"+request);
         return registrationService.register(request);
     }
 
