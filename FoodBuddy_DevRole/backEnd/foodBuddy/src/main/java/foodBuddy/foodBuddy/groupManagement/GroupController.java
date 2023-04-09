@@ -8,23 +8,24 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class GroupController {
     private GroupServices groupServices;
+    private AppGroupService appGroupService;
     @PostMapping("/Create")
     public GroupCreationResponse createGroup(@RequestBody GroupCreationRequest request){
-        return groupServices.createGroup(request);
+        return appGroupService.createGroup(request);
     }
     @PostMapping("/Join")
     public GroupJoinResponse joinGroup(@RequestBody GroupJoinRequest request){
-        GroupJoinResponse response = groupServices.joinGroup(request);
+        GroupJoinResponse response = appGroupService.joinGroup(request);
         return response;
     }
     @GetMapping("/view")
     public ViewGroupUsersResponse viewGroup(@RequestParam(value = "groupCode") String groupCode){
-        ViewGroupUsersResponse response = groupServices.viewGroup(groupCode);
+        ViewGroupUsersResponse response = appGroupService.findGroupUsers(groupCode);
         return response;
     }
     @PostMapping("/Leave")
     public LeaveGroupResponse leaveGroup(@RequestBody LeaveGroupRequest request){
-        LeaveGroupResponse response = groupServices.leaveGroup(request);
+        LeaveGroupResponse response = appGroupService.leaveGroup(request);
         return response;
     }
 }

@@ -16,6 +16,27 @@ public class AppGroupService {
     @Autowired
     private final UserRepository userRepository;
 
+    public GroupCreationResponse createGroup(GroupCreationRequest request) {
+        AppGroup appGroup = new AppGroup(request.getGroupName(),request.getGroupCode());
+        System.out.println("appGroup "+ appGroup);
+        /*
+        Generate a random groupCode, instead of getting from user.
+         */
+        String groupCode = generateCode();// validating for unique groupCode
+
+        appGroup.setGroupCode(groupCode);
+        GroupCreationResponse creationReq = CreateGroup(appGroup);
+        if(creationReq.getStatus().equalsIgnoreCase("success")) {
+            GroupJoinRequest joinReq = new GroupJoinRequest(groupCode, request.getUserName());
+            GroupJoinResponse response = joinGroup(joinReq);
+            creationReq.setGroupCode(groupCode);
+            if (response.getStatus().equalsIgnoreCase("failure")){
+                creationReq.setStatus("joinFailed");
+            }
+        }
+        return creationReq;
+    }
+
 
     public GroupCreationResponse CreateGroup(AppGroup appGroup){
         GroupCreationResponse response = new GroupCreationResponse();
@@ -127,3 +148,5 @@ public class AppGroupService {
         return leaveGroupResponse;
     }
 }
+
+
