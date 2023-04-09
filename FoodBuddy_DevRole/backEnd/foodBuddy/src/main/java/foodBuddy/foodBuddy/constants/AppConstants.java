@@ -10,7 +10,7 @@ public class AppConstants {
     private static final String recipeUrl = "https://api.spoonacular.com/recipes/";
     private static final String ingredientLiteral = "ingredients=";
     private static final String apiKeyLiteral = "apiKey=";
-    private static final String apiKey = "fab641bba03c4195be52c40c98f8ac24";
+    private static final String apiKey = "a6cf26b4e4d04e7abd42b0f9eee9af2c";
     private static final String ampersand = "&";
     private static final int recipeCount = 2;
 
