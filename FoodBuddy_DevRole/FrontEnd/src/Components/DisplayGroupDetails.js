@@ -1,7 +1,6 @@
 import React, { useEffect,useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import callViewGroupDataApi from '../Constants/Constants';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -26,7 +25,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
-    // hide last border
     '&:last-child td, &:last-child th': {
       border: 0,
     },
@@ -34,7 +32,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
   
 export const DisplayGroupDetails = () => {
-    const api='/api/v1/groupApi/view';
+    const api='http://172.17.0.203:8080/api/v1/groupApi/view';
     const [groupData, setGroupData] = useState([]);
     const userGroupNumber = useSelector((state) => state.groupManagementReducer.groupCode);
 

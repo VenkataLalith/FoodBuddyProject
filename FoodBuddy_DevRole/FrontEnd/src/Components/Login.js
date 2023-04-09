@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import Constants from '../Constants/Constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../redux/actions/LoginLogoutAction'
 import { updateGroupNumber } from'../redux/actions/GroupManagementAction';  
-// import Routes from './Routes';
-// import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -21,7 +16,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import logo from "../Images/download.png"
-import ResponsiveAppBar from './Navbar';
 
 const theme = createTheme();
 export const Login = () => {
@@ -35,7 +29,6 @@ const handleUsernameChange = (event) => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const navigate = useNavigate();
   const handleClick = () => navigate('/register');
 
@@ -52,7 +45,7 @@ const handleUsernameChange = (event) => {
     setPassword("");
   }
    const callLoginApi = (formData) => {
-     axios.post('/api/v1/login', formData)
+     axios.post('http://172.17.0.203:8080/api/v1/login', formData)
        .then(response => {
          if(response.data.message==='Login Successful'){
             console.log('login success')
@@ -69,33 +62,10 @@ const handleUsernameChange = (event) => {
        });
    };
 
-  // const gotoSignUpPage = () => navigate("/register");
 
   return (
     <>
-    {/* <ResponsiveAppBar/> */}
-    {/* // <Routing />
-    // <div className='mx-auto'>
-    //   <div style={{ marginTop: '64%' }}>
-    //     <div className='Form-Container'>
-    //       <form className='form'>
-
-    //         <label> Username</label>
-    //         <input className='input' placeholder='Please enter UserName' value={username} onChange={e => setUsername(e.target.value)}></input>
-
-    //         <label> Password</label>
-    //         <input className='input' type="password" placeholder='Please enter Password' value={password} onChange={e => setPassword(e.target.value)}></input>
-    //       </form>
-    //       <button type='submit' className='input1' onClick={submitForm}>Submit</button>
-    //       <p className='mt-4'>
-    //         Don't have an account?{" "}
-    //         <span className='link' onClick={handleClick}>
-    //           Sign up
-    //         </span>
-    //       </p>
-    //     </div>
-    //   </div>
-    // </div> */}
+    
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
@@ -150,10 +120,7 @@ const handleUsernameChange = (event) => {
                 id="password"
                 autoComplete="current-password"
               />
-              {/* <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              /> */}
+              
               <Button onClick={submitForm}
                 type="submit"
                 fullWidth
@@ -163,18 +130,14 @@ const handleUsernameChange = (event) => {
                 Sign In
               </Button>
               <Grid container>
-                {/* <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid> */}
+                
                 <Grid item>
                   <Link  variant="body2" onClick={handleClick}>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>
-              {/* <Copyright sx={{ mt: 5 }} /> */}
+              
             </Box>
           </Box>
         </Grid>

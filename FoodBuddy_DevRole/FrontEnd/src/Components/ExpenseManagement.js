@@ -1,16 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-import Alert from '@mui/material/Alert';
 
 
 function GroupExpensesTable(props) {
@@ -28,7 +23,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
-    // hide last border
     '&:last-child td, &:last-child th': {
       border: 0,
     },
@@ -88,7 +82,7 @@ function Expenses() {
 
   const getTotalExpense = (formData) => {
     axios
-      .post("/api/v1/expenses/total", { emailId }, {
+      .post("http://172.17.0.203:8080/api/v1/expenses/total", { emailId }, {
         headers: {
           "Content-Type": "application/json"
         }
@@ -98,7 +92,6 @@ function Expenses() {
           console.log("Item added");
           console.log(response);
           setShowTotal(response.data.totalUserExpense);
-          //
         } else {
           alert("");
         }
@@ -116,7 +109,7 @@ function Expenses() {
 
   const getGroupExpense = (userGroupNumber) => {
     axios
-      .post("/api/v1/expenses/groupExpenses", { userGroupNumber }, {
+      .post("http://172.17.0.203:8080/api/v1/expenses/groupExpenses", { userGroupNumber }, {
         headers: {
           "Content-Type": "application/json"
         }

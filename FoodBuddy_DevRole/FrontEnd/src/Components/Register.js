@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import UserData from '../Constants/UserData';
-import Constants from '../Constants/Constants';
 import { useNavigate } from "react-router-dom";
-// import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -59,31 +55,6 @@ export const Register = () => {
 
 
   return (
-    // <div className='mx-auto my-auto'>
-    //   <div style={{ marginTop: '50%' }}>
-    //     <div className='Form-Container'>
-    //       <form className='form'>
-    //         <label> Fisrt Name</label>
-    //         <input className='input' placeholder='Please enter your First Name' value={firstName} onChange={e => setFirstName(e.target.value)}></input>
-    //         <label> Last Name</label>
-    //         <input className='input' placeholder='Please enter Last Name' value={lastName} onChange={e => setLastName(e.target.value)}></input>
-
-    //         <label> Password</label>
-    //         <input className='input' placeholder='Please enter Password' value={password} onChange={e => setPassword(e.target.value)}></input>
-
-    //         <label> Email</label>
-    //         <input className='input' placeholder='Please enter your name' value={email} onChange={e => setEmail(e.target.value)}></input>
-    //       </form>
-    //       <button type='submit' className='input1' onClick={submitForm}>Submit</button>
-    //       <p className='mt-4'>
-    //         Already have an account?{" "}
-    //         <span className='link' onClick={gotoLoginPage}>
-    //           Login
-    //         </span>
-    //       </p>
-    //     </div>
-    //   </div>
-    // </div>
 
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -161,10 +132,6 @@ export const Register = () => {
                 autoComplete="current-password"
               />
                
-              {/* <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              /> */}
               <Button onClick={submitForm}
                 type="submit"
                 fullWidth
@@ -174,24 +141,12 @@ export const Register = () => {
                 Register
               </Button>
               <Grid container>
-              {/* <p className='mt-4'>
-            Already have an account?{" "}
-            <span className='link' onClick={gotoLoginPage}>
-               Login
-             </span>
-          </p> */}
-                {/* <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid> */}
                 <Grid item>
                   <Link onClick={gotoLoginPage} variant="body2">
                     {"Already have an account? Login"}
                   </Link>
                 </Grid>
               </Grid>
-              {/* <Copyright sx={{ mt: 5 }} /> */}
             </Box>
           </Box>
         </Grid>

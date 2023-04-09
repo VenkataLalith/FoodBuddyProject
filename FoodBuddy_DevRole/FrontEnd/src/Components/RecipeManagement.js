@@ -1,4 +1,3 @@
-// import React from "react";
 import {useState,useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Card from '@mui/material/Card';
@@ -8,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import axios from "axios";
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 
 
 function RecipeManagement() {
@@ -19,7 +17,7 @@ function RecipeManagement() {
   );
   useEffect(() => {
     axios
-      .get(`/api/v1/recipe/view?groupCode=${userGroupNumber}`)
+      .get(`http://172.17.0.203:8080/api/v1/recipe/view?groupCode=${userGroupNumber}`)
       .then((response) => {
         console.log("recipe: ",response.data.recipeList);
         setData( response.data.recipeList);

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -22,7 +21,7 @@ export const InventoryManagement = () => {
 
   useEffect(() => {
     axios
-      .get(`/api/v1/inventory/view?groupCode=${userGroupNumber}`)
+      .get(`http://172.17.0.203:8080/api/v1/inventory/view?groupCode=${userGroupNumber}`)
       .then((response) => {
         console.log(response.data.itemList);
         setData( response.data.itemList);
@@ -53,7 +52,7 @@ export const InventoryManagement = () => {
     setQuantity("");
     setExpiry("");
     setAmount("");
-    // if(userGroupNumber != null){}
+
     const formData = {
       itemName: newName,
       quantity: newQuantity,
@@ -69,11 +68,10 @@ export const InventoryManagement = () => {
 
   const saveItem = (formData) => {
     axios
-      .post("/api/v1/inventory/add", formData)
+      .post("http://172.17.0.203:8080/api/v1/inventory/add", formData)
       .then((response) => {
         if (response.data.status === "success") {
           console.log("Item added");
-          //
         } else {
           alert("");
         }
@@ -106,7 +104,7 @@ export const InventoryManagement = () => {
     };
    const sendNotification = (formData) => {
        axios
-         .post("/api/v1/notification/notify", formData)
+         .post("http://172.17.0.203:8080/api/v1/notification/notify", formData)
          .then((response) => {
           console.log(response.data);
           console.log(response);
@@ -140,7 +138,7 @@ export const InventoryManagement = () => {
   };
   const deleteItem = (formData) => {
       axios
-        .post("/api/v1/inventory/delete", formData)
+        .post("http://172.17.0.203:8080/api/v1/inventory/delete", formData)
         .then((response) => {
           if (response.data.status === "success") {
             console.log("Item added");
