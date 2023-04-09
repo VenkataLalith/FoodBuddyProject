@@ -17,7 +17,7 @@ import javax.mail.internet.InternetAddress;
 
 @Service
 public class LoginService {
-	private EmailValidator emailValidator;
+    private EmailValidator emailValidator;
     private AppUserService appUserService;
 
 
@@ -33,13 +33,12 @@ public class LoginService {
             AppUser appUser =new AppUser(request.getUsername(), request.getPassword());
             response = appUserService.loginUser(appUser);
             return response;
-        } catch (Exception e) {
+        } catch (AddressException e) {
             // invalid email address
             response.setStatus("failure");
             response.setMessage(e.toString());
             response.setUsername(null);
             response.setGroupCode(null);
-//            throw new IllegalStateException("Email Not Valid");
             return  response;
         }
     }
