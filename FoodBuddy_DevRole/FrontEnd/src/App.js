@@ -18,7 +18,7 @@ function App() {
       <BrowserRouter>
         {/* <Layout> */}
           {/* This is where we can add children */}
-          {/* <Login/> */}
+          {/* <Login/> */},
           <Routing />
         {/* </Layout> */}
       </BrowserRouter>
