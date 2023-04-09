@@ -16,7 +16,9 @@ public enum AppConstants {
     PAST_USER_EXPENSES(30.4),
     PAST_USER_EXPENSES1(33.34),
     NUMBER_LITERAL("number="),
-    NUMBER(20);
+    NUMBER(20),
+    NUM_ZERO(0);
+
 
     private final Object value;
 
