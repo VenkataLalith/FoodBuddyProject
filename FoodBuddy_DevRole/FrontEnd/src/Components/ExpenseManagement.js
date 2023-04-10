@@ -32,13 +32,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   const { groupExpenses } = props;
 
   return (
-    <table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
       <TableHead>
-                <TableRow>
-                  <StyledTableCell align="center">User Email</StyledTableCell>
-                  <StyledTableCell align="center">Total Amount</StyledTableCell>
-                </TableRow>
-              </TableHead>
+        <TableRow>
+          <StyledTableCell align="center">User Email</StyledTableCell>
+          <StyledTableCell align="center">Total Amount</StyledTableCell>
+        </TableRow>
+      </TableHead>
 
       <TableBody>
         {groupExpenses.map((expense,index) => (
@@ -50,7 +50,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
           </StyledTableRow>
         ))}
       </TableBody>
-    </table>
+    </Table>
   );
 }
 
