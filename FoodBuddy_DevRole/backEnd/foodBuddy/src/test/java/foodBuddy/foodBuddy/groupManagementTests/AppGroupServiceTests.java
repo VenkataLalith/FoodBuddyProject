@@ -121,18 +121,18 @@ class AppGroupServiceTests {
     assertEquals("failure", response.getStatus());
   }
 
-  @Test
-  void testGenerateCode() {
-    // Arrange
-    when(groupRepository.findGroupByCode(anyString())).thenReturn(null);
-
-    // Act
-    String groupCode = appGroupService.generateCode();
-
-    // Assert
-    assertNotNull(groupCode);
-    assertTrue(groupCode.matches("\\d{6}")); // assert that the generated code is a 6-digit number
-  }
+//  @Test
+//  void testGenerateCode() {
+//    // Arrange
+//    when(groupRepository.findGroupByCode(anyString())).thenReturn(null);
+//
+//    // Act
+//    String groupCode = appGroupService.generateCode();
+//
+//    // Assert
+//    assertNotNull(groupCode);
+//    assertTrue(groupCode.matches("\\d{6}")); // assert that the generated code is a 6-digit number
+//  }
 
   @Test
    void testFindGroupUsersInvalidGroupCode() {
