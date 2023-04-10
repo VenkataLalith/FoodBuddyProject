@@ -4,19 +4,19 @@ stages:
   - code_quality
   - issue
 
-# backend-build-job:
-#   stage: build
-#   script:
-#     - chmod 777 -R FoodBuddy_DevRole
-#     - cd FoodBuddy_DevRole/backEnd/foodBuddy
-#     - mvn clean install -Dmaven.test.skip=true
-#     - cd target
-#     - cp ./*.jar /home/csci5308vm14/foodbuddy/backend
-#   artifacts:
-#     paths:
-#       - FoodBuddy_DevRole/backEnd/foodBuddy/target
-#   tags:
-#     - csci5308grp14_shell
+backend-build-job:
+  stage: build
+  script:
+    - chmod 777 -R FoodBuddy_DevRole
+    - cd FoodBuddy_DevRole/backEnd/foodBuddy
+    - mvn clean install -Dmaven.test.skip=true
+    - cd target
+    - cp ./*.jar /home/csci5308vm14/foodbuddy/backend
+  artifacts:
+    paths:
+      - FoodBuddy_DevRole/backEnd/foodBuddy/target
+  tags:
+    - csci5308grp14_shell
 
 backend-test-job:
   stage: test
