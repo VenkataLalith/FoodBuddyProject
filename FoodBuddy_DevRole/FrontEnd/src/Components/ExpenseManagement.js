@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
+import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
