@@ -1,151 +1,130 @@
+# FoodBuddy
+FoodBuddy is a Web-Application that is an all-in-one program for food tracking, expense management, and recipe ideas based on your grocery inventory. This project allows users to email other users when they run out of a shopping item. At the moment, the project only permits one person to join a single group. If the user want to join another group, he must first quit current one. Receipe Recommendation is a unique feature since we propose what you can cook based on your grocery inventory as well as the steps to make it. On the Spending Tracker, you can examine your individual spending in the group as well as the total spending of the group. FoodBuddy combines all of these functions under one roof. 
 
-# Project Title
+## Requirements:
+ React js, Java & Maven 
+ 
+# Dependencies -
+Below dependencies are already mentioned in the code and if we have the required software then if you run the commands the dependencies will be auto installed.
+## Frontend
 
-## Food-Buddy-App
+    "@emotion/react": "^11.10.6"
+    "@emotion/styled": "^11.10.6"
+    "@mui/icons-material": "^5.11.11"
+    "@mui/material": "^5.11.13"
+    "@testing-library/jest-dom": "^5.16.5"
+    "@testing-library/react": "^13.4.0"
+    "@testing-library/user-event": "^13.5.0"
+    "axios": "^1.3.3"
+    "bootstrap": "^5.2.3"
+    "http-proxy-middleware": "^2.0.6"
+    "react": "^18.2.0"
+    "react-bootstrap-validation": "^0.1.11"
+    "react-datepicker": "^4.10.0"
+    "react-dom": "^18.2.0"
+    "react-redux": "^8.0.5"
+    "react-router-bootstrap": "^0.26.2"
+    "react-scripts": "5.0.1"
+    "redux": "^4.2.1"
+    "cors": "^2.8.5"
+    "web-vitals": "^2.1.4"
 
-## Description of the Project
+  ## Backend
+
+    spring-boot-starter-data-jpa
+    spring-boot-starter-security
+    spring-boot-starter-web
+    mssql-jdbc
+    mysql-connector-j
+    spring-boot-starter-test
+    spring-security-test
+    lombok
+    gson
+    spring-boot-starter-mail
+    javax.mail
+    junit
+
+# How to Build and Run -
+## Frontend
+
+### Manual Steps:
+Open a terminal window and navigate to the project root directory.
+   Run the command to install the required dependencies:
+```npm i``` 
+    Run the command to start the development server:
+```npm start```
+    
+### Via Pipeline:
+Go to the Gitlab repo and run the pipeline on main branch.
+Run the build pipeline.
+
+## Backend
+### Manual:
+Open the project in your preferred IDE.  Build the code using below command:
+  ```mvn clean install```
+     
+#### Via Pipeline:
+Once the Pipeline is triggered for the frontend and all steps are completed. 
+
+## Deployment:
+Once the pipeline we triggered in build step then follow the below steps:
+Login to the VM using below command:
+```ssh csci5308vm14@csci5308vm14.research.cs.dal.ca```
+
+#### Kill any task if its already running on 3000 & 8080 ports using below commands:
+```sudo kill -9 $(sudo lsof -t -i:8080)```
+```sudo kill -9 $(sudo lsof -t -i:3000)```
+#### Open in one instance of a terminal:
+   Navigate to the frontend build directory using below command:
+```cd /home/csci5308vm14/foodbuddy/frontend```
+    Run the Node server using below command:
+```serve -s build```
+ #### Open in another instance of a terminal:
+  Navigate to the backend build directory using below command:
+```/home/csci5308vm14/foodbuddy/backend``` 
+    Run the spring boot application using below command:
+```java -jar foodBuddy-0.0.1-SNAPSHOT.jar```
+
+## Use Cases:
+## Modules Integrated-
+1) Registration Module:
+A new user can register with his information in this module. After enrolled, the user can access the application. 
+
+2) Login Module:
+The user can log in to this module using the credentials he registered with. We perform a rigorous authentication to determine whether or not the password is correct. 
+
+3) Group Management Module:
+Once a user logs in to this module. He has two options: form a group or join an existing one.
+When a user starts a group, a new group code is generated for him to share with other members.
+If he joins the group, he will require the group code. We only allow one group per user in this application.Hence, if someone is already a member of one group, he must quit to join another. 
+
+4) Inventory Management Module:
+Since the user is a member of the group, he can add his groceries and other items in this module, and those items will be saved in the database. Users can save information about purchased things, including name, price, expiration date, and quantity. One comprehensive feature we offer is the ability for customers to email one another when they run out of specific items.The item may be edited or even deleted by the user. 
+
+5) Expense Tracker Module:
+The user can track his own expenses as well as the expenses of the group in this module. 
+
+6) Receipe Management Module:
+This module provides the user with recipe suggestions depending on the inventory items. Together with the recipe suggestion, we also give the user with the instructions to make that recipe. 
+
+## Document List & Location:
+Location : group14/FoodBuddy_DevRole/Documents
+
+#### Files:
+
+##### API Documentation.docx
+##### Contribution_statement.xlsx
+##### DevRole.docx
+##### Final_Presentation_Group14.pptx
+##### Food_Buddy_Group_18.pptx
+##### GROUP-14-MID-TERM REVIEW .pptx
+##### SmellsDetails.xlsx
+
+
+
+    
+
+     
   
-Welcome to our project! Food-Buddy,The project aims to develop a standalone Web app that enables effective shared grocery and
-expense management. The app automates inventory management and sends notifications when supplies run low, reducing the
-risk of running out of essential items. It also facilitates expense management by allowing users to split grocery bills
-and track expenses in real-time. The app further aims to reduce food waste and expenses through monthly usage analysis,
-providing users with insights into their consumption patterns and enabling them to make informed decisions about their
-shopping habits. Overall, the app offers a convenient and efficient solution to grocery and expense management for
-individuals and households.
-
-## Screenshots
-
-![App Screenshot](https://ibb.co/CH1YR2m)
-
-
-
-## Technology Used
-
-Front-End: React,Redux
-
-Back-End: SpringBoot,MySql,Mockito
-
-## Dependencies
-
-This project has a few dependencies that need to be installed before it can be run successfully.
-Please follow the instructions below to install the necessary dependencies:
-
----
-Downloading and installing Node.js and npm
-redirect_from: [ /getting-started/installing-node ]
----
-
-To publish and install packages to and from the public npm registry or a private npm registry, you must install Node.js and the npm command line interface using either a Node version manager or a Node installer. **We strongly recommend using a Node version manager like [nvm](https://github.com/nvm-sh/nvm) to install Node.js and npm.** We do not recommend using a Node installer, since the Node installation process installs npm in a directory with local permissions and can cause permissions errors when you run npm packages globally.
-
-<Note>
-
-**Note:** to download the latest version of npm, on the command line, run the following command:
-
-```
-npm install -g npm
-```
-
-</Note>
-
-## Overview
-
-- [Checking your version of npm and Node.js](#checking-your-version-of-npm-and-nodejs)
-- [Using a Node version manager to install Node.js and npm](#using-a-node-version-manager-to-install-nodejs-and-npm)
-- [Using a Node installer to install Node.js and npm](#using-a-node-installer-to-install-nodejs-and-npm)
-
-## Checking your version of npm and Node.js
-
-To see if you already have Node.js and npm installed and check the installed version, run the following commands:
-
-```
-node -v
-npm -v
-```
-
-## Using a Node version manager to install Node.js and npm
-
-Node version managers allow you to install and switch between multiple versions of Node.js and npm on your system so you can test your applications on multiple versions of npm to ensure they work for users on different versions.
-
-### OSX or Linux Node version managers
-
-* [nvm](https://github.com/creationix/nvm)
-* [n](https://github.com/tj/n)
-
-### Windows Node version managers
-
-* [nodist](https://github.com/marcelklehr/nodist)
-* [nvm-windows](https://github.com/coreybutler/nvm-windows)
-
-## Using a Node installer to install Node.js and npm
-
-If you are unable to use a Node version manager, you can use a Node installer to install both Node.js and npm on your system.
-
-* [Node.js installer](https://nodejs.org/en/download/)
-* [NodeSource installer](https://github.com/nodesource/distributions)
-
-If you use Linux, we recommend that you use a NodeSource installer.
-
-### OS X or Windows Node installers
-
-If you're using OS X or Windows, use one of the installers from the [Node.js download page](https://nodejs.org/en/download/). Be sure to install the version labeled **LTS**. Other versions have not yet been tested with npm.
-
-### Linux or other operating systems Node installers
-
-If you're using Linux or another operating system, use one of the following installers:
-
-- [NodeSource installer](https://github.com/nodesource/distributions) (recommended)
-- One of the installers on the [Node.js download page](https://nodejs.org/en/download/)
-
-Or see [this page](https://nodejs.org/en/download/package-manager/) to install npm for Linux in the way many Linux developers prefer.
-
-
-### Less-common operating systems
-
-For more information on installing Node.js on a variety of operating systems, see [this page][pkg-mgr].
-
-
-[pkg-mgr]: https://nodejs.org/en/download/package-manager/
-
-
-Note: If you encounter any issues during the installation process, please refer to the
-documentation of each library for troubleshooting or contact the library's support team.
-
-Thank you for using this project!
-
-## Build/Deployment Instructions
-
-This project can be deployed in a variety of ways depending on your needs.
-Below are some general instructions for deploying this project:
-
-1)  **Clone the project**: First, you need to clone the project from the source code repository to your local machine using the following command:
-
-
-**git clone https://github.com/[username]/[project-name].git**
-
-
-Note: Replace [username] with your GitHub username and [project-name] with the name of your project.
-
-2. **Install dependencies**: Before deploying the project, make sure to install the required dependencies
-   by following the instructions provided in the Dependencies section of this README file.
-
-3. **Set up environment variables**: If your project requires environment variables, create a .env file in the
-   root directory of your project and set the required environment variables. You can also set environment variables
-   on your deployment platform if necessary.
-
-4. **Deploy the project**: Once you have chosen a deployment platform, follow the instructions provided by the platform
-   to deploy your project. This may involve creating a deployment package, setting up a server or container, and
-   configuring any necessary settings.
-
-Congratulations, your project is now deployed and ready to use! If you encounter any issues during the deployment process,
-please refer to the documentation provided by your deployment platform or contact their support team for assistance.
-
-## Team Memebers
-
-1) Kothwal Shaik Sujahid Basha (B00925849)
-2) Ashish Ojha (B00931967)
-3) Pakshal Shah (B00935061)
-4) Venkata Lalith Sai Mariganti (B00945727)
-5) Sahil Dilip Dalvi (B00939343)
-
-
+ 
 
