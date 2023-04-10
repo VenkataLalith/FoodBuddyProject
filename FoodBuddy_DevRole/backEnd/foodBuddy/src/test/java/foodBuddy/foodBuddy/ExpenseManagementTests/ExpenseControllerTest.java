@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.mockito.Mockito.when;
 
 public class ExpenseControllerTest {
@@ -27,11 +30,11 @@ public class ExpenseControllerTest {
 
     @Test
     void getTotalExpensesTest(){
-        ExpenseResponse response = new ExpenseResponse();
+        Map<String, Object> response = new HashMap<>();
         ExpenseRequest request = new ExpenseRequest();
-        response.setStatus("success");
+        response.put("status", "success");
 //        when(expenseService.getTotalUserExpenses("user@email.com")).thenReturn(response);
-        ExpenseResponse expenseResponse = expenseController.getTotalExpenses(request);
+        Map<String, Object> expenseResponse = expenseController.getTotalExpenses(request);
 
     }
 }

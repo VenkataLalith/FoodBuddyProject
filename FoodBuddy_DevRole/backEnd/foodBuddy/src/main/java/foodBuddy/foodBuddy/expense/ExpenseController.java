@@ -1,6 +1,10 @@
 package foodBuddy.foodBuddy.expense;
 
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/api/v1/expenses")
@@ -12,8 +16,12 @@ public class ExpenseController {
     }
 
     @PostMapping("/total")
-    public ExpenseResponse getTotalExpenses(@RequestBody ExpenseRequest expenseRequest){
-        ExpenseResponse response =expenseService.getTotalUserExpenses(expenseRequest.getEmailId());
+    public Map<String, Object> getTotalExpenses(@RequestBody ExpenseRequest expenseRequest) {
+        double totalExpenses = expenseService.getTotalUserExpenses(expenseRequest.getEmailId());
+        Map<String, Object> response = new HashMap<>();
+        response.put("totalExpenses", totalExpenses);
+        response.put("status", "success");
+        response.put("message", "success");
         return response;
     }
     @PostMapping("/groupExpenses")

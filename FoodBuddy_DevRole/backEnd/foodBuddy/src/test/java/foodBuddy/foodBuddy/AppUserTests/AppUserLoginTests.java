@@ -3,6 +3,7 @@ package foodBuddy.foodBuddy.AppUserTests;
 import foodBuddy.foodBuddy.appuser.AppUser;
 import foodBuddy.foodBuddy.appuser.AppUserLogin;
 import foodBuddy.foodBuddy.appuser.UserRepository;
+import foodBuddy.foodBuddy.constants.AppConstants;
 import foodBuddy.foodBuddy.groupManagement.ViewGroupUsers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,7 +69,7 @@ public class AppUserLoginTests {
 
     @Test
     void getOneTest(){
-        Long param = 334L;
+        Long param = (Long.parseLong(AppConstants.DEFAULT_LONG_VALUE.getValue().toString()));
         AppUser result = appUserLogin.userRepository.getOne(param);
         assertEquals(null,result);
 
@@ -76,14 +77,14 @@ public class AppUserLoginTests {
 
     @Test
     void getByIdTest(){
-        Long param = 334L;
+        Long param = (Long.parseLong(AppConstants.DEFAULT_LONG_VALUE.getValue().toString()));
         AppUser user = appUserLogin.userRepository.getById(param);
         assertEquals(null,user);
     }
 
     @Test
     void getReferenceByIdTest(){
-        Long param = 334L;
+        Long param = (Long.parseLong(AppConstants.DEFAULT_LONG_VALUE.getValue().toString()));
         AppUser result = appUserLogin.userRepository.getReferenceById(param);
         assertEquals(null,result);
     }
@@ -103,14 +104,14 @@ public class AppUserLoginTests {
 
     @Test
     void findByIdTest(){
-        Long param = 334L;
+        Long param = (Long.parseLong(AppConstants.DEFAULT_LONG_VALUE.getValue().toString()));
         Optional<AppUser> user = appUserLogin.userRepository.findById(param);
         assertEquals(Optional.empty(),user);
     }
 
     @Test
     void existsByIdTest(){
-        Long id = 334L;
+        Long id = (Long.parseLong(AppConstants.DEFAULT_LONG_VALUE.getValue().toString()));
         boolean isExisting = appUserLogin.userRepository.existsById(id);
         assertFalse(isExisting);
     }

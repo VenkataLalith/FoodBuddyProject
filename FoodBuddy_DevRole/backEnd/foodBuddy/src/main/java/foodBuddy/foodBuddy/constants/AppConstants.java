@@ -17,9 +17,14 @@ public enum AppConstants {
     PAST_USER_EXPENSES1(33.34),
     NUMBER_LITERAL("number="),
     NUMBER(20),
+    INGREDIENT_AMOUNT(2.0),
+    DEFAULT_EXPENSE(3534.44),
+    DEFAULT_PAST_EXPENSES(33.33),
+    DEFAULT_PAST_EXPENSES1(34.5),
+    DEFAULT_PAST_EXPENSES2(44.5),
+    DEFAULT_PAST_EXPENSES3(54.5),
+    DEFAULT_LONG_VALUE(334L),
     NUM_ZERO(0);
-
-
     private final Object value;
 
     private AppConstants(Object value) {

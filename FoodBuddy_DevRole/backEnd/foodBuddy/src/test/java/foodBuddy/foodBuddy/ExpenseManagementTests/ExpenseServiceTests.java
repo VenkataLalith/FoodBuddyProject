@@ -1,8 +1,8 @@
 package foodBuddy.foodBuddy.ExpenseManagementTests;
 
 import foodBuddy.foodBuddy.appuser.UserRepository;
+import foodBuddy.foodBuddy.constants.AppConstants;
 import foodBuddy.foodBuddy.expense.*;
-import foodBuddy.foodBuddy.groupManagement.AppGroupService;
 import foodBuddy.foodBuddy.groupManagement.ViewGroupUsers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,9 +34,9 @@ public class ExpenseServiceTests {
     @Test
     void getTotalUserExpensesTestSuccess(){
         String emailId="user@email.com";
-        when(expenseRepository.getPastUserExpenses(emailId)).thenReturn(33.33);
-        ExpenseResponse response = expenseService.getTotalUserExpenses(emailId);
-        assertEquals("success",response.getMessage());
+        when(expenseRepository.getPastUserExpenses(emailId)).thenReturn((Double.parseDouble(AppConstants.DEFAULT_PAST_EXPENSES.getValue().toString())));
+        Double response= expenseService.getTotalUserExpenses(emailId);
+        assertEquals(33.33,response);
     }
 
     @Test
@@ -50,9 +50,9 @@ public class ExpenseServiceTests {
         listOfUsers.add(user3);
         String groupCode = "1234";
         when(userRepository.findUsersByGroupCode(groupCode)).thenReturn(listOfUsers);
-        when(expenseRepository.getPastUserExpenses("user1@email.com")).thenReturn(34.5);
-        when(expenseRepository.getPastUserExpenses("user2@email.com")).thenReturn(44.5);
-        when(expenseRepository.getPastUserExpenses("user3@email.com")).thenReturn(54.5);
+        when(expenseRepository.getPastUserExpenses("user1@email.com")).thenReturn((Double.parseDouble(AppConstants.DEFAULT_PAST_EXPENSES1.getValue().toString())));
+        when(expenseRepository.getPastUserExpenses("user2@email.com")).thenReturn((Double.parseDouble(AppConstants.DEFAULT_PAST_EXPENSES2.getValue().toString())));
+        when(expenseRepository.getPastUserExpenses("user3@email.com")).thenReturn((Double.parseDouble(AppConstants.DEFAULT_PAST_EXPENSES3.getValue().toString())));
 
         GroupExpenseRequest request = new GroupExpenseRequest();
         request.setUserGroupNumber(groupCode);

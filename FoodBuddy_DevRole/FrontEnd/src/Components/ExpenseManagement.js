@@ -91,9 +91,9 @@ function Expenses() {
         if (response.data.status === "success") {
           console.log("Item added");
           console.log(response);
-          setShowTotal(response.data.totalUserExpense);
+          setShowTotal(response.data.totalExpenses);
         } else {
-          alert("");
+          alert("Expense not found");
         }
       })
       .catch((error) => {
