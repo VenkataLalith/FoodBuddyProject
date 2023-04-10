@@ -110,14 +110,15 @@ This module provides the user with recipe suggestions depending on the inventory
 ## Document List & Location:
 Location : group14/FoodBuddy_DevRole/Documents
 
-Files:
-API Documentation.docx
-Contribution_statement.xlsx
-DevRole.docx
-Final_Presentation_Group14.pptx
-Food_Buddy_Group_18.pptx
-GROUP-14-MID-TERM REVIEW .pptx
-SmellsDetails.xlsx
+#### Files:
+
+##### API Documentation.docx
+##### Contribution_statement.xlsx
+##### DevRole.docx
+##### Final_Presentation_Group14.pptx
+##### Food_Buddy_Group_18.pptx
+##### GROUP-14-MID-TERM REVIEW .pptx
+##### SmellsDetails.xlsx
 
 
 
