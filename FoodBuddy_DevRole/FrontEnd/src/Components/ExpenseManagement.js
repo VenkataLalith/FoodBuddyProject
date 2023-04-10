@@ -32,7 +32,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   const { groupExpenses } = props;
 
   return (
-    <table>
+    <table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
       <TableHead>
                 <TableRow>
                   <StyledTableCell align="center">User Email</StyledTableCell>
