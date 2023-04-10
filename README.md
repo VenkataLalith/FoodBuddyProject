@@ -4,7 +4,7 @@
 ## Food-Buddy-App
 
 ## Description of the Project
-
+  
 Welcome to our project! Food-Buddy,The project aims to develop a standalone Web app that enables effective shared grocery and
 expense management. The app automates inventory management and sends notifications when supplies run low, reducing the
 risk of running out of essential items. It also facilitates expense management by allowing users to split grocery bills
