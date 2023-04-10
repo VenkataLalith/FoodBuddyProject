@@ -107,6 +107,17 @@ The user can track his own expenses as well as the expenses of the group in this
 6) Receipe Management Module:
 This module provides the user with recipe suggestions depending on the inventory items. Together with the recipe suggestion, we also give the user with the instructions to make that recipe. 
 
+## Document List & Location:
+Location : group14/FoodBuddy_DevRole/Documents
+
+Files:
+API Documentation.docx
+Contribution_statement.xlsx
+DevRole.docx
+Final_Presentation_Group14.pptx
+Food_Buddy_Group_18.pptx
+GROUP-14-MID-TERM REVIEW .pptx
+SmellsDetails.xlsx
 
 
 
